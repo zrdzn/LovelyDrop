@@ -1,7 +1,7 @@
 # Whole configuration for the drop menu.
 menu:
   # Title of the menu.
-  title: "&8&lDrop Menu"
+  title: "&2&lDrop Menu"
 
 
   # Rows count of the menu.
@@ -24,10 +24,10 @@ menu:
   # Text placeholder which stands for {SWITCH} that could be used in items section.
   drop-switch:
     # Used when drop is switched on for the player.
-    enabled: "&aOn"
+    enabled: "&eon"
 
     # Used when drop is switched off for the player.
-    disabled: "&cOff"
+    disabled: "&coff"
 
 
   # All items that will appear in the menu. There are 3 available types of items in the menu.
@@ -47,9 +47,9 @@ menu:
   #        column: 5                           - column in the menu where the menu item should be;
   #
   #      meta:
-  #        displayname: "&cClose"              - display name of the menu item;
+  #        displayname: "&c&lClose"              - display name of the menu item;
   #        lore:                               - lore of the menu item;
-  #          - "&8Click to close the menu."
+  #          - "&7Click to close the menu."
   items:
     close:
       type: barrier
@@ -60,79 +60,89 @@ menu:
         column: 5
 
       meta:
-        displayname: "&cClose"
+        displayname: "&c&lClose"
         lore:
-          - "&8Click to close the menu."
+          - "&7Click to close the menu."
     gold:
       type: gold_ingot
       action: SWITCH_DROP
 
       slot:
-        row: 1
-        column: 2
+        row: 2
+        column: 3
 
       meta:
-        displayname: "&6Gold"
+        displayname: "&e&lGold"
         lore:
-          - "&2Chance: &a{CHANCE}%"
-          - "&2Amount: &a{AMOUNT-MIN}-{AMOUNT-MAX}"
-          - "&2Status: {SWITCH}"
+          - " &6Chance: &e{CHANCE}%"
+          - " &6Amount: &e{AMOUNT-MIN}&8-&e{AMOUNT-MAX}"
+          - " &6Status: {SWITCH}"
+          - ""
+          - "&aClick to switch the drop."
     diamond:
       type: diamond
       action: SWITCH_DROP
 
       slot:
-        row: 1
-        column: 1
+        row: 2
+        column: 4
 
       meta:
-        displayname: "&9Diamond"
+        displayname: "&b&lDiamond"
         lore:
-          - "&2Chance: &a{CHANCE}%"
-          - "&2Amount: &a{AMOUNT-MIN}-{AMOUNT-MAX}"
-          - "&2Status: {SWITCH}"
+          - " &6Chance: &e{CHANCE}%"
+          - " &6Amount: &e{AMOUNT-MIN}&8-&e{AMOUNT-MAX}"
+          - " &6Status: {SWITCH}"
+          - ""
+          - "&aClick to switch the drop."
     tnt:
       type: tnt
       action: SWITCH_DROP
 
       slot:
-        row: 1
-        column: 3
+        row: 2
+        column: 5
 
       meta:
-        displayname: "&cTNT"
+        displayname: "&c&lTNT"
         lore:
-          - "&2Chance: &a{CHANCE}%"
-          - "&2Amount: &a{AMOUNT-MIN}-{AMOUNT-MAX}"
-          - "&2Status: {SWITCH}"
+          - " &6Chance: &e{CHANCE}%"
+          - " &6Amount: &e{AMOUNT-MIN}&8-&e{AMOUNT-MAX}"
+          - " &6Status: {SWITCH}"
+          - ""
+          - "&aClick to switch the drop."
     emerald:
       type: emerald
       action: SWITCH_DROP
 
       slot:
-        row: 1
-        column: 4
+        row: 2
+        column: 6
 
       meta:
-        displayname: "&aEmerald"
+        displayname: "&a&lEmerald"
         lore:
-          - "&2Chance: &a{CHANCE}%"
-          - "&2Amount: &a{AMOUNT-MIN}-{AMOUNT-MAX}"
-          - "&2Status: {SWITCH}"
+          - " &6Chance: &e{CHANCE}%"
+          - " &6Amount: &e{AMOUNT-MIN}&8-&e{AMOUNT-MAX}"
+          - " &6Status: {SWITCH}"
+          - ""
+          - "&aClick to switch the drop."
     obsidian:
       type: obsidian
       action: SWITCH_DROP
 
       slot:
-        row: 1
-        column: 5
+        row: 2
+        column: 7
 
       meta:
-        displayname: "&bObsidian"
+        displayname: "&7&lObsidian"
         lore:
-          - "&2Chance: &a{CHANCE}%"
-          - "&2Amount: &a{AMOUNT-MIN}-{AMOUNT-MAX}"
-          - "&2Status: {SWITCH}"
+          - " &6Chance: &e{CHANCE}%"
+          - " &6Amount: &e{AMOUNT-MIN}&8-&e{AMOUNT-MAX}"
+          - " &6Status: {SWITCH}"
+          - ""
+          - "&aClick to switch the drop."
 
 
 
