@@ -50,6 +50,13 @@ menu:
   #        displayname: "&c&lClose"            - display name of the menu item;
   #        lore:                               - lore of the menu item;
   #          - "&7Click to close the menu."
+  #
+  # Available placeholders:
+  # {CHANCE}      - a chance of the item to drop;
+  # {AMOUNT-MIN}  - a minimum amount of the item that could drop;
+  # {AMOUNT-MAX}  - a maximum amount of the item that could drop;
+  # {EXPERIENCE}  - an experience that will be given to the player on the successful drop;
+  # {SWITCH}      - text that will be shown depending on the drop switch status
   items:
     close:
       type: barrier
@@ -163,7 +170,7 @@ menu:
 #   experience: 20           - experience given to the player when he has successfull drop;
 #   meta:
 #     displayname: "&6Gold"  - display name of the drop;
-#     lore:                  - lore of the drop;
+#     lore:                  - lore of the drop
 #       - "&7Dropped gold"
 #
 # NOTE: 'meta' section is optional, you can remove it to have original/vanilla items.
