@@ -1,0 +1,140 @@
+# Whole configuration for the drop menu.
+menu:
+  # Title of the menu.
+  title: "&8&lDrop Menu"
+
+
+  # Rows count of the menu.
+  rows: 4
+
+
+  # Item that is filled in blank areas.
+  filler:
+    # Option whether to use filler item or not (true/false).
+    enabled: true
+
+    # Type of the filler item.
+    type: black_stained_glass_pane
+
+    # Display name of the filler item.
+    # Use "none" or "" if you do not want to have any display name for it.
+    displayname: "none"
+
+
+  # Text placeholder which stands for {SWITCH} that could be used in items section.
+  drop-switch:
+    # Used when drop is switched on for the player.
+    enabled: "&aOn"
+
+    # Used when drop is switched off for the player.
+    disabled: "&cOff"
+
+
+  # All items that will appear in the menu. There are 3 available types of items in the menu.
+  # They are based on the action that they do when they are clicked. Actions:
+  # NONE         - it will not do anything;
+  # CLOSE_MENU   - it will close the menu;
+  # SWITCH_DROP  - it will switch drop on/off (id of the item here must equal to the id in the 'drops' section
+  #              to make this work, otherwise it will not recognise the drop that it should switch on/off).
+  # Whole structure explanation:
+  #
+  #    close:                                  - id of the menu item;
+  #      type: barrier                         - type of the menu item;
+  #      action: CLOSE_MENU                    - action that should be performed after clicking on the menu item;
+  #
+  #      slot:
+  #        row: 4                              - row in the menu where the menu item should be
+  #        column: 5                           - column in the menu where the menu item should be;
+  #
+  #      meta:
+  #        displayname: "&cClose"              - display name of the menu item;
+  #        lore:                               - lore of the menu item;
+  #          - "&8Click to close the menu."
+  items:
+    close:
+      type: barrier
+      action: CLOSE_MENU
+
+      slot:
+        row: 4
+        column: 5
+
+      meta:
+        displayname: "&cClose"
+        lore:
+          - "&8Click to close the menu."
+    gold:
+      type: gold_ingot
+      action: SWITCH_DROP
+
+      slot:
+        row: 1
+        column: 2
+
+      meta:
+        displayname: "&6Gold"
+        lore:
+          - "&2Chance: &a{CHANCE}%"
+          - "&2Amount: &a{AMOUNT-MIN}-{AMOUNT-MAX}"
+          - "&2Status: {SWITCH}"
+    diamond:
+      type: diamond
+      action: SWITCH_DROP
+
+      slot:
+        row: 1
+        column: 1
+
+      meta:
+        displayname: "&9Diament"
+        lore:
+          - "&2Chance: &a{CHANCE}%"
+          - "&2Amount: &a{AMOUNT-MIN}-{AMOUNT-MAX}"
+          - "&2Status: {SWITCH}"
+
+
+
+# All drops that will be available on the server.
+# Structure explanation below:
+#
+# gold:                      - id of the drop. IMPORTANT: it is used in menu (id in menu.items must equal to this id
+#                            if you want to use SWITCH_DROP action there);
+#   type: gold_ingot         - type of the drop;
+#   source: stone            - source block type from which 'type' should be dropped;
+#   chance: 60               - percentage chance of the drop;
+#   amount: 1-5              - minimum and maximum amount of the drop (if '-' is not found, it will use only first number);
+#   experience: 20           - experience given to the player when he has successfull drop;
+#   meta:
+#     displayname: "&6Gold"  - display name of the drop;
+#     lore:                  - lore of the drop;
+#       - "&7Dropped gold"
+#
+# NOTE: 'meta' section is optional, you can remove it to have original/vanilla items.
+drops:
+  gold:
+    type: gold_ingot
+    source: stone
+    chance: 60
+    amount: 1-5
+    experience: 20
+    meta:
+      displayname: "&6Gold"
+      lore:
+        - "&7Dropped gold"
+  diamond:
+    type: diamond
+    source: stone
+    chance: 50
+    amount: 1-3
+    experience: 100
+
+
+
+# All messages that are sent by plugin to players.
+messages:
+  executed-as-console: "&cYou cannot execute this command as console."
+  no-permissions: "&cYou do not have enough permissions to perform that action."
+  menu-open-error: "&cSomething went wrong while opening the drop menu."
+  plugin-reloaded: "&aPlugin has been reloaded."
+  not-enough-arguments: "&cYou need to provide arguments."
+  not-valid-argument: "&cYou have provided wrong argument. &eUse /lovelydrop reload."

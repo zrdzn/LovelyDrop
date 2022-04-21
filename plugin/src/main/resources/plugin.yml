@@ -1,0 +1,16 @@
+name: LovelyDrop
+version: 1.0.0
+main: io.github.zrdzn.minecraft.lovelydrop.LovelyDropPlugin
+api-version: 1.13
+author: zrdzn
+description: Universal multiversion customizable drop plugin with fully configurable gui
+permissions:
+  lovelydrop.menu.open:
+    default: true
+  lovelydrop.reload:
+    default: op
+commands:
+  drop:
+
+  lovelydrop:
+    aliases: [ldp]

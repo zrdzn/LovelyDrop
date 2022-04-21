@@ -1,0 +1,35 @@
+plugins {
+    id "com.github.johnrengelman.shadow" version "7.1.2"
+}
+
+compileJava.options.encoding = "UTF-8"
+
+repositories {
+    mavenCentral()
+
+    maven {
+        name "spigot-repository"
+        url "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
+    }
+
+    maven {
+        name "mattstudios-repository"
+        url "https://repo.mattstudios.me/artifactory/public/"
+    }
+}
+
+dependencies {
+    compileOnly "org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT"
+
+    implementation "dev.triumphteam:triumph-gui:3.1.2"
+}
+
+java {
+    withSourcesJar()
+}
+
+shadowJar {
+    archiveFileName = "LovelyDrop v${project.parent.version}.jar"
+
+    relocate "dev.triumphteam.gui", "io.github.zrdzn.minecraft.lovelydrop.gui"
+}
