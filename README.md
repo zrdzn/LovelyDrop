@@ -11,7 +11,7 @@ that clicks it.
 The whole configuration of the plugin is explained in this
 [default configuration file](https://github.com/zrdzn/LovelyDrop/blob/master/plugin/src/main/resources/config.yml).
 ## Setup
-The plugin after being uploaded to the server is generally good to go, there is no need to 
+The plugin is generally good to go after being uploaded to the server, there is no need to 
 set a database or something like that because it does not rely on any.
 
 If you made any changes to the configuration file, you can use the `/ldp reload` command
