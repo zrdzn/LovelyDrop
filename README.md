@@ -21,3 +21,11 @@ to reload your plugin - it requires the `lovelydrop.reload` permission.
 
 To open the drop menu, you need to execute the `/drop` command - it requires the `lovelydrop.menu.open`
 permission (it is given by default).
+
+## Requirements
+The plugin runs on the spigot servers and its forks. At the moment it has not been tested on any version other than 1.18.2,
+so it may not work on older ones.
+
+## Download
+Before downloading the plugin, read the [requirements](#requirements) first. You can find the latest version
+in the [releases](https://github.com/zrdzn/LovelyDrop/releases) tab.
