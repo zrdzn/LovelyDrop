@@ -91,6 +91,48 @@ menu:
           - "&2Chance: &a{CHANCE}%"
           - "&2Amount: &a{AMOUNT-MIN}-{AMOUNT-MAX}"
           - "&2Status: {SWITCH}"
+    tnt:
+      type: tnt
+      action: SWITCH_DROP
+
+      slot:
+        row: 1
+        column: 3
+
+      meta:
+        displayname: "&cTNT"
+        lore:
+          - "&2Chance: &a{CHANCE}%"
+          - "&2Amount: &a{AMOUNT-MIN}-{AMOUNT-MAX}"
+          - "&2Status: {SWITCH}"
+    emerald:
+      type: emerald
+      action: SWITCH_DROP
+
+      slot:
+        row: 1
+        column: 4
+
+      meta:
+        displayname: "&aEmerald"
+        lore:
+          - "&2Chance: &a{CHANCE}%"
+          - "&2Amount: &a{AMOUNT-MIN}-{AMOUNT-MAX}"
+          - "&2Status: {SWITCH}"
+    obsidian:
+      type: obsidian
+      action: SWITCH_DROP
+
+      slot:
+        row: 1
+        column: 5
+
+      meta:
+        displayname: "&bObsidian"
+        lore:
+          - "&2Chance: &a{CHANCE}%"
+          - "&2Amount: &a{AMOUNT-MIN}-{AMOUNT-MAX}"
+          - "&2Status: {SWITCH}"
 
 
 
@@ -127,6 +169,24 @@ drops:
     chance: 50
     amount: 1-3
     experience: 100
+  tnt:
+    type: tnt
+    source: stone
+    chance: 20
+    amount: 2
+    experience: 150
+  emerald:
+    type: emerald
+    source: stone
+    chance: 10
+    amount: 1-4
+    experience: 200
+  obsidian:
+    type: obsidian
+    source: stone
+    chance: 20
+    amount: 3
+    experience: 135
 
 
 
