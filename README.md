@@ -7,6 +7,8 @@ and of course the type of item to drop itself. Besides, the whole drop menu is a
 configurable, you can add items that should perform specific actions when clicked, 
 the most important one is the drop-switch which will turn on/off the specific drop for the player
 that clicks it.
+
+![1](img/menu-preview.png)
 ## Configuration
 The whole configuration of the plugin is explained in this
 [default configuration file](https://github.com/zrdzn/LovelyDrop/blob/master/plugin/src/main/resources/config.yml).
