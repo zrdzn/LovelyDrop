@@ -86,7 +86,7 @@ menu:
         column: 1
 
       meta:
-        displayname: "&9Diament"
+        displayname: "&9Diamont"
         lore:
           - "&2Chance: &a{CHANCE}%"
           - "&2Amount: &a{AMOUNT-MIN}-{AMOUNT-MAX}"
