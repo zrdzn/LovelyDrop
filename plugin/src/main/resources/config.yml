@@ -47,7 +47,7 @@ menu:
   #        column: 5                           - column in the menu where the menu item should be;
   #
   #      meta:
-  #        displayname: "&c&lClose"              - display name of the menu item;
+  #        displayname: "&c&lClose"            - display name of the menu item;
   #        lore:                               - lore of the menu item;
   #          - "&7Click to close the menu."
   items:
