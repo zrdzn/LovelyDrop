@@ -70,6 +70,7 @@ public class MenuService {
                     .map(line -> line.replace("{CHANCE}", String.valueOf(dropItem.getChance()))
                         .replace("{AMOUNT-MIN}", String.valueOf(amount.getKey()))
                         .replace("{AMOUNT-MAX}", String.valueOf(amount.getValue()))
+                        .replace("{EXPERIENCE}", String.valueOf(dropItem.getExperience()))
                         .replace("{SWITCH}", !user.hasDisabledDrop(dropItem) ? dropSwitch.getKey() : dropSwitch.getValue()))
                     .collect(Collectors.toList()))
                 .asGuiItem();
@@ -90,6 +91,7 @@ public class MenuService {
                         .map(line -> line.replace("{CHANCE}", String.valueOf(dropItem.getChance()))
                             .replace("{AMOUNT-MIN}", String.valueOf(amount.getKey()))
                             .replace("{AMOUNT-MAX}", String.valueOf(amount.getValue()))
+                            .replace("{EXPERIENCE}", String.valueOf(dropItem.getExperience()))
                             .replace("{SWITCH}", !user.hasDisabledDrop(dropItem) ? dropSwitch.getKey() : dropSwitch.getValue()))
                         .collect(Collectors.toList()))
                     .build();

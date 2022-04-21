@@ -76,6 +76,7 @@ menu:
         lore:
           - " &6Chance: &e{CHANCE}%"
           - " &6Amount: &e{AMOUNT-MIN}&8-&e{AMOUNT-MAX}"
+          - " &6Experience: &e{EXPERIENCE}"
           - " &6Status: {SWITCH}"
           - ""
           - "&aClick to switch the drop."
@@ -92,6 +93,7 @@ menu:
         lore:
           - " &6Chance: &e{CHANCE}%"
           - " &6Amount: &e{AMOUNT-MIN}&8-&e{AMOUNT-MAX}"
+          - " &6Experience: &e{EXPERIENCE}"
           - " &6Status: {SWITCH}"
           - ""
           - "&aClick to switch the drop."
@@ -108,6 +110,7 @@ menu:
         lore:
           - " &6Chance: &e{CHANCE}%"
           - " &6Amount: &e{AMOUNT-MIN}&8-&e{AMOUNT-MAX}"
+          - " &6Experience: &e{EXPERIENCE}"
           - " &6Status: {SWITCH}"
           - ""
           - "&aClick to switch the drop."
@@ -124,6 +127,7 @@ menu:
         lore:
           - " &6Chance: &e{CHANCE}%"
           - " &6Amount: &e{AMOUNT-MIN}&8-&e{AMOUNT-MAX}"
+          - " &6Experience: &e{EXPERIENCE}"
           - " &6Status: {SWITCH}"
           - ""
           - "&aClick to switch the drop."
@@ -140,6 +144,7 @@ menu:
         lore:
           - " &6Chance: &e{CHANCE}%"
           - " &6Amount: &e{AMOUNT-MIN}&8-&e{AMOUNT-MAX}"
+          - " &6Experience: &e{EXPERIENCE}"
           - " &6Status: {SWITCH}"
           - ""
           - "&aClick to switch the drop."
