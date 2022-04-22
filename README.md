@@ -1,31 +1,42 @@
 # LovelyDrop
-LovelyDrop is a minecraft plugin that adds a drop system to a server.
-You can customize what items should be dropped by specifying properties such as
-chance, minimum and maximum possible amount, meta (display name and lore),
-source block (from which block it should drop from), experience that a player should be given
-and of course the type of item to drop itself. Besides, the whole drop menu is also
-configurable, you can add items that should perform specific actions when clicked, 
-the most important one is the drop-switch which will turn on/off the specific drop for the player
-that clicks it.
+LovelyDrop is a minecraft plugin that adds a drop system to a server. You can customize what items should be dropped by specifying various properties. Besides, the whole drop menu is also configurable, you can add items that should perform specific actions when clicked and you can name them as you want.
 
 ![1](img/menu-preview.png)
+## Features
+- The fully customizable GUI with items that can perform few actions when clicked
+  - Set title and rows for menu
+  - Set display name and lore for menu item with 5 available placeholders
+    - **{CHANCE}** - a chance of the item to drop
+    - **{AMOUNT-MIN}** - a minimum amount of the item that could drop
+    - **{AMOUNT-MAX}** - a maximum amount of the item that could drop
+    - **{EXPERIENCE}** - an experience that will be given to the player
+    - **{SWITCH}** - text that will be shown depending on the drop switch status
+  - Set action that item should perform after being clicked
+    - **NONE** - item will not do any action
+    - **CLOSE_MENU** - menu will be closed
+    - **SWITCH_DROP** - drop assigned to this menu item will be turned on/off
+- The configurable drop section
+  - Adding as many items as you want
+  - Set **display name and lore** of the dropped item (optional)
+  - Set **chance** of the drop
+  - Set **experience** that should be given to the player
+  - Set **amount** of possible items of the drop
 ## Configuration
 The whole configuration of the plugin is explained in this
 [default configuration file](https://github.com/zrdzn/LovelyDrop/blob/master/plugin/src/main/resources/config.yml).
-## Setup
-The plugin is generally good to go after being uploaded to the server, there is no need to 
-set a database or something like that because it does not rely on any.
-
-If you made any changes to the configuration file, you can use the `/ldp reload` command
-to reload your plugin - it requires the `lovelydrop.reload` permission.
-
-To open the drop menu, you need to execute the `/drop` command - it requires the `lovelydrop.menu.open`
-permission (it is given by default).
+## Commands and permissions
+| Command | Permission | Description                                                                                 |
+| ----------------|---------------|----------------------------------------------------------------------------------|
+| /drop | lovelydrop.menu.open | a main command - shows the drop menu                                                  |
+| /ldp reload | lovelydrop.reload | reloads the whole plugin including configuration                                 |
 
 ## Requirements
 The plugin runs on the spigot servers and its forks. At the moment it has not been tested on any version other than 1.18.2,
-so it may not work on older ones.
+so it may not work on older ones. **The plugin requires Java 8 and higher**. 
 
-## Download
-Before downloading the plugin, read the [requirements](#requirements) first. You can find the latest version
-in the [releases](https://github.com/zrdzn/LovelyDrop/releases) tab.
+## How to download
+1. Read the [requirements](#requirements)
+2. Download .jar from the [releases](https://github.com/zrdzn/LovelyDrop/releases) tab
+3. Place .jar in the `plugins` directory
+4. Start your server
+5. Configure the plugin if you want
