@@ -73,11 +73,16 @@ public class MenuParser {
 
         Entry<String, String> dropSwitch = new AbstractMap.SimpleEntry<>(dropSwitchEnabled, dropSwitchDisabled);
 
+        String amountSingular = LovelyDropPlugin.color(section.getString("amount-format.singular", "&e{SWITCH}"));
+        String amountPlural = LovelyDropPlugin.color(section.getString("amount-format.plural", "&e{AMOUNT-MIN}&8-&e{AMOUNT-MAX}"));
+
+        Entry<String, String> amountFormat = new AbstractMap.SimpleEntry<>(amountSingular, amountPlural);
+
         MenuItemParser menuItemParser = new MenuItemParser(this.logger, this.itemCache);
 
         List<MenuItem> menuItems = menuItemParser.parseMany(section.getConfigurationSection("items"));
 
-        return new Menu(title, rows, filler, dropSwitch, menuItems);
+        return new Menu(title, rows, filler, dropSwitch, amountFormat, menuItems);
     }
 
 }

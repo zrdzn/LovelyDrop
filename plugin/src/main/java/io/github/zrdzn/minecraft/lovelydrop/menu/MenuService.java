@@ -26,6 +26,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -76,17 +77,37 @@ public class MenuService {
             }
 
             Entry<Integer, Integer> amount = dropItem.getAmount();
+            String minimumAmount = String.valueOf(amount.getKey());
+            String maximumAmount = String.valueOf(amount.getValue());
+
+            Entry<String, String> amountFormat = this.menu.getAmountFormat();
+
+            List<String> lore = item.getLore().stream()
+                .map(line -> {
+                    String finalAmount;
+                    if (minimumAmount.equals(maximumAmount)) {
+                        finalAmount = amountFormat.getKey()
+                            .replace("{AMOUNT}", minimumAmount);
+                    } else {
+                        finalAmount = amountFormat.getValue()
+                            .replace("{AMOUNT-MIN}", minimumAmount)
+                            .replace("{AMOUNT-MAX}", String.valueOf(maximumAmount));
+                    }
+
+                    return line
+                        .replace("{CHANCE}", String.valueOf(dropItem.getChance()))
+                        .replace("{AMOUNT}", finalAmount)
+                        .replace("{EXPERIENCE}", String.valueOf(dropItem.getExperience()));
+                })
+                .collect(Collectors.toList());
 
             Entry<String, String> dropSwitch = this.menu.getDropSwitch();
 
             GuiItem menuItem = ItemBuilder.from(item.getType())
                 .setName(item.getDisplayName())
-                .setLore(item.getLore().stream()
-                    .map(line -> line.replace("{CHANCE}", String.valueOf(dropItem.getChance()))
-                        .replace("{AMOUNT-MIN}", String.valueOf(amount.getKey()))
-                        .replace("{AMOUNT-MAX}", String.valueOf(amount.getValue()))
-                        .replace("{EXPERIENCE}", String.valueOf(dropItem.getExperience()))
-                        .replace("{SWITCH}", !user.hasDisabledDrop(dropItem) ? dropSwitch.getKey() : dropSwitch.getValue()))
+                .setLore(lore.stream()
+                    .map(line -> line.replace("{SWITCH}",
+                        !user.hasDisabledDrop(dropItem) ? dropSwitch.getKey() : dropSwitch.getValue()))
                     .collect(Collectors.toList()))
                 .asGuiItem();
 
@@ -102,12 +123,9 @@ public class MenuService {
                 }
 
                 ItemStack actionItem = ItemBuilder.from(menuItem.getItemStack())
-                    .setLore(item.getLore().stream()
-                        .map(line -> line.replace("{CHANCE}", String.valueOf(dropItem.getChance()))
-                            .replace("{AMOUNT-MIN}", String.valueOf(amount.getKey()))
-                            .replace("{AMOUNT-MAX}", String.valueOf(amount.getValue()))
-                            .replace("{EXPERIENCE}", String.valueOf(dropItem.getExperience()))
-                            .replace("{SWITCH}", !user.hasDisabledDrop(dropItem) ? dropSwitch.getKey() : dropSwitch.getValue()))
+                    .setLore(lore.stream()
+                        .map(line -> line.replace("{SWITCH}",
+                            !user.hasDisabledDrop(dropItem) ? dropSwitch.getKey() : dropSwitch.getValue()))
                         .collect(Collectors.toList()))
                     .build();
 
