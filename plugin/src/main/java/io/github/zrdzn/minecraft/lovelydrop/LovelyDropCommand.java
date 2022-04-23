@@ -20,7 +20,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
-public class LovelyDropCommand implements CommandExecutor {
+class LovelyDropCommand implements CommandExecutor {
 
     private final MessageParser messageParser;
     private final LovelyDropPlugin plugin;
