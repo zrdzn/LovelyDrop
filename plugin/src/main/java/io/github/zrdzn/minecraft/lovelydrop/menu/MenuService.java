@@ -45,6 +45,7 @@ public class MenuService {
     }
 
     public boolean open(Player player) {
+        // Try getting user from the cache.
         Optional<User> userMaybe = this.userCache.getUser(player.getUniqueId());
         if (!userMaybe.isPresent()) {
             this.logger.severe("User " + player.getName() + " is not added to cached users.");
@@ -55,6 +56,7 @@ public class MenuService {
 
         Gui menu = new Gui(this.menu.getRows(), this.menu.getTitle(), InteractionModifier.VALUES);
 
+        // Forbid the player from getting the item from the inventory.
         menu.setDefaultClickAction(event -> event.setCancelled(true));
 
         this.menu.getItems().forEach(item -> {
@@ -62,6 +64,7 @@ public class MenuService {
             int row = slot.getKey();
             int column = slot.getValue();
 
+            // Set item that does not have drop item assigned to it.
             Item dropItem = item.getDropItem();
             if (dropItem == null) {
                 menu.setItem(row, column, ItemBuilder.from(item.getType())
@@ -82,6 +85,7 @@ public class MenuService {
 
             Entry<String, String> amountFormat = this.menu.getAmountFormat();
 
+            // Set lore depending on the amount setting.
             List<String> lore = item.getLore().stream()
                 .map(line -> {
                     String finalAmount;
@@ -111,6 +115,7 @@ public class MenuService {
                     .collect(Collectors.toList()))
                 .asGuiItem();
 
+            // Perform specific actions when player clicks the item.
             menuItem.setAction(event -> {
                 if (item.getAction() == MenuAction.CLOSE_MENU) {
                     menu.close(player, true);
@@ -135,7 +140,7 @@ public class MenuService {
             menu.setItem(row, column, menuItem);
         });
 
-
+        // Fill the rest inventory with the specified item if enabled.
         MenuFiller filler = this.menu.getFiller();
         if (filler.isEnabled()) {
             ItemStack fillerItem = new ItemStack(filler.getType());

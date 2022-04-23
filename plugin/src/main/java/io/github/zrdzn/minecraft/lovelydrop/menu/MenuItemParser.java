@@ -81,6 +81,7 @@ public class MenuItemParser {
 
         List<MenuItem> items = new ArrayList<>();
 
+        // Add each item section to items list.
         section.getKeys(false).forEach(key -> {
             try {
                 items.add(this.parse(section.getConfigurationSection(key)));

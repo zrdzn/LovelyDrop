@@ -52,11 +52,13 @@ public class DropListener implements Listener {
 
         Material source = event.getBlock().getType();
 
+        // Get optional drops from source blocks.
         Set<Item> sourceDrops = this.itemCache.getDrops(source);
         if (sourceDrops.isEmpty()) {
             return;
         }
 
+        // Get user from the cache.
         Optional<User> userMaybe = this.userCache.getUser(player.getUniqueId());
         if (!userMaybe.isPresent()) {
             this.logger.severe("User " + player.getName() + " is not added to cached users.");
@@ -67,6 +69,7 @@ public class DropListener implements Listener {
 
         User user = userMaybe.get();
 
+        // Remove all disabled drops from the source drops list.
         sourceDrops.removeIf(sourceDrop -> user.getDisabledDrops().contains(sourceDrop));
 
         ThreadLocalRandom random = ThreadLocalRandom.current();
@@ -97,6 +100,7 @@ public class DropListener implements Listener {
 
             Map<Integer, ItemStack> itemsLeft = player.getInventory().addItem(droppedItem);
 
+            // Drop items on the floor if player has full inventory.
             itemsLeft.forEach((key, value) ->
                 player.getWorld().dropItemNaturally(player.getEyeLocation(), value));
         });

@@ -36,6 +36,7 @@ public class DropCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label,
                              String[] args) {
+        // Check if sender is console.
         if (!(sender instanceof Player)) {
             sender.sendMessage(this.messageParser.getExecutedAsConsole());
             return true;
@@ -48,6 +49,7 @@ public class DropCommand implements CommandExecutor {
             return true;
         }
 
+        // Try to open the inventory.
         if (!this.menuService.open(player)) {
             player.sendMessage(this.messageParser.getMenuOpenError());
             return true;
