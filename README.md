@@ -1,5 +1,5 @@
 # LovelyDrop
-LovelyDrop is a minecraft plugin that adds a drop system to a server. You can customize what items should be dropped by specifying various properties. Besides, the whole drop menu is also configurable, you can add items that should perform specific actions when clicked and you can name them as you want.
+LovelyDrop is a minecraft plugin that adds a drop system to a server. You can customize what items should be dropped by specifying various properties. Besides, the whole drop menu is also configurable, you can add items that should perform specific actions when clicked, and you can name them as you want.
 
 ![1](img/menu-preview.png)
 ## Features
@@ -18,7 +18,7 @@ LovelyDrop is a minecraft plugin that adds a drop system to a server. You can cu
     - **ALL** - action will be performed on any type of the click
     - **LEFT** - action will be performed on left click
     - **RIGHT** - action will be performed on right click
-    - Whole list of the click types is [here](https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/event/inventory/ClickType.html)!
+    - Whole list of click types is [here](https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/event/inventory/ClickType.html)!
 - The configurable drop section
   - Adding as many items as you want
   - Set **display name and lore** of the dropped item (optional)
