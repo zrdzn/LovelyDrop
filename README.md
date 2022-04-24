@@ -14,6 +14,11 @@ LovelyDrop is a minecraft plugin that adds a drop system to a server. You can cu
     - **NONE** - item will not do any action
     - **CLOSE_MENU** - menu will be closed
     - **SWITCH_DROP** - drop assigned to this menu item will be turned on/off
+  - Set click types when to perform the specified action
+    - **ALL** - action will be performed on any type of the click
+    - **LEFT** - action will be performed on left click
+    - **RIGHT** - action will be performed on right click
+    - Whole list of the click types is [here](https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/event/inventory/ClickType.html)!
 - The configurable drop section
   - Adding as many items as you want
   - Set **display name and lore** of the dropped item (optional)

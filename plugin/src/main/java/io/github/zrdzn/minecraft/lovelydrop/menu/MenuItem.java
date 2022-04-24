@@ -17,8 +17,10 @@ package io.github.zrdzn.minecraft.lovelydrop.menu;
 
 import io.github.zrdzn.minecraft.lovelydrop.item.Item;
 import org.bukkit.Material;
+import org.bukkit.event.inventory.ClickType;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
 public class MenuItem {
@@ -26,11 +28,11 @@ public class MenuItem {
     private final Material type;
     private final String displayName;
     private final List<String> lore;
-    private final MenuAction action;
+    private final Map<ClickType, MenuAction> action;
     private final Entry<Integer, Integer> slot;
     private final Item dropItem;
 
-    public MenuItem(Material type, String displayName, List<String> lore, MenuAction action,
+    public MenuItem(Material type, String displayName, List<String> lore, Map<ClickType, MenuAction> action,
                     Entry<Integer, Integer> slot, Item dropItem) {
         this.type = type;
         this.displayName = displayName;
@@ -52,7 +54,7 @@ public class MenuItem {
         return this.lore;
     }
 
-    public MenuAction getAction() {
+    public Map<ClickType, MenuAction> getAction() {
         return this.action;
     }
 

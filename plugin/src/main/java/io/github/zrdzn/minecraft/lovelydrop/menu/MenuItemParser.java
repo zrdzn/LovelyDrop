@@ -20,10 +20,13 @@ import io.github.zrdzn.minecraft.lovelydrop.item.ItemCache;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.event.inventory.ClickType;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Logger;
 
@@ -56,7 +59,34 @@ public class MenuItemParser {
 
         List<String> itemLore = LovelyDropPlugin.color(section.getStringList("meta.lore"));
 
-        MenuAction action = MenuAction.valueOf(section.getString("action"));
+        ConfigurationSection actionSection = section.getConfigurationSection("click-action");
+        if (actionSection == null) {
+            throw new InvalidConfigurationException("Section 'click-action' does not exist.");
+        }
+
+        Map<ClickType, MenuAction> actions = new HashMap<>();
+
+        // Parsing action section.
+        for (String clickType : actionSection.getKeys(false)) {
+            String actionRaw = actionSection.getString(clickType);
+
+            MenuAction action;
+            try {
+                action = MenuAction.valueOf(actionRaw);
+            } catch (IllegalArgumentException exception) {
+                action = MenuAction.NONE;
+            }
+
+            try {
+                actions.put(ClickType.valueOf(clickType), action);
+            } catch (IllegalArgumentException exception) {
+                actions.put(ClickType.UNKNOWN, action);
+            }
+        }
+
+        if (actions.size() == 0) {
+            throw new InvalidConfigurationException("Action map is empty, check your configuration in action section.");
+        }
 
         int slotRow = section.getInt("slot.row");
         int slotColumn = section.getInt("slot.column");
@@ -67,7 +97,7 @@ public class MenuItemParser {
 
         Entry<Integer, Integer> slot = new AbstractMap.SimpleEntry<>(slotRow, slotColumn);
 
-        return new MenuItem(type, itemName, itemLore, action, slot, this.itemCache.getDrop(section.getName()).orElse(null));
+        return new MenuItem(type, itemName, itemLore, actions, slot, this.itemCache.getDrop(section.getName()).orElse(null));
     }
 
     public List<MenuItem> parseMany(ConfigurationSection section) throws InvalidConfigurationException {

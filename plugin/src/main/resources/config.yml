@@ -45,11 +45,18 @@ menu:
   # CLOSE_MENU   - it will close the menu;
   # SWITCH_DROP  - it will switch drop on/off (id of the item here must equal to the id in the 'drops' section
   #              to make this work, otherwise it will not recognise the drop that it should switch on/off).
+  #
+  # click-action section contains key, value fields where the key is the specified field in the
+  # https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/event/inventory/ClickType.html. If you want to perform an action
+  # on any click, you can just put ALL as shown below. Value is the action described above.
+  #
   # Whole structure explanation:
   #
   #    close:                                  - id of the menu item;
   #      type: barrier                         - type of the menu item;
-  #      action: CLOSE_MENU                    - action that should be performed after clicking on the menu item;
+  #      click-action:
+  #        ALL: CLOSE_MENU                    - action that should be performed after clicking on the menu item with
+  #                                           any combination;
   #
   #      slot:
   #        row: 4                              - row in the menu where the menu item should be
@@ -69,7 +76,9 @@ menu:
   items:
     close:
       type: barrier
-      action: CLOSE_MENU
+
+      click-action:
+        ALL: CLOSE_MENU
 
       slot:
         row: 4
@@ -81,7 +90,10 @@ menu:
           - "&7Click to close the menu."
     gold:
       type: gold_ingot
-      action: SWITCH_DROP
+
+      click-action:
+        LEFT: SWITCH_DROP
+        RIGHT: CLOSE_MENU
 
       slot:
         row: 2
@@ -98,7 +110,10 @@ menu:
           - "&aClick to switch the drop."
     diamond:
       type: diamond
-      action: SWITCH_DROP
+
+      click-action:
+        LEFT: SWITCH_DROP
+        RIGHT: CLOSE_MENU
 
       slot:
         row: 2
@@ -115,7 +130,10 @@ menu:
           - "&aClick to switch the drop."
     tnt:
       type: tnt
-      action: SWITCH_DROP
+
+      click-action:
+        LEFT: SWITCH_DROP
+        RIGHT: CLOSE_MENU
 
       slot:
         row: 2
@@ -132,7 +150,10 @@ menu:
           - "&aClick to switch the drop."
     emerald:
       type: emerald
-      action: SWITCH_DROP
+
+      click-action:
+        LEFT: SWITCH_DROP
+        RIGHT: CLOSE_MENU
 
       slot:
         row: 2
@@ -149,7 +170,10 @@ menu:
           - "&aClick to switch the drop."
     obsidian:
       type: obsidian
-      action: SWITCH_DROP
+
+      click-action:
+        LEFT: SWITCH_DROP
+        RIGHT: CLOSE_MENU
 
       slot:
         row: 2

@@ -23,10 +23,12 @@ import io.github.zrdzn.minecraft.lovelydrop.item.Item;
 import io.github.zrdzn.minecraft.lovelydrop.user.User;
 import io.github.zrdzn.minecraft.lovelydrop.user.UserCache;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -64,6 +66,9 @@ public class MenuService {
             int row = slot.getKey();
             int column = slot.getValue();
 
+            // Action map cannot be empty because of the exception thrown in the parsing method.
+            Map<ClickType, MenuAction> actions = item.getAction();
+
             // Set item that does not have drop item assigned to it.
             Item dropItem = item.getDropItem();
             if (dropItem == null) {
@@ -71,7 +76,17 @@ public class MenuService {
                     .setName(item.getDisplayName())
                     .setLore(item.getLore())
                     .asGuiItem(event -> {
-                        if (item.getAction() == MenuAction.CLOSE_MENU) {
+                        if (!actions.containsKey(ClickType.UNKNOWN)) {
+                            ClickType click = event.getClick();
+
+                            if (actions.containsKey(click) && actions.get(click) == MenuAction.CLOSE_MENU) {
+                                menu.close(player, true);
+                            }
+
+                            return;
+                        }
+
+                        if (actions.get(ClickType.UNKNOWN) == MenuAction.CLOSE_MENU) {
                             menu.close(player, true);
                         }
                     }));
@@ -117,13 +132,33 @@ public class MenuService {
 
             // Perform specific actions when player clicks the item.
             menuItem.setAction(event -> {
-                if (item.getAction() == MenuAction.CLOSE_MENU) {
-                    menu.close(player, true);
-                } else if (item.getAction() == MenuAction.SWITCH_DROP) {
-                    if (user.hasDisabledDrop(dropItem)) {
-                        user.enableDrop(dropItem);
-                    } else {
-                        user.disableDrop(dropItem);
+                if (!actions.containsKey(ClickType.UNKNOWN)) {
+                    ClickType click = event.getClick();
+
+                    if (actions.containsKey(click)) {
+                        MenuAction action = actions.get(click);
+                        if (action == MenuAction.CLOSE_MENU) {
+                            menu.close(player, true);
+                            return;
+                        } else if (action == MenuAction.SWITCH_DROP) {
+                            if (user.hasDisabledDrop(dropItem)) {
+                                user.enableDrop(dropItem);
+                            } else {
+                                user.disableDrop(dropItem);
+                            }
+                        }
+                    }
+                } else {
+                    MenuAction action = actions.get(ClickType.UNKNOWN);
+                    if (action == MenuAction.CLOSE_MENU) {
+                        menu.close(player, true);
+                        return;
+                    } else if (action == MenuAction.SWITCH_DROP) {
+                        if (user.hasDisabledDrop(dropItem)) {
+                            user.enableDrop(dropItem);
+                        } else {
+                            user.disableDrop(dropItem);
+                        }
                     }
                 }
 
