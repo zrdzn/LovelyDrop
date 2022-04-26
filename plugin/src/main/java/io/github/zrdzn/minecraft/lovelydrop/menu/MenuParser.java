@@ -73,7 +73,7 @@ public class MenuParser {
 
         Entry<String, String> dropSwitch = new AbstractMap.SimpleEntry<>(dropSwitchEnabled, dropSwitchDisabled);
 
-        String amountSingular = LovelyDropPlugin.color(section.getString("amount-format.singular", "&e{SWITCH}"));
+        String amountSingular = LovelyDropPlugin.color(section.getString("amount-format.singular", "&e{AMOUNT}"));
         String amountPlural = LovelyDropPlugin.color(section.getString("amount-format.plural", "&e{AMOUNT-MIN}&8-&e{AMOUNT-MAX}"));
 
         Entry<String, String> amountFormat = new AbstractMap.SimpleEntry<>(amountSingular, amountPlural);
