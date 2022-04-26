@@ -32,10 +32,6 @@ public class ItemCache {
         this.drops.computeIfAbsent(item.getSource(), key -> new HashSet<>()).add(item);
     }
 
-    public void removeDrops(Material source) {
-        this.drops.remove(source);
-    }
-
     public Optional<Item> getDrop(String dropId) {
         for (Set<Item> dropItems : this.drops.values()) {
             for (Item dropItem : dropItems) {

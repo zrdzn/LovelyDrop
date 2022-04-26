@@ -15,7 +15,6 @@
  */
 package io.github.zrdzn.minecraft.lovelydrop.user;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -35,10 +34,6 @@ public class UserCache {
 
     public Optional<User> getUser(UUID id) {
         return Optional.ofNullable(this.users.get(id));
-    }
-
-    public Map<UUID, User> getUsers() {
-        return Collections.unmodifiableMap(this.users);
     }
 
 }
