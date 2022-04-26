@@ -88,13 +88,9 @@ public class DropListener implements Listener {
             player.giveExp(item.getExperience());
 
             Entry<Integer, Integer> amountEntry = item.getAmount();
-            int minimumAmount = amountEntry.getKey();
-            int maximumAmount = amountEntry.getValue();
 
-            int amount;
-            if (minimumAmount == maximumAmount) {
-                amount = minimumAmount;
-            } else {
+            int amount = amountEntry.getKey();
+            if (amount != amountEntry.getValue()) {
                 amount = random.nextInt(item.getAmount().getKey(), item.getAmount().getValue());
             }
 
