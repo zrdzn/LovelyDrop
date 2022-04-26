@@ -30,6 +30,15 @@ menu:
     disabled: "&coff"
 
 
+  # Text placeholder which stands for {SWITCH_INVENTORY} that can be used in items section.
+  inventory-drop-switch:
+    # Used when the drop to inventory is switched on for the player.
+    enabled: "&eon"
+
+    # Used when the drop to inventory is switched off for the player.
+    disabled: "&coff"
+
+
   # Text placeholder which stands for {AMOUNT} that could be used in items section.
   amount-format:
     # Used when the drop's amount is one number.
@@ -41,10 +50,11 @@ menu:
 
   # All items that will appear in the menu. There are 3 available types of items in the menu.
   # They are based on the action that they do when they are clicked. Actions:
-  # NONE         - it will not do anything;
-  # CLOSE_MENU   - it will close the menu;
-  # SWITCH_DROP  - it will switch drop on/off (id of the item here must equal to the id in the 'drops' section
-  #              to make this work, otherwise it will not recognise the drop that it should switch on/off).
+  # NONE                      - it will not do anything;
+  # CLOSE_MENU                - it will close the menu;
+  # SWITCH_DROP               - it will switch drop on/off (id of the item here must equal to the id in the 'drops' section
+  #                           to make this work, otherwise it will not recognise the drop that it should switch on/off);
+  # SWITCH_DROP_TO_INVENTORY  - it will switch whether to drop the item to the inventory or on the floor
   #
   # click-action section contains key, value fields where the key is the specified field in the
   # https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/event/inventory/ClickType.html. If you want to perform an action
@@ -68,11 +78,12 @@ menu:
   #          - "&7Click to close the menu."
   #
   # Available placeholders:
-  # {CHANCE}      - a chance of the item to drop;
-  # {AMOUNT}      - a formatted text that will display amount/s of the drop, it can be configured
-  #               in the amount-format section;
-  # {EXPERIENCE}  - an experience that will be given to the player on the successful drop;
-  # {SWITCH}      - text that will be shown depending on the drop switch status
+  # {CHANCE}            - a chance of the item to drop;
+  # {AMOUNT}            - a formatted text that will display amount/s of the drop, it can be configured
+  #                     in the amount-format section;
+  # {EXPERIENCE}        - an experience that will be given to the player on the successful drop;
+  # {SWITCH}            - text that will be shown depending on the drop switch status;
+  # {SWITCH_INVENTORY}  - text that will be shown depending on the inventory drop switch status
   items:
     close:
       type: barrier
@@ -93,7 +104,7 @@ menu:
 
       click-action:
         LEFT: SWITCH_DROP
-        RIGHT: CLOSE_MENU
+        RIGHT: SWITCH_DROP_TO_INVENTORY
 
       slot:
         row: 2
@@ -106,14 +117,18 @@ menu:
           - " &6Amount: {AMOUNT}"
           - " &6Experience: &e{EXPERIENCE}"
           - " &6Status: {SWITCH}"
+          - " &6To inventory: {SWITCH_INVENTORY}"
           - ""
-          - "&aClick to switch the drop."
+          - "&8-------------------------------------"
+          - " &aLeft click to switch the drop."
+          - " &eRight click to switch the inventory drop."
+          - "&8-------------------------------------"
     diamond:
       type: diamond
 
       click-action:
         LEFT: SWITCH_DROP
-        RIGHT: CLOSE_MENU
+        RIGHT: SWITCH_DROP_TO_INVENTORY
 
       slot:
         row: 2
@@ -126,14 +141,18 @@ menu:
           - " &6Amount: {AMOUNT}"
           - " &6Experience: &e{EXPERIENCE}"
           - " &6Status: {SWITCH}"
+          - " &6To inventory: {SWITCH_INVENTORY}"
           - ""
-          - "&aClick to switch the drop."
+          - "&8-------------------------------------"
+          - " &aLeft click to switch the drop."
+          - " &eRight click to switch the inventory drop."
+          - "&8-------------------------------------"
     tnt:
       type: tnt
 
       click-action:
         LEFT: SWITCH_DROP
-        RIGHT: CLOSE_MENU
+        RIGHT: SWITCH_DROP_TO_INVENTORY
 
       slot:
         row: 2
@@ -146,14 +165,18 @@ menu:
           - " &6Amount: {AMOUNT}"
           - " &6Experience: &e{EXPERIENCE}"
           - " &6Status: {SWITCH}"
+          - " &6To inventory: {SWITCH_INVENTORY}"
           - ""
-          - "&aClick to switch the drop."
+          - "&8-------------------------------------"
+          - " &aLeft click to switch the drop."
+          - " &eRight click to switch the inventory drop."
+          - "&8-------------------------------------"
     emerald:
       type: emerald
 
       click-action:
         LEFT: SWITCH_DROP
-        RIGHT: CLOSE_MENU
+        RIGHT: SWITCH_DROP_TO_INVENTORY
 
       slot:
         row: 2
@@ -166,14 +189,18 @@ menu:
           - " &6Amount: {AMOUNT}"
           - " &6Experience: &e{EXPERIENCE}"
           - " &6Status: {SWITCH}"
+          - " &6To inventory: {SWITCH_INVENTORY}"
           - ""
-          - "&aClick to switch the drop."
+          - "&8-------------------------------------"
+          - " &aLeft click to switch the drop."
+          - " &eRight click to switch the inventory drop."
+          - "&8-------------------------------------"
     obsidian:
       type: obsidian
 
       click-action:
         LEFT: SWITCH_DROP
-        RIGHT: CLOSE_MENU
+        RIGHT: SWITCH_DROP_TO_INVENTORY
 
       slot:
         row: 2
@@ -186,8 +213,12 @@ menu:
           - " &6Amount: {AMOUNT}"
           - " &6Experience: &e{EXPERIENCE}"
           - " &6Status: {SWITCH}"
+          - " &6To inventory: {SWITCH_INVENTORY}"
           - ""
-          - "&aClick to switch the drop."
+          - "&8-------------------------------------"
+          - " &aLeft click to switch the drop."
+          - " &eRight click to switch the inventory drop."
+          - "&8-------------------------------------"
 
 
 

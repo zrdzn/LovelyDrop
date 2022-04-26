@@ -19,7 +19,10 @@ import io.github.zrdzn.minecraft.lovelydrop.item.Item;
 import io.github.zrdzn.minecraft.lovelydrop.item.ItemCache;
 import io.github.zrdzn.minecraft.lovelydrop.user.User;
 import io.github.zrdzn.minecraft.lovelydrop.user.UserCache;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -50,7 +53,9 @@ public class DropListener implements Listener {
     public void onSourceBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
 
-        Material source = event.getBlock().getType();
+        Block block = event.getBlock();
+
+        Material source = block.getType();
 
         // Get optional drops from source blocks.
         Set<Item> sourceDrops = this.itemCache.getDrops(source);
@@ -98,11 +103,21 @@ public class DropListener implements Listener {
             droppedItemMeta.setLore(item.getLore());
             droppedItem.setItemMeta(droppedItemMeta);
 
-            Map<Integer, ItemStack> itemsLeft = player.getInventory().addItem(droppedItem);
+            World world = player.getWorld();
 
-            // Drop items on the floor if player has full inventory.
-            itemsLeft.forEach((key, value) ->
-                player.getWorld().dropItemNaturally(player.getEyeLocation(), value));
+            Location location = block.getLocation();
+
+            if (user.hasSwitchedInventoryDrop(item.getId())) {
+                Map<Integer, ItemStack> itemsLeft = player.getInventory().addItem(droppedItem);
+
+                // Drop items on the floor if player has full inventory.
+                itemsLeft.forEach((key, value) ->
+                    world.dropItemNaturally(location, value));
+
+                return;
+            }
+
+            world.dropItemNaturally(location, droppedItem);
         });
     }
 

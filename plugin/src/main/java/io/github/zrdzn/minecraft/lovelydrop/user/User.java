@@ -17,6 +17,9 @@ package io.github.zrdzn.minecraft.lovelydrop.user;
 
 import io.github.zrdzn.minecraft.lovelydrop.item.Item;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -24,10 +27,12 @@ public class User {
 
     private final UUID id;
     private final Set<Item> disabledDrops;
+    private final Map<Item, Boolean> inventoryDrops;
 
-    public User(UUID id, Set<Item> disabledDrops) {
+    public User(UUID id) {
         this.id = id;
-        this.disabledDrops = disabledDrops;
+        this.disabledDrops = new HashSet<>();
+        this.inventoryDrops = new HashMap<>();
     }
 
     public UUID getId() {
@@ -48,6 +53,29 @@ public class User {
 
     public Set<Item> getDisabledDrops() {
         return this.disabledDrops;
+    }
+
+    public void addInventoryDrop(Item item, boolean initialValue) {
+        this.inventoryDrops.put(item, initialValue);
+    }
+
+    public void switchInventoryDrop(String itemId, boolean newValue) throws IllegalArgumentException {
+        Item item = this.inventoryDrops.keySet().stream()
+            .filter(key -> key.getId().equals(itemId))
+            .findAny()
+            .orElseThrow(() ->
+                new IllegalArgumentException(String.format("Drop with the specified item id does not exist (%s).", itemId)));
+
+        this.inventoryDrops.replace(item, newValue);
+    }
+
+    public boolean hasSwitchedInventoryDrop(String itemId) throws IllegalArgumentException {
+        return this.inventoryDrops.entrySet().stream()
+            .filter((entry) -> entry.getKey().getId().equals(itemId))
+            .findAny()
+            .orElseThrow(() ->
+                new IllegalArgumentException(String.format("Drop with the specified item id does not exist (%s).", itemId)))
+            .getValue();
     }
 
 }

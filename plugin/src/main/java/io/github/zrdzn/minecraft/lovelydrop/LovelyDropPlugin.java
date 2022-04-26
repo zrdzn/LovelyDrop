@@ -50,7 +50,7 @@ public class LovelyDropPlugin extends JavaPlugin {
 
         PluginManager pluginManager = this.getServer().getPluginManager();
 
-        pluginManager.registerEvents(new UserListener(this.userCache), this);
+        pluginManager.registerEvents(new UserListener(this.userCache, this.itemCache), this);
         pluginManager.registerEvents(new DropListener(this.logger, this.itemCache, this.userCache), this);
 
         MenuService menuService = new MenuService(this.logger, this.menu, this.userCache);

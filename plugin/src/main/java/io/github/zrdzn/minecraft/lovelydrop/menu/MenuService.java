@@ -121,17 +121,23 @@ public class MenuService {
                 .collect(Collectors.toList());
 
             Entry<String, String> dropSwitch = this.menu.getDropSwitch();
+            Entry<String, String> inventoryDropSwitch = this.menu.getInventoryDropSwitch();
 
             GuiItem menuItem = ItemBuilder.from(item.getType())
                 .setName(item.getDisplayName())
                 .setLore(lore.stream()
-                    .map(line -> line.replace("{SWITCH}",
-                        !user.hasDisabledDrop(dropItem) ? dropSwitch.getKey() : dropSwitch.getValue()))
+                    .map(line -> line
+                        .replace("{SWITCH}", !user.hasDisabledDrop(dropItem) ? dropSwitch.getKey() : dropSwitch.getValue())
+                        .replace("{SWITCH_INVENTORY}", user.hasSwitchedInventoryDrop(dropItem.getId()) ?
+                            inventoryDropSwitch.getKey() :
+                            inventoryDropSwitch.getValue()))
                     .collect(Collectors.toList()))
                 .asGuiItem();
 
             // Perform specific actions when player clicks the item.
             menuItem.setAction(event -> {
+                String itemId = dropItem.getId();
+
                 if (!actions.containsKey(ClickType.UNKNOWN)) {
                     ClickType click = event.getClick();
 
@@ -146,6 +152,8 @@ public class MenuService {
                             } else {
                                 user.disableDrop(dropItem);
                             }
+                        } else if (action == MenuAction.SWITCH_DROP_TO_INVENTORY) {
+                            user.switchInventoryDrop(itemId, !user.hasSwitchedInventoryDrop(itemId));
                         }
                     }
                 } else {
@@ -159,13 +167,18 @@ public class MenuService {
                         } else {
                             user.disableDrop(dropItem);
                         }
+                    } else if (action == MenuAction.SWITCH_DROP_TO_INVENTORY) {
+                        user.switchInventoryDrop(itemId, !user.hasSwitchedInventoryDrop(itemId));
                     }
                 }
 
                 ItemStack actionItem = ItemBuilder.from(menuItem.getItemStack())
                     .setLore(lore.stream()
-                        .map(line -> line.replace("{SWITCH}",
-                            !user.hasDisabledDrop(dropItem) ? dropSwitch.getKey() : dropSwitch.getValue()))
+                        .map(line -> line
+                            .replace("{SWITCH}", !user.hasDisabledDrop(dropItem) ? dropSwitch.getKey() : dropSwitch.getValue())
+                            .replace("{SWITCH_INVENTORY}", user.hasSwitchedInventoryDrop(dropItem.getId()) ?
+                                inventoryDropSwitch.getKey() :
+                                inventoryDropSwitch.getValue()))
                         .collect(Collectors.toList()))
                     .build();
 

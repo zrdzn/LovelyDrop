@@ -19,6 +19,7 @@ public enum MenuAction {
 
     CLOSE_MENU,
     SWITCH_DROP,
-    NONE
+    NONE,
+    SWITCH_DROP_TO_INVENTORY
 
 }
