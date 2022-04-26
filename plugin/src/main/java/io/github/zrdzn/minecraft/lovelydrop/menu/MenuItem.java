@@ -28,15 +28,17 @@ public class MenuItem {
     private final Material type;
     private final String displayName;
     private final List<String> lore;
+    private final boolean showEnchantments;
     private final Map<ClickType, MenuAction> action;
     private final Entry<Integer, Integer> slot;
     private final Item dropItem;
 
-    public MenuItem(Material type, String displayName, List<String> lore, Map<ClickType, MenuAction> action,
-                    Entry<Integer, Integer> slot, Item dropItem) {
+    public MenuItem(Material type, String displayName, List<String> lore, boolean showEnchantments,
+                    Map<ClickType, MenuAction> action, Entry<Integer, Integer> slot, Item dropItem) {
         this.type = type;
         this.displayName = displayName;
         this.lore = lore;
+        this.showEnchantments = showEnchantments;
         this.action = action;
         this.slot = slot;
         this.dropItem = dropItem;
@@ -52,6 +54,10 @@ public class MenuItem {
 
     public List<String> getLore() {
         return this.lore;
+    }
+
+    public boolean isShowEnchantments() {
+        return this.showEnchantments;
     }
 
     public Map<ClickType, MenuAction> getAction() {

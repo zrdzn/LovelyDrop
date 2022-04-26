@@ -16,8 +16,10 @@
 package io.github.zrdzn.minecraft.lovelydrop.item;
 
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
 public class Item {
@@ -30,9 +32,10 @@ public class Item {
     private final int experience;
     private final String displayName;
     private final List<String> lore;
+    private final Map<Enchantment, Integer> enchantments;
 
     public Item(String id, Material type, Material source, double chance, Entry<Integer, Integer> amount, int experience,
-                String displayName, List<String> lore) {
+                String displayName, List<String> lore, Map<Enchantment, Integer> enchantments) {
         this.id = id;
         this.type = type;
         this.source = source;
@@ -41,6 +44,7 @@ public class Item {
         this.experience = experience;
         this.displayName = displayName;
         this.lore = lore;
+        this.enchantments = enchantments;
     }
 
     public String getId() {
@@ -73,6 +77,10 @@ public class Item {
 
     public List<String> getLore() {
         return this.lore;
+    }
+
+    public Map<Enchantment, Integer> getEnchantments() {
+        return this.enchantments;
     }
 
 }

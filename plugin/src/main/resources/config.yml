@@ -76,6 +76,8 @@ menu:
   #        displayname: "&c&lClose"            - display name of the menu item;
   #        lore:                               - lore of the menu item;
   #          - "&7Click to close the menu."
+  #        show-enchantments: true             - whether to show the dropped item enchantments (only applicable if
+  #                                            it is assigned to a drop item)
   #
   # Available placeholders:
   # {CHANCE}            - a chance of the item to drop;
@@ -99,6 +101,31 @@ menu:
         displayname: "&c&lClose"
         lore:
           - "&7Click to close the menu."
+    diamond-sword:
+      type: diamond_sword
+
+      click-action:
+        LEFT: SWITCH_DROP
+        RIGHT: SWITCH_DROP_TO_INVENTORY
+
+      slot:
+        row: 1
+        column: 5
+
+      meta:
+        displayname: "&a&lEpic Sword"
+        lore:
+          - " &6Chance: &e{CHANCE}%"
+          - " &6Amount: {AMOUNT}"
+          - " &6Experience: &e{EXPERIENCE}"
+          - " &6Status: {SWITCH}"
+          - " &6To inventory: {SWITCH_INVENTORY}"
+          - ""
+          - "&8-------------------------------------"
+          - " &aLeft click to switch the drop."
+          - " &eRight click to switch the inventory drop."
+          - "&8-------------------------------------"
+        show-enchantments: true
     gold:
       type: gold_ingot
 
@@ -123,6 +150,7 @@ menu:
           - " &aLeft click to switch the drop."
           - " &eRight click to switch the inventory drop."
           - "&8-------------------------------------"
+        show-enchantments: true
     diamond:
       type: diamond
 
@@ -147,6 +175,7 @@ menu:
           - " &aLeft click to switch the drop."
           - " &eRight click to switch the inventory drop."
           - "&8-------------------------------------"
+        show-enchantments: true
     tnt:
       type: tnt
 
@@ -171,6 +200,7 @@ menu:
           - " &aLeft click to switch the drop."
           - " &eRight click to switch the inventory drop."
           - "&8-------------------------------------"
+        show-enchantments: true
     emerald:
       type: emerald
 
@@ -195,6 +225,7 @@ menu:
           - " &aLeft click to switch the drop."
           - " &eRight click to switch the inventory drop."
           - "&8-------------------------------------"
+        show-enchantments: true
     obsidian:
       type: obsidian
 
@@ -219,26 +250,46 @@ menu:
           - " &aLeft click to switch the drop."
           - " &eRight click to switch the inventory drop."
           - "&8-------------------------------------"
+        show-enchantments: true
 
 
 
 # All drops that will be available on the server.
 # Structure explanation below:
 #
-# gold:                      - id of the drop. IMPORTANT: it is used in menu (id in menu.items must equal to this id
-#                            if you want to use SWITCH_DROP action there);
-#   type: gold_ingot         - type of the drop;
-#   source: stone            - source block type from which 'type' should be dropped;
-#   chance: 60               - percentage chance of the drop;
-#   amount: 1-5              - minimum and maximum amount of the drop (if '-' is not found, it will use only first number);
-#   experience: 20           - experience given to the player when he has successfull drop;
+# gold:                                 - id of the drop. IMPORTANT: it is used in menu (id in menu.items must equal to this id
+#                                       if you want to use SWITCH_DROP action there);
+#   type: diamond_sword                 - type of the drop;
+#   source: stone                       - source block type from which 'type' should be dropped;
+#   chance: 20                          - percentage chance of the drop;
+#   amount: 1-2                         - minimum and maximum amount of the drop (if '-' is not found, it will use only first number);
+#   experience: 175                     - experience given to the player when he has successful drop;
 #   meta:
-#     displayname: "&6Gold"  - display name of the drop;
-#     lore:                  - lore of the drop
-#       - "&7Dropped gold"
+#     displayname: "&a&lEpic Sword"     - display name of the drop;
+#     lore:                             - lore of the drop;
+#       - "&6Legendary diamond sword."
+#     enchantments:                     - enchantments of the drop, word before ':' is enchantment name, and after it is the level,
+#                                       they MUST BE lowercase
+#       - "sharpness:5"
+#       - "unbreaking:3"
+#       - "looting:3"
 #
 # NOTE: 'meta' section is optional, you can remove it to have original/vanilla items.
 drops:
+  diamond-sword:
+    type: diamond_sword
+    source: stone
+    chance: 20
+    amount: 1-2
+    experience: 175
+    meta:
+      displayname: "&a&lEpic Sword"
+      lore:
+        - "&6Legendary diamond sword."
+      enchantments:
+        - "sharpness:5"
+        - "unbreaking:3"
+        - "looting:3"
   gold:
     type: gold_ingot
     source: stone

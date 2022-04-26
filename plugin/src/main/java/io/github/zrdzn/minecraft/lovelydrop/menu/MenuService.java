@@ -123,7 +123,7 @@ public class MenuService {
             Entry<String, String> dropSwitch = this.menu.getDropSwitch();
             Entry<String, String> inventoryDropSwitch = this.menu.getInventoryDropSwitch();
 
-            GuiItem menuItem = ItemBuilder.from(item.getType())
+            ItemBuilder menuItemBuilder = ItemBuilder.from(item.getType())
                 .setName(item.getDisplayName())
                 .setLore(lore.stream()
                     .map(line -> line
@@ -131,8 +131,14 @@ public class MenuService {
                         .replace("{SWITCH_INVENTORY}", user.hasSwitchedInventoryDrop(dropItem.getId()) ?
                             inventoryDropSwitch.getKey() :
                             inventoryDropSwitch.getValue()))
-                    .collect(Collectors.toList()))
-                .asGuiItem();
+                    .collect(Collectors.toList()));
+
+            // Add enchantments if they should be shown.
+            if (item.isShowEnchantments()) {
+                dropItem.getEnchantments().forEach((enchantment, level) -> menuItemBuilder.enchant(enchantment, level, true));
+            }
+
+            GuiItem menuItem = menuItemBuilder.asGuiItem();
 
             // Perform specific actions when player clicks the item.
             menuItem.setAction(event -> {

@@ -59,6 +59,8 @@ public class MenuItemParser {
 
         List<String> itemLore = LovelyDropPlugin.color(section.getStringList("meta.lore"));
 
+        boolean showEnchantments = section.getBoolean("meta.show-enchantments", true);
+
         ConfigurationSection actionSection = section.getConfigurationSection("click-action");
         if (actionSection == null) {
             throw new InvalidConfigurationException("Section 'click-action' does not exist.");
@@ -97,7 +99,8 @@ public class MenuItemParser {
 
         Entry<Integer, Integer> slot = new AbstractMap.SimpleEntry<>(slotRow, slotColumn);
 
-        return new MenuItem(type, itemName, itemLore, actions, slot, this.itemCache.getDrop(section.getName()).orElse(null));
+        return new MenuItem(type, itemName, itemLore, showEnchantments, actions, slot,
+            this.itemCache.getDrop(section.getName()).orElse(null));
     }
 
     public List<MenuItem> parseMany(ConfigurationSection section) throws InvalidConfigurationException {

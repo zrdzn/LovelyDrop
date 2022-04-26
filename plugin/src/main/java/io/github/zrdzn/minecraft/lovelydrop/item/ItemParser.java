@@ -17,12 +17,16 @@ package io.github.zrdzn.minecraft.lovelydrop.item;
 
 import io.github.zrdzn.minecraft.lovelydrop.LovelyDropPlugin;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.enchantments.Enchantment;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Logger;
 
@@ -106,7 +110,26 @@ public class ItemParser {
 
         List<String> lore = LovelyDropPlugin.color(section.getStringList("meta.lore"));
 
-        return new Item(section.getName(), type, sourceType, chance, amounts, experience, displayName, lore);
+        Map<Enchantment, Integer> enchantments = new HashMap<>();
+        for (String enchantmentRaw : section.getStringList("meta.enchantments")) {
+            String[] enchantmentRawArray = enchantmentRaw.split(":");
+
+            Enchantment enchantment = Enchantment.getByKey(NamespacedKey.minecraft(enchantmentRawArray[0]));
+            if (enchantment == null) {
+                throw new InvalidConfigurationException("Key in 'enchantments' is an invalid enchantment.");
+            }
+
+            int level;
+            try {
+                level = Integer.parseUnsignedInt(enchantmentRawArray[1]);
+            } catch (NumberFormatException exception) {
+                throw new InvalidConfigurationException("Key in 'enchantments' is an invalid enchantment level.");
+            }
+
+            enchantments.put(enchantment, level);
+        }
+
+        return new Item(section.getName(), type, sourceType, chance, amounts, experience, displayName, lore, enchantments);
     }
 
     public List<Item> parseMany(ConfigurationSection section) throws InvalidConfigurationException {

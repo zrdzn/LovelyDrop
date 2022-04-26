@@ -23,6 +23,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -102,6 +103,12 @@ public class DropListener implements Listener {
             droppedItemMeta.setDisplayName(item.getDisplayName());
             droppedItemMeta.setLore(item.getLore());
             droppedItem.setItemMeta(droppedItemMeta);
+
+            // Add additional enchantments.
+            Map<Enchantment, Integer> enchantments = item.getEnchantments();
+            if (enchantments.size() > 0) {
+                droppedItem.addUnsafeEnchantments(enchantments);
+            }
 
             World world = player.getWorld();
 

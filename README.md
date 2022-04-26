@@ -27,6 +27,7 @@ LovelyDrop is a minecraft plugin that adds a drop system to a server. You can cu
   - Set **chance** of the drop
   - Set **experience** that should be given to the player
   - Set **amount** of possible items of the drop
+  - Set **enchantments** of the drop
 ## Configuration
 The whole configuration of the plugin is explained in this
 [default configuration file](https://github.com/zrdzn/LovelyDrop/blob/master/plugin/src/main/resources/config.yml).
