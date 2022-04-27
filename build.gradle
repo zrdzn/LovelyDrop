@@ -23,5 +23,10 @@ subprojects {
             name "spigot-repository"
             url "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
         }
+
+        maven {
+            name "sonatype-repository"
+            url "https://oss.sonatype.org/content/repositories/snapshots"
+        }
     }
 }
