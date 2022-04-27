@@ -16,8 +16,8 @@
 package io.github.zrdzn.minecraft.lovelydrop.item;
 
 import io.github.zrdzn.minecraft.lovelydrop.LovelyDropPlugin;
+import io.github.zrdzn.minecraft.spigot.EnchantmentMatcher;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.enchantments.Enchantment;
@@ -33,9 +33,11 @@ import java.util.logging.Logger;
 public class ItemParser {
 
     private final Logger logger;
+    private final EnchantmentMatcher enchantmentMatcher;
 
-    public ItemParser(Logger logger) {
+    public ItemParser(Logger logger, EnchantmentMatcher enchantmentMatcher) {
         this.logger = logger;
+        this.enchantmentMatcher = enchantmentMatcher;
     }
 
     public Item parse(ConfigurationSection section) throws InvalidConfigurationException {
@@ -114,10 +116,9 @@ public class ItemParser {
         for (String enchantmentRaw : section.getStringList("meta.enchantments")) {
             String[] enchantmentRawArray = enchantmentRaw.split(":");
 
-            Enchantment enchantment = Enchantment.getByKey(NamespacedKey.minecraft(enchantmentRawArray[0]));
-            if (enchantment == null) {
-                throw new InvalidConfigurationException("Key in 'enchantments' is an invalid enchantment.");
-            }
+            this.logger.info("found enchant: " + enchantmentRawArray[0]);
+            Enchantment enchantment = this.enchantmentMatcher.matchEnchantment(enchantmentRawArray[0])
+                .orElseThrow(() -> new InvalidConfigurationException("Key in 'enchantments' is an invalid enchantment."));
 
             int level;
             try {

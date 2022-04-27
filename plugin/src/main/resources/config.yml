@@ -14,7 +14,7 @@ menu:
     enabled: true
 
     # Type of the filler item.
-    type: black_stained_glass_pane
+    type: stained_glass_pane
 
     # Display name of the filler item.
     # Use "none" or "" if you do not want to have any display name for it.
@@ -270,11 +270,15 @@ menu:
 #       - "&6Legendary diamond sword."
 #     enchantments:                     - enchantments of the drop, word before ':' is enchantment name, and after it is the level,
 #                                       they MUST BE lowercase
-#       - "sharpness:5"
-#       - "unbreaking:3"
-#       - "looting:3"
+#       - "fire_aspect:1"
+#       - "knockback:1"
 #
 # NOTE: 'meta' section is optional, you can remove it to have original/vanilla items.
+#
+# Enchantments are different on different minecraft versions, you need to check up the differences yourself depending on the
+# version you are using. For example:
+# 1.8  - damage_all  |  1.8  - durability  |  1.8  - loot_bonus_mobs
+# 1.18 - sharpness   |  1.18 - unbreaking  |  1.18 - loot
 drops:
   diamond-sword:
     type: diamond_sword
@@ -287,9 +291,8 @@ drops:
       lore:
         - "&6Legendary diamond sword."
       enchantments:
-        - "sharpness:5"
-        - "unbreaking:3"
-        - "looting:3"
+        - "fire_aspect:1"
+        - "knockback:1"
   gold:
     type: gold_ingot
     source: stone

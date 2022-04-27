@@ -24,6 +24,13 @@ import io.github.zrdzn.minecraft.lovelydrop.menu.MenuParser;
 import io.github.zrdzn.minecraft.lovelydrop.menu.MenuService;
 import io.github.zrdzn.minecraft.lovelydrop.user.UserCache;
 import io.github.zrdzn.minecraft.lovelydrop.user.UserListener;
+import io.github.zrdzn.minecraft.spigot.EnchantmentMatcher;
+import io.github.zrdzn.minecraft.spigot.SpigotAdapter;
+import io.github.zrdzn.minecraft.spigot.V1_12SpigotAdapter;
+import io.github.zrdzn.minecraft.spigot.V1_13EnchantmentMatcher;
+import io.github.zrdzn.minecraft.spigot.V1_13SpigotAdapter;
+import io.github.zrdzn.minecraft.spigot.V1_8EnchantmentMatcher;
+import io.github.zrdzn.minecraft.spigot.V1_8SpigotAdapter;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -46,12 +53,15 @@ public class LovelyDropPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         this.saveDefaultConfig();
-        this.loadConfigurations();
+
+        SpigotAdapter spigotAdapter = this.prepareSpigotAdapter();
+
+        this.loadConfigurations(spigotAdapter);
 
         PluginManager pluginManager = this.getServer().getPluginManager();
 
         pluginManager.registerEvents(new UserListener(this.userCache, this.itemCache), this);
-        pluginManager.registerEvents(new DropListener(this.logger, this.itemCache, this.userCache), this);
+        pluginManager.registerEvents(new DropListener(this.logger, spigotAdapter, this.itemCache, this.userCache), this);
 
         MenuService menuService = new MenuService(this.logger, this.menu, this.userCache);
 
@@ -64,7 +74,7 @@ public class LovelyDropPlugin extends JavaPlugin {
         this.itemCache.getDrops().clear();
     }
 
-    public void loadConfigurations() {
+    public void loadConfigurations(SpigotAdapter spigotAdapter) {
         try {
             this.reloadConfig();
 
@@ -72,7 +82,9 @@ public class LovelyDropPlugin extends JavaPlugin {
 
             this.itemCache = new ItemCache();
 
-            ItemParser itemParser = new ItemParser(this.logger);
+            EnchantmentMatcher enchantmentMatcher = spigotAdapter.getEnchantmentMatcher();
+
+            ItemParser itemParser = new ItemParser(this.logger, enchantmentMatcher);
             itemParser.parseMany(configuration.getConfigurationSection("drops")).forEach(this.itemCache::addDrop);
 
             MenuParser menuParser = new MenuParser(this.logger, this.itemCache);
@@ -85,6 +97,31 @@ public class LovelyDropPlugin extends JavaPlugin {
             exception.printStackTrace();
             this.getServer().getPluginManager().disablePlugin(this);
         }
+    }
+
+    public SpigotAdapter prepareSpigotAdapter() {
+        // Checks if the api version is greater than 1.12.2.
+        try {
+            Class.forName("org.bukkit.event.block.BlockBreakEvent").getDeclaredMethod("setDropItems", boolean.class);
+        } catch (Exception exception) {
+            return new V1_8SpigotAdapter();
+        }
+
+        Class<?> namespaced;
+        try {
+            namespaced = Class.forName("org.bukkit.NamespacedKey");
+        } catch (ClassNotFoundException exception) {
+            this.logger.severe("Class 'NamespacedKey' not found on 1.12.2+. Using 1.8 spigot adapter.");
+            return new V1_8SpigotAdapter();
+        }
+
+        try {
+            Class.forName("org.bukkit.enchantments.Enchantment").getDeclaredMethod("getByKey", namespaced);
+        } catch (Exception exception) {
+            return new V1_12SpigotAdapter();
+        }
+
+        return new V1_13SpigotAdapter();
     }
 
     public static String color(String message) {

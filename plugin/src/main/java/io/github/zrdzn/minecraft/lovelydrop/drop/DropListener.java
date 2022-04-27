@@ -19,6 +19,7 @@ import io.github.zrdzn.minecraft.lovelydrop.item.Item;
 import io.github.zrdzn.minecraft.lovelydrop.item.ItemCache;
 import io.github.zrdzn.minecraft.lovelydrop.user.User;
 import io.github.zrdzn.minecraft.lovelydrop.user.UserCache;
+import io.github.zrdzn.minecraft.spigot.SpigotAdapter;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -41,11 +42,13 @@ import java.util.logging.Logger;
 public class DropListener implements Listener {
 
     private final Logger logger;
+    private final SpigotAdapter adapter;
     private final ItemCache itemCache;
     private final UserCache userCache;
 
-    public DropListener(Logger logger, ItemCache itemCache, UserCache userCache) {
+    public DropListener(Logger logger, SpigotAdapter adapter, ItemCache itemCache, UserCache userCache) {
         this.logger = logger;
+        this.adapter = adapter;
         this.itemCache = itemCache;
         this.userCache = userCache;
     }
@@ -71,7 +74,7 @@ public class DropListener implements Listener {
             return;
         }
 
-        event.setDropItems(false);
+        this.adapter.getBlockBreakHelper().disableDrop(event);
 
         User user = userMaybe.get();
 
