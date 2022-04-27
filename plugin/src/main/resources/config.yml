@@ -11,7 +11,7 @@ menu:
   # Item that is filled in blank areas.
   filler:
     # Option whether to use filler item or not (true/false).
-    enabled: true
+    enabled: false
 
     # Type of the filler item.
     type: stained_glass_pane
