@@ -116,7 +116,6 @@ public class ItemParser {
         for (String enchantmentRaw : section.getStringList("meta.enchantments")) {
             String[] enchantmentRawArray = enchantmentRaw.split(":");
 
-            this.logger.info("found enchant: " + enchantmentRawArray[0]);
             Enchantment enchantment = this.enchantmentMatcher.matchEnchantment(enchantmentRawArray[0])
                 .orElseThrow(() -> new InvalidConfigurationException("Key in 'enchantments' is an invalid enchantment."));
 
