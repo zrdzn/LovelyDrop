@@ -19,18 +19,12 @@ import org.bukkit.Material;
 
 public class MenuFiller {
 
-    private final boolean enabled;
     private final Material type;
     private final String displayName;
 
-    public MenuFiller(boolean enabled, Material type, String displayName) {
-        this.enabled = enabled;
+    public MenuFiller(Material type, String displayName) {
         this.type = type;
         this.displayName = displayName;
-    }
-
-    public boolean isEnabled() {
-        return this.enabled;
     }
 
     public Material getType() {

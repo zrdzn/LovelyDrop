@@ -196,7 +196,7 @@ public class MenuService {
 
         // Fill the rest inventory with the specified item if enabled.
         MenuFiller filler = this.menu.getFiller();
-        if (filler.isEnabled()) {
+        if (filler != null) {
             ItemStack fillerItem = new ItemStack(filler.getType());
             ItemMeta fillerMeta = fillerItem.getItemMeta();
             if (filler.getDisplayName().equalsIgnoreCase("none")) {

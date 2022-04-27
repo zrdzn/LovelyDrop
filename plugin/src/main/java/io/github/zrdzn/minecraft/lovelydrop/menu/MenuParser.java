@@ -24,6 +24,7 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import java.util.AbstractMap;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 public class MenuParser {
@@ -52,21 +53,24 @@ public class MenuParser {
             throw new InvalidConfigurationException("Key 'rows' cannot be 0 and lower");
         }
 
+        MenuFiller filler = null;
+
         boolean fillerEnabled = section.getBoolean("filler.enabled", false);
+        if (fillerEnabled) {
+            String fillerTypeRaw = section.getString("filler.type");
+            if (fillerTypeRaw == null) {
+                throw new InvalidConfigurationException("Key 'filler.type' is null.");
+            }
 
-        String fillerTypeRaw = section.getString("filler.type");
-        if (fillerTypeRaw == null) {
-            throw new InvalidConfigurationException("Key 'filler.type' is null.");
+            Material fillerType = Material.matchMaterial(fillerTypeRaw);
+            if (fillerType == null) {
+                throw new InvalidConfigurationException("Material with key 'filler.type' does not exist.");
+            }
+
+            String fillerName = LovelyDropPlugin.color(section.getString("filler.displayname", "none"));
+
+            filler = new MenuFiller(fillerType, fillerName);
         }
-
-        Material fillerType = Material.matchMaterial(fillerTypeRaw);
-        if (fillerType == null) {
-            throw new InvalidConfigurationException("Material with key 'filler.type' does not exist.");
-        }
-
-        String fillerName = LovelyDropPlugin.color(section.getString("filler.displayname", "none"));
-
-        MenuFiller filler = new MenuFiller(fillerEnabled, fillerType, fillerName);
 
         String dropSwitchEnabled = LovelyDropPlugin.color(section.getString("drop-switch.enabled", "&aon"));
         String dropSwitchDisabled = LovelyDropPlugin.color(section.getString("drop-switch.disabled", "&coff"));
