@@ -1,7 +1,10 @@
 # LovelyDrop
+[![Build Status](https://img.shields.io/github/workflow/status/zrdzn/LovelyDrop/LovelyDrop%20Build)](https://github.com/zrdzn/LovelyDrop/actions/workflows/build.yml)
+[![Release](https://img.shields.io/github/v/release/zrdzn/LovelyDrop?color=44CC44)](https://github.com/zrdzn/LovelyDrop/releases/latest)
+
 LovelyDrop is a minecraft plugin that adds a drop system to a server. You can customize what items should be dropped by specifying various properties. Besides, the whole drop menu is also configurable, you can add items that should perform specific actions when clicked, and you can name them as you want.
 
-![1](img/menu-preview.png)
+![](img/menu-preview.png)
 ## Features
 - The fully customizable GUI with items that can perform few actions when clicked
   - Set title and rows for menu
