@@ -38,8 +38,7 @@ The whole configuration of the plugin is explained in this
 | /ldp reload | lovelydrop.reload | reloads the whole plugin including configuration                                 |
 
 ## Requirements
-The plugin runs on the spigot servers and its forks. At the moment it has not been tested on any version other than 1.18.2,
-so it may not work on older ones. **The plugin requires Java 8 and higher**. 
+The plugin runs on the spigot servers and its forks. Minecraft versions above **1.8 up to 1.18.2** are fully supported by the plugin.
 
 ## How to download
 1. Read the [requirements](#requirements)
