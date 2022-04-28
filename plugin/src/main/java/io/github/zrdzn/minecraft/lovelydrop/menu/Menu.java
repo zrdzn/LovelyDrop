@@ -15,6 +15,8 @@
  */
 package io.github.zrdzn.minecraft.lovelydrop.menu;
 
+import org.bukkit.inventory.ItemStack;
+
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -22,13 +24,13 @@ public class Menu {
 
     private final String title;
     private final int rows;
-    private final MenuFiller filler;
+    private final ItemStack filler;
     private final Entry<String, String> dropSwitch;
     private final Entry<String, String> inventoryDropSwitch;
     private final Entry<String, String> amountFormat;
     private final List<MenuItem> items;
 
-    public Menu(String title, int rows, MenuFiller filler, Entry<String, String> dropSwitch,
+    public Menu(String title, int rows, ItemStack filler, Entry<String, String> dropSwitch,
                 Entry<String, String> inventoryDropSwitch, Entry<String, String> amountFormat, List<MenuItem> items) {
         this.title = title;
         this.rows = rows;
@@ -47,8 +49,8 @@ public class Menu {
         return this.rows;
     }
 
-    public MenuFiller getFiller() {
-        return this.filler;
+    public ItemStack getFiller() {
+        return this.filler.clone();
     }
 
     public Entry<String, String> getDropSwitch() {

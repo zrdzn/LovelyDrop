@@ -25,7 +25,6 @@ import io.github.zrdzn.minecraft.lovelydrop.user.UserCache;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 import java.util.Map;
@@ -195,19 +194,9 @@ public class MenuService {
         });
 
         // Fill the rest inventory with the specified item if enabled.
-        MenuFiller filler = this.menu.getFiller();
+        ItemStack filler = this.menu.getFiller();
         if (filler != null) {
-            ItemStack fillerItem = new ItemStack(filler.getType());
-            ItemMeta fillerMeta = fillerItem.getItemMeta();
-            if (filler.getDisplayName().equalsIgnoreCase("none")) {
-                fillerMeta.setDisplayName(" ");
-            } else {
-                fillerMeta.setDisplayName(filler.getDisplayName());
-            }
-
-            fillerItem.setItemMeta(fillerMeta);
-
-            menu.getFiller().fill(ItemBuilder.from(fillerItem).asGuiItem());
+            menu.getFiller().fill(ItemBuilder.from(filler).asGuiItem());
         }
 
         menu.open(player);

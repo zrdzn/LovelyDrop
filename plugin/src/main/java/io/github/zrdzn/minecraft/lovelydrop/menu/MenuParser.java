@@ -20,11 +20,12 @@ import io.github.zrdzn.minecraft.lovelydrop.item.ItemCache;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.AbstractMap;
 import java.util.List;
 import java.util.Map.Entry;
-import java.util.Optional;
 import java.util.logging.Logger;
 
 public class MenuParser {
@@ -53,7 +54,7 @@ public class MenuParser {
             throw new InvalidConfigurationException("Key 'rows' cannot be 0 and lower");
         }
 
-        MenuFiller filler = null;
+        ItemStack filler = null;
 
         boolean fillerEnabled = section.getBoolean("filler.enabled", false);
         if (fillerEnabled) {
@@ -67,9 +68,15 @@ public class MenuParser {
                 throw new InvalidConfigurationException("Material with key 'filler.type' does not exist.");
             }
 
-            String fillerName = LovelyDropPlugin.color(section.getString("filler.displayname", "none"));
+            String fillerName = LovelyDropPlugin.color(section.getString("filler.displayname", " "));
 
-            filler = new MenuFiller(fillerType, fillerName);
+            filler = new ItemStack(fillerType);
+
+            ItemMeta fillerMeta = filler.getItemMeta();
+
+            fillerMeta.setDisplayName(fillerName.equals("none") ? " " : fillerName);
+
+            filler.setItemMeta(fillerMeta);
         }
 
         String dropSwitchEnabled = LovelyDropPlugin.color(section.getString("drop-switch.enabled", "&aon"));
