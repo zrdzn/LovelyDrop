@@ -65,7 +65,7 @@ public class LovelyDropPlugin extends JavaPlugin {
         pluginManager.registerEvents(new DropListener(this.logger, this.messageService, spigotAdapter, this.itemCache,
             this.userCache), this);
 
-        MenuService menuService = new MenuService(this.logger, this.menu, this.userCache);
+        MenuService menuService = new MenuService(this.logger, this.messageService, this.menu, this.userCache);
 
         this.getCommand("lovelydrop").setExecutor(new LovelyDropCommand(this.messageService, this));
         this.getCommand("drop").setExecutor(new DropCommand(this.messageService, menuService));
