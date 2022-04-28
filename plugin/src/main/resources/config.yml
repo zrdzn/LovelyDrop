@@ -329,8 +329,8 @@ drops:
     experience: 135
 
 
-
-# All messages that are sent by plugin to players.
+# All messages that can be sent by plugin to players.
+# If you want to disable specific messages just place a '#' before them.
 messages:
   executed-as-console: "&cYou cannot execute this command as console."
   no-permissions: "&cYou do not have enough permissions to perform that action."
@@ -338,3 +338,6 @@ messages:
   plugin-reloaded: "&aPlugin has been reloaded."
   not-enough-arguments: "&cYou need to provide arguments."
   not-valid-argument: "&cYou have provided wrong argument. &eUse /lovelydrop reload."
+  drop-switched: "&aYou have switched the {DROP} drop."
+  drop-switched-inventory: "&aYou have switched the {DROP} drop to inventory."
+  drop-successful: "&aYou have dropped {AMOUNT}x {DROP}!"

@@ -17,6 +17,7 @@ package io.github.zrdzn.minecraft.lovelydrop.drop;
 
 import io.github.zrdzn.minecraft.lovelydrop.item.Item;
 import io.github.zrdzn.minecraft.lovelydrop.item.ItemCache;
+import io.github.zrdzn.minecraft.lovelydrop.message.MessageService;
 import io.github.zrdzn.minecraft.lovelydrop.user.User;
 import io.github.zrdzn.minecraft.lovelydrop.user.UserCache;
 import io.github.zrdzn.minecraft.spigot.SpigotAdapter;
@@ -42,12 +43,15 @@ import java.util.logging.Logger;
 public class DropListener implements Listener {
 
     private final Logger logger;
+    private final MessageService messageService;
     private final SpigotAdapter adapter;
     private final ItemCache itemCache;
     private final UserCache userCache;
 
-    public DropListener(Logger logger, SpigotAdapter adapter, ItemCache itemCache, UserCache userCache) {
+    public DropListener(Logger logger, MessageService messageService, SpigotAdapter adapter, ItemCache itemCache,
+                        UserCache userCache) {
         this.logger = logger;
+        this.messageService = messageService;
         this.adapter = adapter;
         this.itemCache = itemCache;
         this.userCache = userCache;
@@ -97,9 +101,14 @@ public class DropListener implements Listener {
                 amount = random.nextInt(item.getAmount().getKey(), item.getAmount().getValue());
             }
 
+            String itemName = item.getDisplayName();
+
+            String[] placeholders = { "{DROP}", itemName, "{AMOUNT}", String.valueOf(amount) };
+            this.messageService.send(player, "drop-successful", placeholders);
+
             ItemStack droppedItem = new ItemStack(item.getType(), amount);
             ItemMeta droppedItemMeta = droppedItem.getItemMeta();
-            droppedItemMeta.setDisplayName(item.getDisplayName());
+            droppedItemMeta.setDisplayName(itemName);
             droppedItemMeta.setLore(item.getLore());
             droppedItem.setItemMeta(droppedItemMeta);
 

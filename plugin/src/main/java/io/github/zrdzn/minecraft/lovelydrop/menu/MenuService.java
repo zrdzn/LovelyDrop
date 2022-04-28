@@ -20,6 +20,7 @@ import dev.triumphteam.gui.components.InteractionModifier;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
 import io.github.zrdzn.minecraft.lovelydrop.item.Item;
+import io.github.zrdzn.minecraft.lovelydrop.message.MessageService;
 import io.github.zrdzn.minecraft.lovelydrop.user.User;
 import io.github.zrdzn.minecraft.lovelydrop.user.UserCache;
 import org.bukkit.entity.Player;
@@ -36,11 +37,13 @@ import java.util.stream.Collectors;
 public class MenuService {
 
     private final Logger logger;
+    private final MessageService messageService;
     private final Menu menu;
     private final UserCache userCache;
 
-    public MenuService(Logger logger, Menu menu, UserCache userCache) {
+    public MenuService(Logger logger, MessageService messageService, Menu menu, UserCache userCache) {
         this.logger = logger;
+        this.messageService = messageService;
         this.menu = menu;
         this.userCache = userCache;
     }
@@ -122,6 +125,8 @@ public class MenuService {
             Entry<String, String> dropSwitch = this.menu.getDropSwitch();
             Entry<String, String> inventoryDropSwitch = this.menu.getInventoryDropSwitch();
 
+            String dropName = dropItem.getDisplayName();
+
             ItemBuilder menuItemBuilder = ItemBuilder.from(item.getType())
                 .setName(item.getDisplayName())
                 .setLore(lore.stream()
@@ -157,8 +162,11 @@ public class MenuService {
                             } else {
                                 user.disableDrop(dropItem);
                             }
+
+                            this.messageService.send(player, "drop-switched", "{DROP}", dropName);
                         } else if (action == MenuAction.SWITCH_DROP_TO_INVENTORY) {
                             user.switchInventoryDrop(itemId, !user.hasSwitchedInventoryDrop(itemId));
+                            this.messageService.send(player, "drop-switched-inventory", "{DROP}", dropName);
                         }
                     }
                 } else {
@@ -172,8 +180,11 @@ public class MenuService {
                         } else {
                             user.disableDrop(dropItem);
                         }
+
+                        this.messageService.send(player, "drop-switched", "{DROP}", dropName);
                     } else if (action == MenuAction.SWITCH_DROP_TO_INVENTORY) {
                         user.switchInventoryDrop(itemId, !user.hasSwitchedInventoryDrop(itemId));
+                        this.messageService.send(player, "drop-switched-inventory", "{DROP}", dropName);
                     }
                 }
 

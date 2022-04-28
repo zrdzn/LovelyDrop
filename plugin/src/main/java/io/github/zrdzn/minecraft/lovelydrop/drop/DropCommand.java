@@ -15,8 +15,8 @@
  */
 package io.github.zrdzn.minecraft.lovelydrop.drop;
 
-import io.github.zrdzn.minecraft.lovelydrop.MessageParser;
 import io.github.zrdzn.minecraft.lovelydrop.menu.MenuService;
+import io.github.zrdzn.minecraft.lovelydrop.message.MessageService;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -25,11 +25,11 @@ import org.jetbrains.annotations.NotNull;
 
 public class DropCommand implements CommandExecutor {
 
-    private final MessageParser messageParser;
+    private final MessageService messageService;
     private final MenuService menuService;
 
-    public DropCommand(MessageParser messageParser, MenuService menuService) {
-        this.messageParser = messageParser;
+    public DropCommand(MessageService messageService, MenuService menuService) {
+        this.messageService = messageService;
         this.menuService = menuService;
     }
 
@@ -38,20 +38,20 @@ public class DropCommand implements CommandExecutor {
                              String[] args) {
         // Check if sender is console.
         if (!(sender instanceof Player)) {
-            sender.sendMessage(this.messageParser.getExecutedAsConsole());
+            this.messageService.send(sender, "executed-as-console");
             return true;
         }
 
         Player player = (Player) sender;
 
         if (!player.hasPermission("lovelydrop.menu.open")) {
-            player.sendMessage(this.messageParser.getNoPermissions());
+            this.messageService.send(sender, "no-permissions");
             return true;
         }
 
         // Try to open the inventory.
         if (!this.menuService.open(player)) {
-            player.sendMessage(this.messageParser.getMenuOpenError());
+            this.messageService.send(sender, "menu-open-error");
             return true;
         }
 

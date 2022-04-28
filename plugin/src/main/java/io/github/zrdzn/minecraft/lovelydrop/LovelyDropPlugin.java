@@ -22,6 +22,9 @@ import io.github.zrdzn.minecraft.lovelydrop.item.ItemParser;
 import io.github.zrdzn.minecraft.lovelydrop.menu.Menu;
 import io.github.zrdzn.minecraft.lovelydrop.menu.MenuParser;
 import io.github.zrdzn.minecraft.lovelydrop.menu.MenuService;
+import io.github.zrdzn.minecraft.lovelydrop.message.MessageCache;
+import io.github.zrdzn.minecraft.lovelydrop.message.MessageLoader;
+import io.github.zrdzn.minecraft.lovelydrop.message.MessageService;
 import io.github.zrdzn.minecraft.lovelydrop.user.UserCache;
 import io.github.zrdzn.minecraft.lovelydrop.user.UserListener;
 import io.github.zrdzn.minecraft.spigot.EnchantmentMatcher;
@@ -46,7 +49,7 @@ public class LovelyDropPlugin extends JavaPlugin {
 
     private ItemCache itemCache;
     private Menu menu;
-    private MessageParser messageParser;
+    private MessageService messageService;
 
     @Override
     public void onEnable() {
@@ -59,12 +62,13 @@ public class LovelyDropPlugin extends JavaPlugin {
         PluginManager pluginManager = this.getServer().getPluginManager();
 
         pluginManager.registerEvents(new UserListener(this.userCache, this.itemCache), this);
-        pluginManager.registerEvents(new DropListener(this.logger, spigotAdapter, this.itemCache, this.userCache), this);
+        pluginManager.registerEvents(new DropListener(this.logger, this.messageService, spigotAdapter, this.itemCache,
+            this.userCache), this);
 
         MenuService menuService = new MenuService(this.logger, this.menu, this.userCache);
 
-        this.getCommand("lovelydrop").setExecutor(new LovelyDropCommand(this.messageParser, this));
-        this.getCommand("drop").setExecutor(new DropCommand(this.messageParser, menuService));
+        this.getCommand("lovelydrop").setExecutor(new LovelyDropCommand(this.messageService, this));
+        this.getCommand("drop").setExecutor(new DropCommand(this.messageService, menuService));
     }
 
     @Override
@@ -88,8 +92,12 @@ public class LovelyDropPlugin extends JavaPlugin {
             MenuParser menuParser = new MenuParser(this.logger, this.itemCache);
             this.menu = menuParser.parse(configuration.getConfigurationSection("menu"));
 
-            this.messageParser = new MessageParser();
-            this.messageParser.parse(configuration.getConfigurationSection("messages"));
+            MessageCache messageCache = new MessageCache();
+
+            MessageLoader messageLoader = new MessageLoader(messageCache);
+            messageLoader.load(configuration.getConfigurationSection("messages"));
+
+            this.messageService = new MessageService(messageCache);
         } catch (InvalidConfigurationException exception) {
             this.logger.severe("Something went wrong while parsing configuration/s.");
             exception.printStackTrace();

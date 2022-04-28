@@ -15,6 +15,7 @@
  */
 package io.github.zrdzn.minecraft.lovelydrop;
 
+import io.github.zrdzn.minecraft.lovelydrop.message.MessageService;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -22,11 +23,11 @@ import org.jetbrains.annotations.NotNull;
 
 class LovelyDropCommand implements CommandExecutor {
 
-    private final MessageParser messageParser;
+    private final MessageService messageService;
     private final LovelyDropPlugin plugin;
 
-    public LovelyDropCommand(MessageParser messageParser, LovelyDropPlugin plugin) {
-        this.messageParser = messageParser;
+    public LovelyDropCommand(MessageService messageService, LovelyDropPlugin plugin) {
+        this.messageService = messageService;
         this.plugin = plugin;
     }
 
@@ -34,24 +35,24 @@ class LovelyDropCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label,
                              String[] args) {
         if (!sender.hasPermission("lovelydrop.reload")) {
-            sender.sendMessage(this.messageParser.getNoPermissions());
+            this.messageService.send(sender, "no-permissions");
             return true;
         }
 
         if (args.length == 0) {
-            sender.sendMessage(this.messageParser.getNotEnoughArguments());
+            this.messageService.send(sender, "not-enough-arguments");
             return true;
         }
 
         if (!args[0].equalsIgnoreCase("reload")) {
-            sender.sendMessage(this.messageParser.getNotValidArgument());
+            this.messageService.send(sender, "not-valid-argument");
             return true;
         }
 
         this.plugin.getPluginLoader().disablePlugin(this.plugin);
         this.plugin.getPluginLoader().enablePlugin(this.plugin);
 
-        sender.sendMessage(this.messageParser.getPluginReloaded());
+        this.messageService.send(sender, "plugin-reloaded");
 
         return true;
     }
