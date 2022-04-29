@@ -125,7 +125,7 @@ public class MenuService {
             Entry<String, String> dropSwitch = this.menu.getDropSwitch();
             Entry<String, String> inventoryDropSwitch = this.menu.getInventoryDropSwitch();
 
-            String dropName = dropItem.getDisplayName();
+            String dropId = dropItem.getId();
 
             ItemBuilder menuItemBuilder = ItemBuilder.from(item.getType())
                 .setName(item.getDisplayName())
@@ -163,10 +163,10 @@ public class MenuService {
                                 user.disableDrop(dropItem);
                             }
 
-                            this.messageService.send(player, "drop-switched", "{DROP}", dropName);
+                            this.messageService.send(player, "drop-switched", "{DROP}", dropId);
                         } else if (action == MenuAction.SWITCH_DROP_TO_INVENTORY) {
                             user.switchInventoryDrop(itemId, !user.hasSwitchedInventoryDrop(itemId));
-                            this.messageService.send(player, "drop-switched-inventory", "{DROP}", dropName);
+                            this.messageService.send(player, "drop-switched-inventory", "{DROP}", dropId);
                         }
                     }
                 } else {
@@ -181,10 +181,10 @@ public class MenuService {
                             user.disableDrop(dropItem);
                         }
 
-                        this.messageService.send(player, "drop-switched", "{DROP}", dropName);
+                        this.messageService.send(player, "drop-switched", "{DROP}", dropId);
                     } else if (action == MenuAction.SWITCH_DROP_TO_INVENTORY) {
                         user.switchInventoryDrop(itemId, !user.hasSwitchedInventoryDrop(itemId));
-                        this.messageService.send(player, "drop-switched-inventory", "{DROP}", dropName);
+                        this.messageService.send(player, "drop-switched-inventory", "{DROP}", dropId);
                     }
                 }
 
@@ -205,10 +205,7 @@ public class MenuService {
         });
 
         // Fill the rest inventory with the specified item if enabled.
-        ItemStack filler = this.menu.getFiller();
-        if (filler != null) {
-            menu.getFiller().fill(ItemBuilder.from(filler).asGuiItem());
-        }
+        this.menu.getFiller().ifPresent(filler -> menu.getFiller().fill(ItemBuilder.from(filler).asGuiItem()));
 
         menu.open(player);
 
