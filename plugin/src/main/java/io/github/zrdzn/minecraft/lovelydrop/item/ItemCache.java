@@ -17,6 +17,7 @@ package io.github.zrdzn.minecraft.lovelydrop.item;
 
 import org.bukkit.Material;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -33,15 +34,10 @@ public class ItemCache {
     }
 
     public Optional<Item> getDrop(String dropId) {
-        for (Set<Item> dropItems : this.drops.values()) {
-            for (Item dropItem : dropItems) {
-                if (dropItem.getId().equals(dropId)) {
-                    return Optional.of(dropItem);
-                }
-            }
-        }
-
-        return Optional.empty();
+        return this.drops.values().stream()
+            .flatMap(Collection::stream)
+            .filter(item -> item.getId().equals(dropId))
+            .findFirst();
     }
 
     public Set<Item> getDrops(Material source) {
