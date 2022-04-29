@@ -19,6 +19,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Optional;
 
 public class Menu {
 
@@ -49,8 +50,8 @@ public class Menu {
         return this.rows;
     }
 
-    public ItemStack getFiller() {
-        return this.filler.clone();
+    public Optional<ItemStack> getFiller() {
+        return this.filler == null ? Optional.empty() : Optional.of(this.filler.clone());
     }
 
     public Entry<String, String> getDropSwitch() {
