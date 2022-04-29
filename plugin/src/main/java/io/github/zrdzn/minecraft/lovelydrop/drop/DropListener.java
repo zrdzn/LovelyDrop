@@ -105,11 +105,9 @@ public class DropListener implements Listener {
 
             ItemMeta droppedItemMeta = droppedItem.getItemMeta();
 
-            String itemId = item.getId();
+            droppedItemMeta.setDisplayName(item.getDisplayName());
 
-            droppedItemMeta.setDisplayName(itemId);
-
-            String[] placeholders = { "{DROP}", itemId, "{AMOUNT}", String.valueOf(amount) };
+            String[] placeholders = { "{DROP}", item.getId(), "{AMOUNT}", String.valueOf(amount) };
             this.messageService.send(player, "drop-successful", placeholders);
 
             droppedItemMeta.setLore(item.getLore());
