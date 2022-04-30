@@ -53,7 +53,7 @@ public class ParserHelper {
 
                 return new AbstractMap.SimpleEntry<>(minimum, maximum);
             } catch (NumberFormatException exception) {
-                throw new InvalidConfigurationException("The entry does not contain valid numbers. Input: " + input + "\nArray: " + Arrays.toString(inputArray));
+                throw new InvalidConfigurationException("The entry does not contain valid numbers. Input: " + input);
             }
         }
     }
