@@ -18,7 +18,6 @@ package io.github.zrdzn.minecraft.lovelydrop;
 import org.bukkit.configuration.InvalidConfigurationException;
 
 import java.util.AbstractMap;
-import java.util.Arrays;
 import java.util.Map.Entry;
 
 public class ParserHelper {
