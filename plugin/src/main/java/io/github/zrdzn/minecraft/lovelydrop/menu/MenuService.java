@@ -102,6 +102,11 @@ public class MenuService {
 
             Entry<String, String> amountFormat = this.menu.getAmountFormat();
 
+            Entry<Integer, Integer> height = dropItem.getHeight();
+            String minimumHeight = String.valueOf(height.getKey());
+            String maximumHeight = String.valueOf(height.getValue());
+            Entry<String, String> heightFormat = this.menu.getHeightFormat();
+
             // Set lore depending on the amount setting.
             List<String> lore = item.getLore().stream()
                 .map(line -> {
@@ -115,10 +120,21 @@ public class MenuService {
                             .replace("{AMOUNT-MAX}", String.valueOf(maximumAmount));
                     }
 
+                    String finalHeight;
+                    if (minimumHeight.equals(maximumHeight)) {
+                        finalHeight = heightFormat.getKey()
+                            .replace("{HEIGHT}", minimumHeight);
+                    } else {
+                        finalHeight = heightFormat.getValue()
+                            .replace("{HEIGHT-MIN}", minimumHeight)
+                            .replace("{HEIGHT-MAX}", maximumHeight);
+                    }
+
                     return line
                         .replace("{CHANCE}", String.valueOf(dropItem.getChance()))
                         .replace("{AMOUNT}", finalAmount)
-                        .replace("{EXPERIENCE}", String.valueOf(dropItem.getExperience()));
+                        .replace("{EXPERIENCE}", String.valueOf(dropItem.getExperience()))
+                        .replace("{HEIGHT}", finalHeight);
                 })
                 .collect(Collectors.toList());
 

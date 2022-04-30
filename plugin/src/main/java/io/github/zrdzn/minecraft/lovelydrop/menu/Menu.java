@@ -29,16 +29,19 @@ public class Menu {
     private final Entry<String, String> dropSwitch;
     private final Entry<String, String> inventoryDropSwitch;
     private final Entry<String, String> amountFormat;
+    private final Entry<String, String> heightFormat;
     private final List<MenuItem> items;
 
     public Menu(String title, int rows, ItemStack filler, Entry<String, String> dropSwitch,
-                Entry<String, String> inventoryDropSwitch, Entry<String, String> amountFormat, List<MenuItem> items) {
+                Entry<String, String> inventoryDropSwitch, Entry<String, String> amountFormat,
+                Entry<String, String> heightFormat, List<MenuItem> items) {
         this.title = title;
         this.rows = rows;
         this.filler = filler;
         this.dropSwitch = dropSwitch;
         this.inventoryDropSwitch = inventoryDropSwitch;
         this.amountFormat = amountFormat;
+        this.heightFormat = heightFormat;
         this.items = items;
     }
 
@@ -64,6 +67,10 @@ public class Menu {
 
     public Entry<String, String> getAmountFormat() {
         return this.amountFormat;
+    }
+
+    public Entry<String, String> getHeightFormat() {
+        return this.heightFormat;
     }
 
     public List<MenuItem> getItems() {

@@ -16,13 +16,13 @@
 package io.github.zrdzn.minecraft.lovelydrop.item;
 
 import io.github.zrdzn.minecraft.lovelydrop.LovelyDropPlugin;
+import io.github.zrdzn.minecraft.lovelydrop.ParserHelper;
 import io.github.zrdzn.minecraft.spigot.EnchantmentMatcher;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.enchantments.Enchantment;
 
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -70,36 +70,24 @@ public class ItemParser {
             throw new InvalidConfigurationException("Key 'chance' cannot be 0 and lower.");
         }
 
-        Entry<Integer, Integer> amounts;
-
         String amountRaw = section.getString("amount");
         if (amountRaw == null) {
             throw new InvalidConfigurationException("Key 'amount' is null.");
         }
 
-        String[] amountRawArray = amountRaw.split("-");
-        if (amountRawArray.length == 0) {
-            throw new InvalidConfigurationException("Key 'amount' is empty.");
-        } else if (amountRawArray.length == 1) {
-            try {
-                int amount = Integer.parseUnsignedInt(amountRawArray[0]);
-                amounts = new AbstractMap.SimpleEntry<>(amount, amount);
-            } catch (NumberFormatException exception) {
-                throw new InvalidConfigurationException("Key 'amount' does not contain number.");
-            }
-        } else {
-            try {
-                amounts = new AbstractMap.SimpleEntry<>(Integer.parseUnsignedInt(amountRawArray[0]),
-                    Integer.parseUnsignedInt(amountRawArray[1]));
-            } catch (NumberFormatException exception) {
-                throw new InvalidConfigurationException("Key 'amount' is wrongly formatted.");
-            }
-        }
+        Entry<Integer, Integer> amounts = ParserHelper.parseRange(amountRaw, false);
 
         int experience = section.getInt("experience");
         if (experience < 0 ) {
             throw new InvalidConfigurationException("Key 'experience' cannot be lower than 0.");
         }
+
+        String heightRaw = section.getString("height");
+        if (heightRaw == null) {
+            throw new InvalidConfigurationException("Key 'height' is null.");
+        }
+
+        Entry<Integer, Integer> height = ParserHelper.parseRange(heightRaw, true);
 
         String displayNameRaw = section.getString("meta.displayname");
 
@@ -129,7 +117,8 @@ public class ItemParser {
             enchantments.put(enchantment, level);
         }
 
-        return new Item(section.getName(), type, sourceType, chance, amounts, experience, displayName, lore, enchantments);
+        return new Item(section.getName(), type, sourceType, chance, amounts, experience, height, displayName, lore,
+            enchantments);
     }
 
     public List<Item> parseMany(ConfigurationSection section) throws InvalidConfigurationException {

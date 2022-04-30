@@ -88,7 +88,14 @@ public class DropListener implements Listener {
 
         ThreadLocalRandom random = ThreadLocalRandom.current();
 
+        int blockHeight = block.getY();
+
         sourceDrops.forEach(item -> {
+            Entry<Integer, Integer> height = item.getHeight();
+            if (blockHeight < height.getKey() || blockHeight > height.getValue()) {
+                return;
+            }
+
             if (item.getChance() <= Math.random() * 100.0D) {
                 return;
             }

@@ -30,18 +30,20 @@ public class Item {
     private final double chance;
     private final Entry<Integer, Integer> amount;
     private final int experience;
+    private final Entry<Integer, Integer> height;
     private final String displayName;
     private final List<String> lore;
     private final Map<Enchantment, Integer> enchantments;
 
     public Item(String id, Material type, Material source, double chance, Entry<Integer, Integer> amount, int experience,
-                String displayName, List<String> lore, Map<Enchantment, Integer> enchantments) {
+                Entry<Integer, Integer> height, String displayName, List<String> lore, Map<Enchantment, Integer> enchantments) {
         this.id = id;
         this.type = type;
         this.source = source;
         this.chance = chance;
         this.amount = amount;
         this.experience = experience;
+        this.height = height;
         this.displayName = displayName;
         this.lore = lore;
         this.enchantments = enchantments;
@@ -69,6 +71,10 @@ public class Item {
 
     public int getExperience() {
         return this.experience;
+    }
+
+    public Entry<Integer, Integer> getHeight() {
+        return this.height;
     }
 
     public String getDisplayName() {
