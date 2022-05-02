@@ -15,7 +15,7 @@
  */
 package io.github.zrdzn.minecraft.lovelydrop.user;
 
-import io.github.zrdzn.minecraft.lovelydrop.item.ItemCache;
+import io.github.zrdzn.minecraft.lovelydrop.drop.DropItemCache;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -26,11 +26,11 @@ import java.util.UUID;
 public class UserListener implements Listener {
 
     private final UserCache userCache;
-    private final ItemCache itemCache;
+    private final DropItemCache dropItemCache;
 
-    public UserListener(UserCache userCache, ItemCache itemCache) {
+    public UserListener(UserCache userCache, DropItemCache dropItemCache) {
         this.userCache = userCache;
-        this.itemCache = itemCache;
+        this.dropItemCache = dropItemCache;
     }
 
     @EventHandler
@@ -38,7 +38,7 @@ public class UserListener implements Listener {
         UUID playerId = event.getPlayer().getUniqueId();
 
         User user = new User(playerId);
-        this.itemCache.getDrops().values().forEach(items -> items.forEach(item -> user.addInventoryDrop(item, false)));
+        this.dropItemCache.getDrops().values().forEach(items -> items.forEach(item -> user.addInventoryDrop(item, false)));
 
         this.userCache.addUser(playerId, user);
     }

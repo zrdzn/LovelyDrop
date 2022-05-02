@@ -15,8 +15,6 @@
  */
 package io.github.zrdzn.minecraft.lovelydrop.drop;
 
-import io.github.zrdzn.minecraft.lovelydrop.item.Item;
-import io.github.zrdzn.minecraft.lovelydrop.item.ItemCache;
 import io.github.zrdzn.minecraft.lovelydrop.message.MessageService;
 import io.github.zrdzn.minecraft.lovelydrop.user.User;
 import io.github.zrdzn.minecraft.lovelydrop.user.UserCache;
@@ -46,15 +44,15 @@ public class DropListener implements Listener {
     private final Logger logger;
     private final MessageService messageService;
     private final SpigotAdapter adapter;
-    private final ItemCache itemCache;
+    private final DropItemCache dropItemCache;
     private final UserCache userCache;
 
-    public DropListener(Logger logger, MessageService messageService, SpigotAdapter adapter, ItemCache itemCache,
+    public DropListener(Logger logger, MessageService messageService, SpigotAdapter adapter, DropItemCache dropItemCache,
                         UserCache userCache) {
         this.logger = logger;
         this.messageService = messageService;
         this.adapter = adapter;
-        this.itemCache = itemCache;
+        this.dropItemCache = dropItemCache;
         this.userCache = userCache;
     }
 
@@ -67,7 +65,7 @@ public class DropListener implements Listener {
         MaterialData source = block.getState().getData();
 
         // Get optional drops from source blocks.
-        Set<Item> sourceDrops = this.itemCache.getDrops(source);
+        Set<DropItem> sourceDrops = this.dropItemCache.getDrops(source);
         if (sourceDrops.isEmpty()) {
             return;
         }

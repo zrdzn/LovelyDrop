@@ -17,8 +17,8 @@ package io.github.zrdzn.minecraft.lovelydrop;
 
 import io.github.zrdzn.minecraft.lovelydrop.drop.DropCommand;
 import io.github.zrdzn.minecraft.lovelydrop.drop.DropListener;
-import io.github.zrdzn.minecraft.lovelydrop.item.ItemCache;
-import io.github.zrdzn.minecraft.lovelydrop.item.ItemParser;
+import io.github.zrdzn.minecraft.lovelydrop.drop.DropItemCache;
+import io.github.zrdzn.minecraft.lovelydrop.drop.ItemParser;
 import io.github.zrdzn.minecraft.lovelydrop.menu.Menu;
 import io.github.zrdzn.minecraft.lovelydrop.menu.MenuParser;
 import io.github.zrdzn.minecraft.lovelydrop.menu.MenuService;
@@ -47,7 +47,7 @@ public class LovelyDropPlugin extends JavaPlugin {
     private final Logger logger = this.getLogger();
     private final UserCache userCache = new UserCache();
 
-    private ItemCache itemCache;
+    private DropItemCache dropItemCache;
     private Menu menu;
     private MessageService messageService;
 
@@ -61,8 +61,8 @@ public class LovelyDropPlugin extends JavaPlugin {
 
         PluginManager pluginManager = this.getServer().getPluginManager();
 
-        pluginManager.registerEvents(new UserListener(this.userCache, this.itemCache), this);
-        pluginManager.registerEvents(new DropListener(this.logger, this.messageService, spigotAdapter, this.itemCache,
+        pluginManager.registerEvents(new UserListener(this.userCache, this.dropItemCache), this);
+        pluginManager.registerEvents(new DropListener(this.logger, this.messageService, spigotAdapter, this.dropItemCache,
             this.userCache), this);
 
         MenuService menuService = new MenuService(this.logger, this.messageService, this.menu, this.userCache);
@@ -73,7 +73,7 @@ public class LovelyDropPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        this.itemCache.getDrops().clear();
+        this.dropItemCache.getDrops().clear();
     }
 
     public void loadConfigurations(SpigotAdapter spigotAdapter) {
@@ -82,14 +82,14 @@ public class LovelyDropPlugin extends JavaPlugin {
 
             Configuration configuration = this.getConfig();
 
-            this.itemCache = new ItemCache();
+            this.dropItemCache = new DropItemCache();
 
             EnchantmentMatcher enchantmentMatcher = spigotAdapter.getEnchantmentMatcher();
 
             ItemParser itemParser = new ItemParser(this.logger, enchantmentMatcher);
-            itemParser.parseMany(configuration.getConfigurationSection("drops")).forEach(this.itemCache::addDrop);
+            itemParser.parseMany(configuration.getConfigurationSection("drops")).forEach(this.dropItemCache::addDrop);
 
-            MenuParser menuParser = new MenuParser(this.logger, this.itemCache);
+            MenuParser menuParser = new MenuParser(this.logger, this.dropItemCache);
             this.menu = menuParser.parse(configuration.getConfigurationSection("menu"));
 
             MessageCache messageCache = new MessageCache();

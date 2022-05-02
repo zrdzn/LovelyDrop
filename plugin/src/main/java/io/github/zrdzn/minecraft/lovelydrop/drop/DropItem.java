@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.zrdzn.minecraft.lovelydrop.item;
+package io.github.zrdzn.minecraft.lovelydrop.drop;
 
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.material.MaterialData;
@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class Item {
+public class DropItem {
 
     private final String id;
     private final MaterialData type;
@@ -35,9 +35,9 @@ public class Item {
     private final List<String> lore;
     private final Map<Enchantment, Integer> enchantments;
 
-    public Item(String id, MaterialData type, MaterialData source, double chance,
-                Entry<Integer, Integer> amount, int experience, Entry<Integer, Integer> height, String displayName,
-                List<String> lore, Map<Enchantment, Integer> enchantments) {
+    public DropItem(String id, MaterialData type, MaterialData source, double chance, Entry<Integer, Integer> amount,
+                    int experience, Entry<Integer, Integer> height, String displayName, List<String> lore,
+                    Map<Enchantment, Integer> enchantments) {
         this.id = id;
         this.type = type;
         this.source = source;

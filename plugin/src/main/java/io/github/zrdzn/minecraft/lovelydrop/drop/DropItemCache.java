@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.zrdzn.minecraft.lovelydrop.item;
+package io.github.zrdzn.minecraft.lovelydrop.drop;
 
 import org.bukkit.material.MaterialData;
 
@@ -25,27 +25,27 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-public class ItemCache {
+public class DropItemCache {
 
-    private final Map<MaterialData, Set<Item>> drops = new HashMap<>();
+    private final Map<MaterialData, Set<DropItem>> drops = new HashMap<>();
 
-    public void addDrop(Item item) {
-        this.drops.computeIfAbsent(item.getSource(), key -> new HashSet<>()).add(item);
+    public void addDrop(DropItem dropItem) {
+        this.drops.computeIfAbsent(dropItem.getSource(), key -> new HashSet<>()).add(dropItem);
     }
 
-    public Optional<Item> getDrop(String dropId) {
+    public Optional<DropItem> getDrop(String dropId) {
         return this.drops.values().stream()
             .flatMap(Collection::stream)
             .filter(item -> item.getId().equals(dropId))
             .findFirst();
     }
 
-    public Set<Item> getDrops(MaterialData source) {
-        Set<Item> items = this.drops.getOrDefault(source, Collections.emptySet());
-        return items.isEmpty() ? items : new HashSet<>(items);
+    public Set<DropItem> getDrops(MaterialData source) {
+        Set<DropItem> dropItems = this.drops.getOrDefault(source, Collections.emptySet());
+        return dropItems.isEmpty() ? dropItems : new HashSet<>(dropItems);
     }
 
-    public Map<MaterialData, Set<Item>> getDrops() {
+    public Map<MaterialData, Set<DropItem>> getDrops() {
         return this.drops;
     }
 

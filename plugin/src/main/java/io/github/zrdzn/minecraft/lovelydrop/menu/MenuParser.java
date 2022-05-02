@@ -17,7 +17,7 @@ package io.github.zrdzn.minecraft.lovelydrop.menu;
 
 import io.github.zrdzn.minecraft.lovelydrop.LovelyDropPlugin;
 import io.github.zrdzn.minecraft.lovelydrop.ParserHelper;
-import io.github.zrdzn.minecraft.lovelydrop.item.ItemCache;
+import io.github.zrdzn.minecraft.lovelydrop.drop.DropItemCache;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.inventory.ItemStack;
@@ -31,11 +31,11 @@ import java.util.logging.Logger;
 public class MenuParser {
 
     private final Logger logger;
-    private final ItemCache itemCache;
+    private final DropItemCache dropItemCache;
 
-    public MenuParser(Logger logger, ItemCache itemCache) {
+    public MenuParser(Logger logger, DropItemCache dropItemCache) {
         this.logger = logger;
-        this.itemCache = itemCache;
+        this.dropItemCache = dropItemCache;
     }
 
     public Menu parse(ConfigurationSection section) throws InvalidConfigurationException {
@@ -94,7 +94,7 @@ public class MenuParser {
 
         Entry<String, String> heightFormat = new AbstractMap.SimpleEntry<>(heightSingular, heightPlural);
 
-        MenuItemParser menuItemParser = new MenuItemParser(this.logger, this.itemCache);
+        MenuItemParser menuItemParser = new MenuItemParser(this.logger, this.dropItemCache);
 
         List<MenuItem> menuItems = menuItemParser.parseMany(section.getConfigurationSection("items"));
 

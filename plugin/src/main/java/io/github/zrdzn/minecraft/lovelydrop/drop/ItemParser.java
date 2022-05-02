@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.zrdzn.minecraft.lovelydrop.item;
+package io.github.zrdzn.minecraft.lovelydrop.drop;
 
 import io.github.zrdzn.minecraft.lovelydrop.LovelyDropPlugin;
 import io.github.zrdzn.minecraft.lovelydrop.ParserHelper;
@@ -40,7 +40,7 @@ public class ItemParser {
         this.enchantmentMatcher = enchantmentMatcher;
     }
 
-    public Item parse(ConfigurationSection section) throws InvalidConfigurationException {
+    public DropItem parse(ConfigurationSection section) throws InvalidConfigurationException {
         if (section == null) {
             throw new InvalidConfigurationException("Provided section is null.");
         }
@@ -111,11 +111,11 @@ public class ItemParser {
             enchantments.put(enchantment, level);
         }
 
-        return new Item(section.getName(), type, sourceType, chance, amounts, experience, height, displayName, lore,
+        return new DropItem(section.getName(), type, sourceType, chance, amounts, experience, height, displayName, lore,
             enchantments);
     }
 
-    public List<Item> parseMany(ConfigurationSection section) throws InvalidConfigurationException {
+    public List<DropItem> parseMany(ConfigurationSection section) throws InvalidConfigurationException {
         if (section == null) {
             throw new InvalidConfigurationException("Provided section is null.");
         }
@@ -124,19 +124,19 @@ public class ItemParser {
             throw new InvalidConfigurationException("Provided section is not 'drops'.");
         }
 
-        List<Item> items = new ArrayList<>();
+        List<DropItem> dropItems = new ArrayList<>();
 
         // Add each item section to items list.
         section.getKeys(false).forEach(key -> {
             try {
-                items.add(this.parse(section.getConfigurationSection(key)));
+                dropItems.add(this.parse(section.getConfigurationSection(key)));
             } catch (InvalidConfigurationException exception) {
                 this.logger.severe("Something went wrong while parsing item section.");
                 exception.printStackTrace();
             }
         });
 
-        return items;
+        return dropItems;
     }
 
 }

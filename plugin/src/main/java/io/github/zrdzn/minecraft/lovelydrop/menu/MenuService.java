@@ -19,7 +19,7 @@ import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.components.InteractionModifier;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
-import io.github.zrdzn.minecraft.lovelydrop.item.Item;
+import io.github.zrdzn.minecraft.lovelydrop.drop.DropItem;
 import io.github.zrdzn.minecraft.lovelydrop.message.MessageService;
 import io.github.zrdzn.minecraft.lovelydrop.user.User;
 import io.github.zrdzn.minecraft.lovelydrop.user.UserCache;
@@ -72,7 +72,7 @@ public class MenuService {
             Map<ClickType, MenuAction> actions = item.getAction();
 
             // Set item that does not have drop item assigned to it.
-            Item dropItem = item.getDropItem();
+            DropItem dropItem = item.getDropItem();
             if (dropItem == null) {
                 menu.setItem(row, column, ItemBuilder.from(item.getType().toItemStack(1))
                     .setName(item.getDisplayName())
