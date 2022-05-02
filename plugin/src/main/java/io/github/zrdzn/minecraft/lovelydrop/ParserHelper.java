@@ -65,9 +65,11 @@ public class ParserHelper {
             throw new InvalidConfigurationException("The value for the entry is empty.");
         }
 
-        Material material = Material.matchMaterial(inputArray[0]);
+        String materialRaw = inputArray[0];
+
+        Material material = Material.matchMaterial(materialRaw);
         if (material == null) {
-            throw new InvalidConfigurationException("Material '" + inputArray[0] + "' does not exist.");
+            throw new InvalidConfigurationException("Material '" + materialRaw + "' does not exist.");
         }
 
         if (inputArray.length == 1) {
