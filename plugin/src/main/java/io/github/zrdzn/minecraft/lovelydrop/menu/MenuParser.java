@@ -18,12 +18,10 @@ package io.github.zrdzn.minecraft.lovelydrop.menu;
 import io.github.zrdzn.minecraft.lovelydrop.LovelyDropPlugin;
 import io.github.zrdzn.minecraft.lovelydrop.ParserHelper;
 import io.github.zrdzn.minecraft.lovelydrop.item.ItemCache;
-import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.material.MaterialData;
 
 import java.util.AbstractMap;
 import java.util.List;

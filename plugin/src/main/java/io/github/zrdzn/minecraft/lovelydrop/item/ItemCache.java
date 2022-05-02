@@ -15,7 +15,6 @@
  */
 package io.github.zrdzn.minecraft.lovelydrop.item;
 
-import org.bukkit.Material;
 import org.bukkit.material.MaterialData;
 
 import java.util.Collection;
