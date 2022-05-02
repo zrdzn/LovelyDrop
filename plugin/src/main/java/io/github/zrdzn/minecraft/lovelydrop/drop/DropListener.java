@@ -70,7 +70,6 @@ public class DropListener implements Listener {
         // Get optional drops from source blocks.
         Set<Item> sourceDrops = this.itemCache.getDrops(source);
         if (sourceDrops.isEmpty()) {
-            player.sendMessage("srcdrops-isEmpty");
             return;
         }
 
@@ -93,7 +92,6 @@ public class DropListener implements Listener {
         int blockHeight = block.getY();
 
         sourceDrops.forEach(item -> {
-            player.sendMessage("foreach - " + item.getId());
             Entry<Integer, Integer> height = item.getHeight();
             if (blockHeight < height.getKey() || blockHeight > height.getValue()) {
                 return;
