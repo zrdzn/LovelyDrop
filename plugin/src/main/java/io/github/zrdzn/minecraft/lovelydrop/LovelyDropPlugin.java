@@ -18,7 +18,7 @@ package io.github.zrdzn.minecraft.lovelydrop;
 import io.github.zrdzn.minecraft.lovelydrop.drop.DropCommand;
 import io.github.zrdzn.minecraft.lovelydrop.drop.DropListener;
 import io.github.zrdzn.minecraft.lovelydrop.drop.DropItemCache;
-import io.github.zrdzn.minecraft.lovelydrop.drop.ItemParser;
+import io.github.zrdzn.minecraft.lovelydrop.drop.DropItemParser;
 import io.github.zrdzn.minecraft.lovelydrop.menu.Menu;
 import io.github.zrdzn.minecraft.lovelydrop.menu.MenuParser;
 import io.github.zrdzn.minecraft.lovelydrop.menu.MenuService;
@@ -86,8 +86,8 @@ public class LovelyDropPlugin extends JavaPlugin {
 
             EnchantmentMatcher enchantmentMatcher = spigotAdapter.getEnchantmentMatcher();
 
-            ItemParser itemParser = new ItemParser(this.logger, enchantmentMatcher);
-            itemParser.parseMany(configuration.getConfigurationSection("drops")).forEach(this.dropItemCache::addDrop);
+            DropItemParser dropItemParser = new DropItemParser(this.logger, enchantmentMatcher);
+            dropItemParser.parseMany(configuration.getConfigurationSection("drops")).forEach(this.dropItemCache::addDrop);
 
             MenuParser menuParser = new MenuParser(this.logger, this.dropItemCache);
             this.menu = menuParser.parse(configuration.getConfigurationSection("menu"));

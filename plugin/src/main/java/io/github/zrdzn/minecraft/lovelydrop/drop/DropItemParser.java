@@ -30,12 +30,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Logger;
 
-public class ItemParser {
+public class DropItemParser {
 
     private final Logger logger;
     private final EnchantmentMatcher enchantmentMatcher;
 
-    public ItemParser(Logger logger, EnchantmentMatcher enchantmentMatcher) {
+    public DropItemParser(Logger logger, EnchantmentMatcher enchantmentMatcher) {
         this.logger = logger;
         this.enchantmentMatcher = enchantmentMatcher;
     }
