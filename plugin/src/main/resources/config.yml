@@ -13,7 +13,7 @@ menu:
     # Option whether to use filler item or not (true/false).
     enabled: false
 
-    # Type of the filler item.
+    # Type of the filler item. If you want to use legacy materials just format it - material:data, e.g. stone:5 for andesite.
     type: stained_glass_pane
 
     # Display name of the filler item.
@@ -72,7 +72,8 @@ menu:
   # Whole structure explanation:
   #
   #    close:                                  - id of the menu item;
-  #      type: barrier                         - type of the menu item;
+  #      type: barrier                         - type of the menu item. If you want to use legacy materials
+  #                                            just format it - material:data, e.g. stone:5 for andesite;;
   #      click-action:
   #        ALL: CLOSE_MENU                    - action that should be performed after clicking on the menu item with
   #                                           any combination;
@@ -276,7 +277,8 @@ menu:
 # gold:                                 - id of the drop. IMPORTANT: it is used in menu (id in menu.items must equal to this id
 #                                       if you want to use SWITCH_DROP action there);
 #   type: diamond_sword                 - type of the drop;
-#   source: stone                       - source block type from which 'type' should be dropped;
+#   source: stone                       - source block type from which 'type' should be dropped. If you want to use legacy materials
+#                                       just format it - material:data, e.g. stone:5 for andesite;
 #   chance: 20                          - percentage chance of the drop;
 #   amount: 1:2                         - minimum and maximum amount of the drop (if ':' is not found, it will use only first number);
 #   experience: 175                     - experience given to the player when he has successful drop;

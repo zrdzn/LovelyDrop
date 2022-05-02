@@ -16,11 +16,12 @@
 package io.github.zrdzn.minecraft.lovelydrop.menu;
 
 import io.github.zrdzn.minecraft.lovelydrop.LovelyDropPlugin;
+import io.github.zrdzn.minecraft.lovelydrop.ParserHelper;
 import io.github.zrdzn.minecraft.lovelydrop.item.ItemCache;
-import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.event.inventory.ClickType;
+import org.bukkit.material.MaterialData;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
@@ -50,10 +51,7 @@ public class MenuItemParser {
             throw new InvalidConfigurationException("Key 'type' is null.");
         }
 
-        Material type = Material.matchMaterial(typeRaw);
-        if (type == null) {
-            throw new InvalidConfigurationException("Material with key 'type' does not exist.");
-        }
+        MaterialData type = ParserHelper.parseLegacyMaterial(typeRaw);
 
         String itemName = LovelyDropPlugin.color(section.getString("meta.displayname", "<EMPTY>"));
 

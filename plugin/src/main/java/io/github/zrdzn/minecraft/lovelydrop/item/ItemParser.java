@@ -18,10 +18,10 @@ package io.github.zrdzn.minecraft.lovelydrop.item;
 import io.github.zrdzn.minecraft.lovelydrop.LovelyDropPlugin;
 import io.github.zrdzn.minecraft.lovelydrop.ParserHelper;
 import io.github.zrdzn.minecraft.spigot.EnchantmentMatcher;
-import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.material.MaterialData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,20 +50,14 @@ public class ItemParser {
             throw new InvalidConfigurationException("Key 'type' is null.");
         }
 
-        Material type = Material.matchMaterial(typeRaw);
-        if (type == null) {
-            throw new InvalidConfigurationException("Material with key 'type' does not exist.");
-        }
+        MaterialData type = ParserHelper.parseLegacyMaterial(typeRaw);
 
         String sourceTypeRaw = section.getString("source");
         if (sourceTypeRaw == null) {
             throw new InvalidConfigurationException("Key 'source' is null.");
         }
 
-        Material sourceType = Material.matchMaterial(sourceTypeRaw);
-        if (sourceType == null) {
-            throw new InvalidConfigurationException("Material with key 'source' does not exist.");
-        }
+        MaterialData sourceType = ParserHelper.parseLegacyMaterial(sourceTypeRaw);
 
         double chance = section.getDouble("chance");
         if (chance <= 0.0D) {

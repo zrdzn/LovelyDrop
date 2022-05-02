@@ -15,7 +15,9 @@
  */
 package io.github.zrdzn.minecraft.lovelydrop;
 
+import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.material.MaterialData;
 
 import java.util.AbstractMap;
 import java.util.Map.Entry;
@@ -54,6 +56,30 @@ public class ParserHelper {
             } catch (NumberFormatException exception) {
                 throw new InvalidConfigurationException("The entry does not contain valid numbers. Input: " + input);
             }
+        }
+    }
+
+    public static MaterialData parseLegacyMaterial(String input) throws InvalidConfigurationException {
+        String[] inputArray = input.split(":");
+        if (inputArray.length == 0) {
+            throw new InvalidConfigurationException("The value for the entry is empty.");
+        }
+
+        Material material = Material.matchMaterial(inputArray[0]);
+        if (material == null) {
+            throw new InvalidConfigurationException("Material '" + inputArray[0] + "' does not exist.");
+        }
+
+        if (inputArray.length == 1) {
+            return new MaterialData(material);
+        }
+
+        try {
+            byte data = Byte.parseByte(inputArray[1]);
+
+            return new MaterialData(material, data);
+        } catch (NumberFormatException exception) {
+            throw new InvalidConfigurationException("The input does not contain valid byte data. Input: " + input);
         }
     }
 

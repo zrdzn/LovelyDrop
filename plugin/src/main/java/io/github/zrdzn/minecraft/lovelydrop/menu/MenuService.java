@@ -74,7 +74,7 @@ public class MenuService {
             // Set item that does not have drop item assigned to it.
             Item dropItem = item.getDropItem();
             if (dropItem == null) {
-                menu.setItem(row, column, ItemBuilder.from(item.getType())
+                menu.setItem(row, column, ItemBuilder.from(item.getType().toItemStack(1))
                     .setName(item.getDisplayName())
                     .setLore(item.getLore())
                     .asGuiItem(event -> {
@@ -143,7 +143,7 @@ public class MenuService {
 
             String dropId = dropItem.getId();
 
-            ItemBuilder menuItemBuilder = ItemBuilder.from(item.getType())
+            ItemBuilder menuItemBuilder = ItemBuilder.from(item.getType().toItemStack(1))
                 .setName(item.getDisplayName())
                 .setLore(lore.stream()
                     .map(line -> line

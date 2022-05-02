@@ -33,6 +33,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.material.MaterialData;
 
 import java.util.Map;
 import java.util.Map.Entry;
@@ -64,11 +65,12 @@ public class DropListener implements Listener {
 
         Block block = event.getBlock();
 
-        Material source = block.getType();
+        MaterialData source = block.getState().getData();
 
         // Get optional drops from source blocks.
         Set<Item> sourceDrops = this.itemCache.getDrops(source);
         if (sourceDrops.isEmpty()) {
+            player.sendMessage("srcdrops-isEmpty");
             return;
         }
 
@@ -91,6 +93,7 @@ public class DropListener implements Listener {
         int blockHeight = block.getY();
 
         sourceDrops.forEach(item -> {
+            player.sendMessage("foreach - " + item.getId());
             Entry<Integer, Integer> height = item.getHeight();
             if (blockHeight < height.getKey() || blockHeight > height.getValue()) {
                 return;
@@ -109,7 +112,7 @@ public class DropListener implements Listener {
                 amount = random.nextInt(item.getAmount().getKey(), item.getAmount().getValue());
             }
 
-            ItemStack droppedItem = new ItemStack(item.getType(), amount);
+            ItemStack droppedItem = item.getType().toItemStack(amount);
 
             ItemMeta droppedItemMeta = droppedItem.getItemMeta();
 

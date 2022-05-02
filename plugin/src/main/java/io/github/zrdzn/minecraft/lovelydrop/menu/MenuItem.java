@@ -16,8 +16,8 @@
 package io.github.zrdzn.minecraft.lovelydrop.menu;
 
 import io.github.zrdzn.minecraft.lovelydrop.item.Item;
-import org.bukkit.Material;
 import org.bukkit.event.inventory.ClickType;
+import org.bukkit.material.MaterialData;
 
 import java.util.List;
 import java.util.Map;
@@ -25,7 +25,7 @@ import java.util.Map.Entry;
 
 public class MenuItem {
 
-    private final Material type;
+    private final MaterialData type;
     private final String displayName;
     private final List<String> lore;
     private final boolean showEnchantments;
@@ -33,7 +33,7 @@ public class MenuItem {
     private final Entry<Integer, Integer> slot;
     private final Item dropItem;
 
-    public MenuItem(Material type, String displayName, List<String> lore, boolean showEnchantments,
+    public MenuItem(MaterialData type, String displayName, List<String> lore, boolean showEnchantments,
                     Map<ClickType, MenuAction> action, Entry<Integer, Integer> slot, Item dropItem) {
         this.type = type;
         this.displayName = displayName;
@@ -44,7 +44,7 @@ public class MenuItem {
         this.dropItem = dropItem;
     }
 
-    public Material getType() {
+    public MaterialData getType() {
         return this.type;
     }
 

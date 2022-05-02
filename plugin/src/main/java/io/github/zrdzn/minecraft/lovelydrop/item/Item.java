@@ -17,6 +17,7 @@ package io.github.zrdzn.minecraft.lovelydrop.item;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.material.MaterialData;
 
 import java.util.List;
 import java.util.Map;
@@ -25,8 +26,8 @@ import java.util.Map.Entry;
 public class Item {
 
     private final String id;
-    private final Material type;
-    private final Material source;
+    private final MaterialData type;
+    private final MaterialData source;
     private final double chance;
     private final Entry<Integer, Integer> amount;
     private final int experience;
@@ -35,8 +36,9 @@ public class Item {
     private final List<String> lore;
     private final Map<Enchantment, Integer> enchantments;
 
-    public Item(String id, Material type, Material source, double chance, Entry<Integer, Integer> amount, int experience,
-                Entry<Integer, Integer> height, String displayName, List<String> lore, Map<Enchantment, Integer> enchantments) {
+    public Item(String id, MaterialData type, MaterialData source, double chance,
+                Entry<Integer, Integer> amount, int experience, Entry<Integer, Integer> height, String displayName,
+                List<String> lore, Map<Enchantment, Integer> enchantments) {
         this.id = id;
         this.type = type;
         this.source = source;
@@ -53,11 +55,11 @@ public class Item {
         return this.id;
     }
 
-    public Material getType() {
+    public MaterialData getType() {
         return this.type;
     }
 
-    public Material getSource() {
+    public MaterialData getSource() {
         return this.source;
     }
 

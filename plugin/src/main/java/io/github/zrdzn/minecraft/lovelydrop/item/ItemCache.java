@@ -16,6 +16,7 @@
 package io.github.zrdzn.minecraft.lovelydrop.item;
 
 import org.bukkit.Material;
+import org.bukkit.material.MaterialData;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -27,7 +28,7 @@ import java.util.Set;
 
 public class ItemCache {
 
-    private final Map<Material, Set<Item>> drops = new HashMap<>();
+    private final Map<MaterialData, Set<Item>> drops = new HashMap<>();
 
     public void addDrop(Item item) {
         this.drops.computeIfAbsent(item.getSource(), key -> new HashSet<>()).add(item);
@@ -40,12 +41,12 @@ public class ItemCache {
             .findFirst();
     }
 
-    public Set<Item> getDrops(Material source) {
+    public Set<Item> getDrops(MaterialData source) {
         Set<Item> items = this.drops.getOrDefault(source, Collections.emptySet());
         return items.isEmpty() ? items : new HashSet<>(items);
     }
 
-    public Map<Material, Set<Item>> getDrops() {
+    public Map<MaterialData, Set<Item>> getDrops() {
         return this.drops;
     }
 
