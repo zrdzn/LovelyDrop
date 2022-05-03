@@ -39,13 +39,14 @@ menu:
     disabled: "&coff"
 
 
-  # Text placeholder which stands for {AMOUNT} that could be used in items section.
+  # Text placeholder which stands for {AMOUNT-{LEVEL}} that could be used in items section. Placeholder {LEVEL} stands
+  # for specific fortune enchantment level.
   amount-format:
     # Used when the drop's amount is one number.
-    singular: "&e{AMOUNT}"
+    singular: "&e{AMOUNT-{LEVEL}}"
 
     # Used when the drop's amount is a range of two numbers.
-    plural: "&e{AMOUNT-MIN}&8-&e{AMOUNT-MAX}"
+    plural: "&e{AMOUNT-{LEVEL}-MIN}&8-&e{AMOUNT-{LEVEL}-MAX}"
 
 
   # Text placeholder which stands for {HEIGHT} that could be used in items section.
@@ -89,14 +90,14 @@ menu:
   #        show-enchantments: true             - whether to show the dropped item enchantments (only applicable if
   #                                            it is assigned to a drop item)
   #
-  # Available placeholders:
-  # {CHANCE}            - a chance of the item to drop;
-  # {AMOUNT}            - a formatted text that will display amount/s of the drop, it can be configured
-  #                     in the amount-format section;
-  # {EXPERIENCE}        - an experience that will be given to the player on the successful drop;
-  # {SWITCH}            - a text that will be shown depending on the drop switch status;
-  # {SWITCH_INVENTORY}  - a text that will be shown depending on the inventory drop switch status;
-  # {HEIGHT}            - a text that will be shown depending on the customized height range
+  # Available placeholders ({LEVEL} placeholder stands for fortune enchantment level, replace it with number 0-3):
+  # {CHANCE-{LEVEL}}            - a chance of the item to drop;
+  # {AMOUNT-{LEVEL}}            - a formatted text that will display amount/s of the drop, it can be configured
+  #                             in the amount-format section;
+  # {EXPERIENCE-{LEVEL}}        - an experience that will be given to the player on the successful drop;
+  # {SWITCH}                    - a text that will be shown depending on the drop switch status;
+  # {SWITCH_INVENTORY}          - a text that will be shown depending on the inventory drop switch status;
+  # {HEIGHT}                    - a text that will be shown depending on the customized height range
   items:
     close:
       type: barrier
@@ -126,12 +127,25 @@ menu:
       meta:
         displayname: "&a&lEpic Sword"
         lore:
-          - " &6Chance: &e{CHANCE}%"
-          - " &6Amount: {AMOUNT}"
-          - " &6Experience: &e{EXPERIENCE}"
+          - " &6Chance: &e{CHANCE-0}%"
+          - " &6Amount: {AMOUNT-0}"
+          - " &6Experience: &e{EXPERIENCE-0}"
           - " &6Height: {HEIGHT}"
           - " &6Status: {SWITCH}"
           - " &6To inventory: {SWITCH_INVENTORY}"
+          - " &6Fortune Level:"
+          - "   &6Level 1:"
+          - "     &6Chance: &e{CHANCE-1}%"
+          - "     &6Amount: {AMOUNT-1}"
+          - "     &6Experience: &e{EXPERIENCE-1}"
+          - "   &6Level 2:"
+          - "     &6Chance: &e{CHANCE-2}%"
+          - "     &6Amount: {AMOUNT-2}"
+          - "     &6Experience: &e{EXPERIENCE-2}"
+          - "   &6Level 3:"
+          - "     &6Chance: &e{CHANCE-3}%"
+          - "     &6Amount: {AMOUNT-3}"
+          - "     &6Experience: &e{EXPERIENCE-3}"
           - ""
           - "&8-------------------------------------"
           - " &aLeft click to switch the drop."
@@ -152,9 +166,9 @@ menu:
       meta:
         displayname: "&e&lGold"
         lore:
-          - " &6Chance: &e{CHANCE}%"
-          - " &6Amount: {AMOUNT}"
-          - " &6Experience: &e{EXPERIENCE}"
+          - " &6Chance: &e{CHANCE-0}%"
+          - " &6Amount: {AMOUNT-0}"
+          - " &6Experience: &e{EXPERIENCE-0}"
           - " &6Height: {HEIGHT}"
           - " &6Status: {SWITCH}"
           - " &6To inventory: {SWITCH_INVENTORY}"
@@ -178,9 +192,9 @@ menu:
       meta:
         displayname: "&b&lDiamond"
         lore:
-          - " &6Chance: &e{CHANCE}%"
-          - " &6Amount: {AMOUNT}"
-          - " &6Experience: &e{EXPERIENCE}"
+          - " &6Chance: &e{CHANCE-0}%"
+          - " &6Amount: {AMOUNT-0}"
+          - " &6Experience: &e{EXPERIENCE-0}"
           - " &6Height: {HEIGHT}"
           - " &6Status: {SWITCH}"
           - " &6To inventory: {SWITCH_INVENTORY}"
@@ -204,9 +218,9 @@ menu:
       meta:
         displayname: "&c&lTNT"
         lore:
-          - " &6Chance: &e{CHANCE}%"
-          - " &6Amount: {AMOUNT}"
-          - " &6Experience: &e{EXPERIENCE}"
+          - " &6Chance: &e{CHANCE-0}%"
+          - " &6Amount: {AMOUNT-0}"
+          - " &6Experience: &e{EXPERIENCE-0}"
           - " &6Height: {HEIGHT}"
           - " &6Status: {SWITCH}"
           - " &6To inventory: {SWITCH_INVENTORY}"
@@ -230,9 +244,9 @@ menu:
       meta:
         displayname: "&a&lEmerald"
         lore:
-          - " &6Chance: &e{CHANCE}%"
-          - " &6Amount: {AMOUNT}"
-          - " &6Experience: &e{EXPERIENCE}"
+          - " &6Chance: &e{CHANCE-0}%"
+          - " &6Amount: {AMOUNT-0}"
+          - " &6Experience: &e{EXPERIENCE-0}"
           - " &6Height: {HEIGHT}"
           - " &6Status: {SWITCH}"
           - " &6To inventory: {SWITCH_INVENTORY}"
@@ -256,9 +270,9 @@ menu:
       meta:
         displayname: "&7&lObsidian"
         lore:
-          - " &6Chance: &e{CHANCE}%"
-          - " &6Amount: {AMOUNT}"
-          - " &6Experience: &e{EXPERIENCE}"
+          - " &6Chance: &e{CHANCE-0}%"
+          - " &6Amount: {AMOUNT-0}"
+          - " &6Experience: &e{EXPERIENCE-0}"
           - " &6Height: {HEIGHT}"
           - " &6Status: {SWITCH}"
           - " &6To inventory: {SWITCH_INVENTORY}"
@@ -279,12 +293,13 @@ menu:
 #   type: diamond_sword                 - type of the drop;
 #   source: stone                       - source block type from which 'type' should be dropped. If you want to use legacy materials
 #                                       just format it - material:data, e.g. stone:5 for andesite;
-#   chance: 20                          - percentage chance of the drop;
-#   amount: 1:2                         - minimum and maximum amount of the drop (if ':' is not found, it will use only first number);
-#   experience: 175                     - experience given to the player when he has successful drop;
 #   height: 0:256                       - height range where the item should be dropped;
-#   fortune:                            - optional fortune section, all properties will be applied to the drop depending on the current
-#                                       pickaxe fortune level, if none found it will use values provided above;
+#   fortune:                            - fortune section, all properties will be applied to the drop depending on the current
+#                                       pickaxe fortune level, it must contain at least one section;
+#     0:
+#       chance: 20                      - percentage chance of the drop;
+#       amount: "1:2"                   - minimum and maximum amount of the drop (if ':' is not found, it will use only first number);
+#       experience: 175                 - experience given to the player when he has successful drop;
 #     1:
 #       chance: 30
 #       amount: 3
@@ -293,6 +308,10 @@ menu:
 #       chance: 45
 #       amount: "3:4"
 #       experience: 225
+#     3:
+#       chance: 50
+#       amount: 5
+#       experience: 250
 #   meta:
 #     displayname: "&a&lEpic Sword"     - display name of the drop;
 #     lore:                             - lore of the drop;
@@ -312,10 +331,26 @@ drops:
   diamond-sword:
     type: diamond_sword
     source: stone
-    chance: 20
-    amount: "1:2"
-    experience: 175
     height: "0:256"
+
+    fortune:
+      0:
+        chance: 20
+        amount: "1:2"
+        experience: 175
+      1:
+        chance: 30
+        amount: 3
+        experience: 200
+      2:
+        chance: 45
+        amount: "3:4"
+        experience: 225
+      3:
+        chance: 50
+        amount: 5
+        experience: 250
+
     meta:
       displayname: "&a&lEpic Sword"
       lore:
@@ -326,10 +361,14 @@ drops:
   gold:
     type: gold_ingot
     source: stone
-    chance: 60
-    amount: "1:5"
-    experience: 20
     height: "-50:100"
+
+    fortune:
+      0:
+        chance: 60
+        amount: "1:5"
+        experience: 20
+
     meta:
       displayname: "&6Gold"
       lore:
@@ -337,31 +376,43 @@ drops:
   diamond:
     type: diamond
     source: stone
-    chance: 50
-    amount: "1:3"
-    experience: 100
     height: "-20:50"
+
+    fortune:
+      0:
+        chance: 50
+        amount: "1:3"
+        experience: 100
   tnt:
     type: tnt
     source: stone
-    chance: 20
-    amount: 2
-    experience: 150
     height: "0:256"
+
+    fortune:
+      0:
+        chance: 20
+        amount: 2
+        experience: 150
   emerald:
     type: emerald
     source: stone
-    chance: 10
-    amount: "1:4"
-    experience: 200
     height: "30:60"
+
+    fortune:
+      0:
+        chance: 10
+        amount: "1:4"
+        experience: 200
   obsidian:
     type: obsidian
     source: stone
-    chance: 20
-    amount: 3
-    experience: 135
     height: "0:256"
+
+    fortune:
+      0:
+        chance: 20
+        amount: 3
+        experience: 135
 
 
 # All messages that can be sent by plugin to players.

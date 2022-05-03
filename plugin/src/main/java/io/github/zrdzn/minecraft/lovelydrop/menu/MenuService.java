@@ -20,6 +20,7 @@ import dev.triumphteam.gui.components.InteractionModifier;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
 import io.github.zrdzn.minecraft.lovelydrop.drop.DropItem;
+import io.github.zrdzn.minecraft.lovelydrop.drop.DropProperty;
 import io.github.zrdzn.minecraft.lovelydrop.message.MessageService;
 import io.github.zrdzn.minecraft.lovelydrop.user.User;
 import io.github.zrdzn.minecraft.lovelydrop.user.UserCache;
@@ -27,6 +28,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -96,47 +99,55 @@ public class MenuService {
                 return;
             }
 
-            Entry<Integer, Integer> amount = dropItem.getAmount();
-            String minimumAmount = String.valueOf(amount.getKey());
-            String maximumAmount = String.valueOf(amount.getValue());
-
-            Entry<String, String> amountFormat = this.menu.getAmountFormat();
+            Map<Integer, DropProperty> properties = new HashMap<>(dropItem.getProperties());
 
             Entry<Integer, Integer> height = dropItem.getHeight();
             String minimumHeight = String.valueOf(height.getKey());
             String maximumHeight = String.valueOf(height.getValue());
             Entry<String, String> heightFormat = this.menu.getHeightFormat();
 
-            // Set lore depending on the amount setting.
-            List<String> lore = item.getLore().stream()
-                .map(line -> {
-                    String finalAmount;
-                    if (minimumAmount.equals(maximumAmount)) {
-                        finalAmount = amountFormat.getKey()
-                            .replace("{AMOUNT}", minimumAmount);
-                    } else {
-                        finalAmount = amountFormat.getValue()
-                            .replace("{AMOUNT-MIN}", minimumAmount)
-                            .replace("{AMOUNT-MAX}", String.valueOf(maximumAmount));
-                    }
+            List<String> lore = new ArrayList<>();
+            for (Entry<Integer, DropProperty> propertyEntry : properties.entrySet()) {
+                DropProperty property = propertyEntry.getValue();
 
-                    String finalHeight;
-                    if (minimumHeight.equals(maximumHeight)) {
-                        finalHeight = heightFormat.getKey()
-                            .replace("{HEIGHT}", minimumHeight);
-                    } else {
-                        finalHeight = heightFormat.getValue()
-                            .replace("{HEIGHT-MIN}", minimumHeight)
-                            .replace("{HEIGHT-MAX}", maximumHeight);
-                    }
+                Entry<Integer, Integer> amount = property.getAmount();
+                String minimumAmount = String.valueOf(amount.getKey());
+                String maximumAmount = String.valueOf(amount.getValue());
+                Entry<String, String> amountFormat = this.menu.getAmountFormat();
 
-                    return line
-                        .replace("{CHANCE}", String.valueOf(dropItem.getChance()))
-                        .replace("{AMOUNT}", finalAmount)
-                        .replace("{EXPERIENCE}", String.valueOf(dropItem.getExperience()))
-                        .replace("{HEIGHT}", finalHeight);
-                })
-                .collect(Collectors.toList());
+                // Set lore depending on the amount setting.
+                lore = item.getLore().stream()
+                    .map(line -> {
+                        player.sendMessage(line);
+                        for (int level = 0; level < properties.size(); level++) {
+                            line = line
+                                .replace("{CHANCE-" + level + "}", String.valueOf(property.getChance()))
+                                .replace("{EXPERIENCE-" + level + "}", String.valueOf(property.getExperience()));
+
+                            String placeholder = "{AMOUNT-" + level + "}";
+                            if (minimumAmount.equals(maximumAmount)) {
+                                line = line.replace(placeholder, amountFormat.getKey().replace(placeholder, minimumAmount));
+                            } else {
+                                line = line.replace(placeholder, amountFormat.getValue()
+                                    .replace("{AMOUNT-MIN}", minimumAmount)
+                                    .replace("{AMOUNT-MAX}", String.valueOf(maximumAmount)));
+                            }
+                        }
+
+                        String finalHeight;
+                        if (minimumHeight.equals(maximumHeight)) {
+                            finalHeight = heightFormat.getKey()
+                                .replace("{HEIGHT}", minimumHeight);
+                        } else {
+                            finalHeight = heightFormat.getValue()
+                                .replace("{HEIGHT-MIN}", minimumHeight)
+                                .replace("{HEIGHT-MAX}", maximumHeight);
+                        }
+
+                        return line.replace("{HEIGHT}", finalHeight);
+                    })
+                    .collect(Collectors.toList());
+            }
 
             Entry<String, String> dropSwitch = this.menu.getDropSwitch();
             Entry<String, String> inventoryDropSwitch = this.menu.getInventoryDropSwitch();
@@ -161,6 +172,7 @@ public class MenuService {
             GuiItem menuItem = menuItemBuilder.asGuiItem();
 
             // Perform specific actions when player clicks the item.
+            List<String> finalLore = lore;
             menuItem.setAction(event -> {
                 String itemId = dropItem.getId();
 
@@ -205,7 +217,7 @@ public class MenuService {
                 }
 
                 ItemStack actionItem = ItemBuilder.from(menuItem.getItemStack())
-                    .setLore(lore.stream()
+                    .setLore(finalLore.stream()
                         .map(line -> line
                             .replace("{SWITCH}", !user.hasDisabledDrop(dropItem) ? dropSwitch.getKey() : dropSwitch.getValue())
                             .replace("{SWITCH_INVENTORY}", user.hasSwitchedInventoryDrop(dropItem.getId()) ?
