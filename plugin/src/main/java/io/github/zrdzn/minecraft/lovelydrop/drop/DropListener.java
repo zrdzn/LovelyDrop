@@ -93,13 +93,20 @@ public class DropListener implements Listener {
 
         int blockHeight = block.getY();
 
+        int fortuneLevel = pickaxe.getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS);
+
         sourceDrops.forEach(item -> {
             Entry<Integer, Integer> height = item.getHeight();
             if (blockHeight < height.getKey() || blockHeight > height.getValue()) {
                 return;
             }
 
-            DropProperty property = item.getProperties().get(pickaxe.getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS));
+            Map<Integer, DropProperty> properties = item.getProperties();
+
+            DropProperty property = properties.getOrDefault(fortuneLevel, properties.get(0));
+            if (property == null) {
+                return;
+            }
 
             if (property.getChance() <= Math.random() * 100.0D) {
                 return;
