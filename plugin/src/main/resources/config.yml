@@ -39,14 +39,13 @@ menu:
     disabled: "&coff"
 
 
-  # Text placeholder which stands for {AMOUNT-{LEVEL}} that could be used in items section. Placeholder {LEVEL} stands
-  # for specific fortune enchantment level.
+  # Text placeholder which stands for {AMOUNT-{LEVEL}} that could be used in items section.
   amount-format:
     # Used when the drop's amount is one number.
-    singular: "&e{AMOUNT-{LEVEL}}"
+    singular: "&e{AMOUNT}"
 
     # Used when the drop's amount is a range of two numbers.
-    plural: "&e{AMOUNT-{LEVEL}-MIN}&8-&e{AMOUNT-{LEVEL}-MAX}"
+    plural: "&e{AMOUNT-MIN}&8-&e{AMOUNT-MAX}"
 
 
   # Text placeholder which stands for {HEIGHT} that could be used in items section.
@@ -134,15 +133,15 @@ menu:
           - " &6Status: {SWITCH}"
           - " &6To inventory: {SWITCH_INVENTORY}"
           - " &6Fortune Level:"
-          - "   &6Level 1:"
+          - "   &aLevel 1:"
           - "     &6Chance: &e{CHANCE-1}%"
           - "     &6Amount: {AMOUNT-1}"
           - "     &6Experience: &e{EXPERIENCE-1}"
-          - "   &6Level 2:"
+          - "   &aLevel 2:"
           - "     &6Chance: &e{CHANCE-2}%"
           - "     &6Amount: {AMOUNT-2}"
           - "     &6Experience: &e{EXPERIENCE-2}"
-          - "   &6Level 3:"
+          - "   &aLevel 3:"
           - "     &6Chance: &e{CHANCE-3}%"
           - "     &6Amount: {AMOUNT-3}"
           - "     &6Experience: &e{EXPERIENCE-3}"

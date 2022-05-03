@@ -64,14 +64,8 @@ public class DropItemParser {
             throw new InvalidConfigurationException("Section 'fortune' must exist and have at least 1 section.");
         }
 
-        // TODO to be removed
-        logger.warning(fortunes.getCurrentPath());
-        logger.warning(String.valueOf(fortunes.getKeys(false).size()));
-
         Map<Integer, DropProperty> properties = new HashMap<>();
         for (String levelRaw : fortunes.getKeys(false)) {
-            // TODO to be removed
-            logger.warning(levelRaw);
             int level;
             try {
                 level = Integer.parseUnsignedInt(levelRaw);

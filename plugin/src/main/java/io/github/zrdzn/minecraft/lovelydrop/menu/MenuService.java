@@ -28,8 +28,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -99,54 +97,55 @@ public class MenuService {
                 return;
             }
 
-            Map<Integer, DropProperty> properties = new HashMap<>(dropItem.getProperties());
-
+            Entry<String, String> heightFormat = this.menu.getHeightFormat();
             Entry<Integer, Integer> height = dropItem.getHeight();
             String minimumHeight = String.valueOf(height.getKey());
             String maximumHeight = String.valueOf(height.getValue());
-            Entry<String, String> heightFormat = this.menu.getHeightFormat();
 
-            List<String> lore = new ArrayList<>();
-            for (Entry<Integer, DropProperty> propertyEntry : properties.entrySet()) {
-                DropProperty property = propertyEntry.getValue();
+            List<String> lore = item.getLore().stream()
+                .map(line -> {
+                    String formattedHeight;
+                    if (minimumHeight.equals(maximumHeight)) {
+                        formattedHeight = heightFormat.getKey()
+                            .replace("{HEIGHT}", minimumHeight);
+                    } else {
+                        formattedHeight = heightFormat.getValue()
+                            .replace("{HEIGHT-MIN}", minimumHeight)
+                            .replace("{HEIGHT-MAX}", maximumHeight);
+                    }
 
+                    return line.replace("{HEIGHT}", formattedHeight);
+                })
+                .collect(Collectors.toList());
+
+            Map<Integer, DropProperty> properties = dropItem.getProperties();
+            for (int level = 0; level < properties.size(); level++) {
+                DropProperty property = properties.get(level);
+
+                Entry<String, String> amountFormat = this.menu.getAmountFormat();
                 Entry<Integer, Integer> amount = property.getAmount();
                 String minimumAmount = String.valueOf(amount.getKey());
                 String maximumAmount = String.valueOf(amount.getValue());
-                Entry<String, String> amountFormat = this.menu.getAmountFormat();
 
-                // Set lore depending on the amount setting.
-                lore = item.getLore().stream()
-                    .map(line -> {
-                        player.sendMessage(line);
-                        for (int level = 0; level < properties.size(); level++) {
-                            line = line
-                                .replace("{CHANCE-" + level + "}", String.valueOf(property.getChance()))
-                                .replace("{EXPERIENCE-" + level + "}", String.valueOf(property.getExperience()));
+                for (int lineNumber = 0; lineNumber < lore.size(); lineNumber++) {
+                    String line = lore.get(lineNumber)
+                        .replace(String.format("{CHANCE-%d}", level), String.valueOf(property.getChance()))
+                        .replace(String.format("{EXPERIENCE-%d}", level), String.valueOf(property.getExperience()));
 
-                            String placeholder = "{AMOUNT-" + level + "}";
-                            if (minimumAmount.equals(maximumAmount)) {
-                                line = line.replace(placeholder, amountFormat.getKey().replace(placeholder, minimumAmount));
-                            } else {
-                                line = line.replace(placeholder, amountFormat.getValue()
-                                    .replace("{AMOUNT-MIN}", minimumAmount)
-                                    .replace("{AMOUNT-MAX}", String.valueOf(maximumAmount)));
-                            }
-                        }
+                    String placeholder = String.format("{AMOUNT-%d}", level);
+                    if (minimumAmount.equals(maximumAmount)) {
+                        line = line
+                            .replace(placeholder, amountFormat.getKey()
+                                .replace("{AMOUNT}", minimumAmount));
+                    } else {
+                        line = line
+                            .replace(placeholder, amountFormat.getValue()
+                                .replace("{AMOUNT-MIN}", minimumAmount)
+                                .replace("{AMOUNT-MAX}", String.valueOf(maximumAmount)));
+                    }
 
-                        String finalHeight;
-                        if (minimumHeight.equals(maximumHeight)) {
-                            finalHeight = heightFormat.getKey()
-                                .replace("{HEIGHT}", minimumHeight);
-                        } else {
-                            finalHeight = heightFormat.getValue()
-                                .replace("{HEIGHT-MIN}", minimumHeight)
-                                .replace("{HEIGHT-MAX}", maximumHeight);
-                        }
-
-                        return line.replace("{HEIGHT}", finalHeight);
-                    })
-                    .collect(Collectors.toList());
+                    lore.set(lineNumber, line);
+                }
             }
 
             Entry<String, String> dropSwitch = this.menu.getDropSwitch();
