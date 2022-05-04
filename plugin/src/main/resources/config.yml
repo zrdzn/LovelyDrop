@@ -132,6 +132,7 @@ menu:
           - " &6Height: {HEIGHT}"
           - " &6Status: {SWITCH}"
           - " &6To inventory: {SWITCH_INVENTORY}"
+          - ""
           - " &6Fortune Level:"
           - "   &aLevel 1:"
           - "     &6Chance: &e{CHANCE-1}%"
