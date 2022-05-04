@@ -59,21 +59,40 @@ public class DropItemParser {
 
         MaterialData sourceType = ParserHelper.parseLegacyMaterial(sourceTypeRaw);
 
-        double chance = section.getDouble("chance");
-        if (chance <= 0.0D) {
-            throw new InvalidConfigurationException("Key 'chance' cannot be 0 and lower.");
+        ConfigurationSection fortunes = section.getConfigurationSection("fortune");
+        if (fortunes == null) {
+            throw new InvalidConfigurationException("Section 'fortune' must exist and have at least 1 section.");
         }
 
-        String amountRaw = section.getString("amount");
-        if (amountRaw == null) {
-            throw new InvalidConfigurationException("Key 'amount' is null.");
-        }
+        Map<Integer, DropProperty> properties = new HashMap<>();
+        for (String levelRaw : fortunes.getKeys(false)) {
+            int level;
+            try {
+                level = Integer.parseUnsignedInt(levelRaw);
+            } catch (NumberFormatException exception) {
+                level = 0;
+            }
 
-        Entry<Integer, Integer> amounts = ParserHelper.parseRange(amountRaw, false);
+            ConfigurationSection fortune = fortunes.getConfigurationSection(levelRaw);
 
-        int experience = section.getInt("experience");
-        if (experience < 0 ) {
-            throw new InvalidConfigurationException("Key 'experience' cannot be lower than 0.");
+            double chance = fortune.getDouble("chance");
+            if (chance <= 0.0D) {
+                throw new InvalidConfigurationException("Key 'chance' cannot be 0 and lower.");
+            }
+
+            String amountRaw = fortune.getString("amount");
+            if (amountRaw == null) {
+                throw new InvalidConfigurationException("Key 'amount' is null.");
+            }
+
+            Entry<Integer, Integer> amounts = ParserHelper.parseRange(amountRaw, false);
+
+            int experience = fortune.getInt("experience");
+            if (experience < 0 ) {
+                throw new InvalidConfigurationException("Key 'experience' cannot be lower than 0.");
+            }
+
+            properties.put(level, new DropProperty(chance, amounts, experience));
         }
 
         String heightRaw = section.getString("height");
@@ -111,8 +130,7 @@ public class DropItemParser {
             enchantments.put(enchantment, level);
         }
 
-        return new DropItem(section.getName(), type, sourceType, chance, amounts, experience, height, displayName, lore,
-            enchantments);
+        return new DropItem(section.getName(), type, sourceType, properties, height, displayName, lore, enchantments);
     }
 
     public List<DropItem> parseMany(ConfigurationSection section) throws InvalidConfigurationException {

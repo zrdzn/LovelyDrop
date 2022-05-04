@@ -60,6 +60,11 @@ public class DropListener implements Listener {
     public void onSourceBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
 
+        ItemStack pickaxe = player.getItemInHand();
+        if (!pickaxe.getType().name().contains("PICKAXE")) {
+            return;
+        }
+
         Block block = event.getBlock();
 
         MaterialData source = block.getState().getData();
@@ -88,23 +93,32 @@ public class DropListener implements Listener {
 
         int blockHeight = block.getY();
 
+        int fortuneLevel = pickaxe.getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS);
+
         sourceDrops.forEach(item -> {
             Entry<Integer, Integer> height = item.getHeight();
             if (blockHeight < height.getKey() || blockHeight > height.getValue()) {
                 return;
             }
 
-            if (item.getChance() <= Math.random() * 100.0D) {
+            Map<Integer, DropProperty> properties = item.getProperties();
+
+            DropProperty property = properties.getOrDefault(fortuneLevel, properties.get(0));
+            if (property == null) {
                 return;
             }
 
-            player.giveExp(item.getExperience());
+            if (property.getChance() <= Math.random() * 100.0D) {
+                return;
+            }
 
-            Entry<Integer, Integer> amountEntry = item.getAmount();
+            player.giveExp(property.getExperience());
+
+            Entry<Integer, Integer> amountEntry = property.getAmount();
 
             int amount = amountEntry.getKey();
             if (amount != amountEntry.getValue()) {
-                amount = random.nextInt(item.getAmount().getKey(), item.getAmount().getValue());
+                amount = random.nextInt(amountEntry.getKey(), amountEntry.getValue());
             }
 
             ItemStack droppedItem = item.getType().toItemStack(amount);

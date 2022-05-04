@@ -9,10 +9,11 @@ LovelyDrop is a Minecraft plugin that adds a drop system to a server. You can cu
 - The fully customizable GUI with items that can perform few actions when clicked
   - Set a title and rows for the menu
   - Set an optional filler type and a display name for it
-  - Set a display name and a lore for the menu item with few available placeholders
-    - **{CHANCE}** - a chance of the item to drop
-    - **{AMOUNT}** - a formatted amount of the item that could be dropped
-    - **{EXPERIENCE}** - an experience that will be given to the player
+  - Set a display name and a lore for the menu item with few available placeholders, {LEVEL} placeholder is a specific
+fortune level (0-3)
+    - **{CHANCE-{LEVEL}}** - a chance of the item to drop
+    - **{AMOUNT-{LEVEL}}** - a formatted amount of the item that could be dropped
+    - **{EXPERIENCE-{LEVEL}}** - an experience that will be given to the player
     - **{SWITCH}** - a text that will be shown depending on the drop switch status
     - **{SWITCH_INVENTORY}** - a text that will be shown depending on the inventory drop switch status
     - **{HEIGHT}** - a text that will be shown depending on the customized height range
@@ -34,6 +35,7 @@ LovelyDrop is a Minecraft plugin that adds a drop system to a server. You can cu
   - Set a **height** where the item could be dropped
   - Set an **amount** of possible items of the drop
   - Set an **enchantments** of the drop
+  - Set a **fortune section** where you can customize chance, experience and amount depending on the pickaxe's fortune
 ## Configuration
 The whole configuration of the plugin is explained in this
 [default configuration file](https://github.com/zrdzn/LovelyDrop/blob/master/plugin/src/main/resources/config.yml).

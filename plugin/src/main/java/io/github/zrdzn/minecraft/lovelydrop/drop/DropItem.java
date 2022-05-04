@@ -27,23 +27,19 @@ public class DropItem {
     private final String id;
     private final MaterialData type;
     private final MaterialData source;
-    private final double chance;
-    private final Entry<Integer, Integer> amount;
-    private final int experience;
+    private final Map<Integer, DropProperty> properties;
     private final Entry<Integer, Integer> height;
     private final String displayName;
     private final List<String> lore;
     private final Map<Enchantment, Integer> enchantments;
 
-    public DropItem(String id, MaterialData type, MaterialData source, double chance, Entry<Integer, Integer> amount,
-                    int experience, Entry<Integer, Integer> height, String displayName, List<String> lore,
+    public DropItem(String id, MaterialData type, MaterialData source, Map<Integer, DropProperty> properties,
+                    Entry<Integer, Integer> height, String displayName, List<String> lore,
                     Map<Enchantment, Integer> enchantments) {
         this.id = id;
         this.type = type;
         this.source = source;
-        this.chance = chance;
-        this.amount = amount;
-        this.experience = experience;
+        this.properties = properties;
         this.height = height;
         this.displayName = displayName;
         this.lore = lore;
@@ -62,16 +58,8 @@ public class DropItem {
         return this.source;
     }
 
-    public double getChance() {
-        return this.chance;
-    }
-
-    public Entry<Integer, Integer> getAmount() {
-        return this.amount;
-    }
-
-    public int getExperience() {
-        return this.experience;
+    public Map<Integer, DropProperty> getProperties() {
+        return this.properties;
     }
 
     public Entry<Integer, Integer> getHeight() {
