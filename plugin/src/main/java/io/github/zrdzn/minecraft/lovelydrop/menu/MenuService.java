@@ -24,6 +24,7 @@ import io.github.zrdzn.minecraft.lovelydrop.drop.DropProperty;
 import io.github.zrdzn.minecraft.lovelydrop.message.MessageService;
 import io.github.zrdzn.minecraft.lovelydrop.user.User;
 import io.github.zrdzn.minecraft.lovelydrop.user.UserCache;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
@@ -106,15 +107,14 @@ public class MenuService {
                 .map(line -> {
                     String formattedHeight;
                     if (minimumHeight.equals(maximumHeight)) {
-                        formattedHeight = heightFormat.getKey()
-                            .replace("{HEIGHT}", minimumHeight);
+                        formattedHeight = StringUtils.replace(heightFormat.getKey(), "{HEIGHT}", minimumHeight);
                     } else {
-                        formattedHeight = heightFormat.getValue()
-                            .replace("{HEIGHT-MIN}", minimumHeight)
-                            .replace("{HEIGHT-MAX}", maximumHeight);
+                        formattedHeight = StringUtils.replaceEach(heightFormat.getValue(),
+                            new String[]{ "{HEIGHT-MIN}", "{HEIGHT-MAX}" },
+                            new String[]{ minimumHeight, maximumHeight });
                     }
 
-                    return line.replace("{HEIGHT}", formattedHeight);
+                    return StringUtils.replace(line, "{HEIGHT}", formattedHeight);
                 })
                 .collect(Collectors.toList());
 
@@ -128,20 +128,19 @@ public class MenuService {
                 String maximumAmount = String.valueOf(amount.getValue());
 
                 for (int lineNumber = 0; lineNumber < lore.size(); lineNumber++) {
-                    String line = lore.get(lineNumber)
-                        .replace(String.format("{CHANCE-%d}", level), String.valueOf(property.getChance()))
-                        .replace(String.format("{EXPERIENCE-%d}", level), String.valueOf(property.getExperience()));
+                    String line = StringUtils.replaceEach(lore.get(lineNumber),
+                        new String[]{ String.format("{CHANCE-%d", level), String.format("{EXPERIENCE-%d}", level) },
+                        new String[]{ String.valueOf(property.getChance()), String.valueOf(property.getExperience()) });
 
                     String placeholder = String.format("{AMOUNT-%d}", level);
                     if (minimumAmount.equals(maximumAmount)) {
-                        line = line
-                            .replace(placeholder, amountFormat.getKey()
-                                .replace("{AMOUNT}", minimumAmount));
+                        line = StringUtils.replace(line, placeholder,
+                            StringUtils.replace(amountFormat.getKey(), "{AMOUNT}", minimumAmount));
                     } else {
-                        line = line
-                            .replace(placeholder, amountFormat.getValue()
-                                .replace("{AMOUNT-MIN}", minimumAmount)
-                                .replace("{AMOUNT-MAX}", String.valueOf(maximumAmount)));
+                        line = StringUtils.replace(line, placeholder,
+                            StringUtils.replaceEach(amountFormat.getValue(),
+                                new String[]{ "{AMOUNT-MIN}", "{AMOUNT-MAX}" },
+                                new String[]{ minimumAmount, String.valueOf(maximumAmount) }));
                     }
 
                     lore.set(lineNumber, line);
@@ -149,18 +148,22 @@ public class MenuService {
             }
 
             Entry<String, String> dropSwitch = this.menu.getDropSwitch();
-            Entry<String, String> inventoryDropSwitch = this.menu.getInventoryDropSwitch();
+            Entry<String, String> inventorySwitch = this.menu.getInventoryDropSwitch();
 
             String dropId = dropItem.getId();
 
             ItemBuilder menuItemBuilder = ItemBuilder.from(item.getType().toItemStack(1))
                 .setName(item.getDisplayName())
                 .setLore(lore.stream()
-                    .map(line -> line
-                        .replace("{SWITCH}", !user.hasDisabledDrop(dropItem) ? dropSwitch.getKey() : dropSwitch.getValue())
-                        .replace("{SWITCH_INVENTORY}", user.hasSwitchedInventoryDrop(dropItem.getId()) ?
-                            inventoryDropSwitch.getKey() :
-                            inventoryDropSwitch.getValue()))
+                    .map(line -> {
+                        String[] replacements = {
+                            !user.hasDisabledDrop(dropItem) ? dropSwitch.getKey() : dropSwitch.getValue(),
+                            user.hasSwitchedInventoryDrop(dropItem.getId()) ? inventorySwitch.getKey() : inventorySwitch.getValue()
+                        };
+
+                        return StringUtils
+                            .replaceEach(line, new String[]{ "{SWITCH}", "{SWITCH_INVENTORY}" }, replacements);
+                    })
                     .collect(Collectors.toList()));
 
             // Add enchantments if they should be shown.
@@ -217,11 +220,15 @@ public class MenuService {
 
                 ItemStack actionItem = ItemBuilder.from(menuItem.getItemStack())
                     .setLore(finalLore.stream()
-                        .map(line -> line
-                            .replace("{SWITCH}", !user.hasDisabledDrop(dropItem) ? dropSwitch.getKey() : dropSwitch.getValue())
-                            .replace("{SWITCH_INVENTORY}", user.hasSwitchedInventoryDrop(dropItem.getId()) ?
-                                inventoryDropSwitch.getKey() :
-                                inventoryDropSwitch.getValue()))
+                        .map(line -> {
+                            String[] replacements = {
+                                !user.hasDisabledDrop(dropItem) ? dropSwitch.getKey() : dropSwitch.getValue(),
+                                user.hasSwitchedInventoryDrop(dropItem.getId()) ? inventorySwitch.getKey() : inventorySwitch.getValue()
+                            };
+
+                            return StringUtils
+                                .replaceEach(line, new String[]{ "{SWITCH}", "{SWITCH_INVENTORY}" }, replacements);
+                        })
                         .collect(Collectors.toList()))
                     .build();
 
