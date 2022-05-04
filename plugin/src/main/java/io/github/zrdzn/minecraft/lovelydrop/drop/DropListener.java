@@ -67,7 +67,17 @@ public class DropListener implements Listener {
 
         Block block = event.getBlock();
 
-        MaterialData source = block.getState().getData();
+        MaterialData source = null;
+        for (MaterialData legacyData : this.dropItemCache.getDrops().keySet()) {
+            if (block.getType() == legacyData.getItemType() && block.getData() == legacyData.getData()) {
+                source = legacyData;
+                break;
+            }
+        }
+
+        if (source == null) {
+            return;
+        }
 
         // Get optional drops from source blocks.
         Set<DropItem> sourceDrops = this.dropItemCache.getDrops(source);
