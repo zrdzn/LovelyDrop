@@ -16,9 +16,9 @@
 package io.github.zrdzn.minecraft.lovelydrop;
 
 import io.github.zrdzn.minecraft.lovelydrop.drop.DropCommand;
-import io.github.zrdzn.minecraft.lovelydrop.drop.DropListener;
 import io.github.zrdzn.minecraft.lovelydrop.drop.DropItemCache;
 import io.github.zrdzn.minecraft.lovelydrop.drop.DropItemParser;
+import io.github.zrdzn.minecraft.lovelydrop.drop.DropListener;
 import io.github.zrdzn.minecraft.lovelydrop.menu.Menu;
 import io.github.zrdzn.minecraft.lovelydrop.menu.MenuParser;
 import io.github.zrdzn.minecraft.lovelydrop.menu.MenuService;
@@ -50,6 +50,16 @@ public class LovelyDropPlugin extends JavaPlugin {
     private DropItemCache dropItemCache;
     private Menu menu;
     private MessageService messageService;
+
+    public static String color(String message) {
+        return ChatColor.translateAlternateColorCodes('&', message);
+    }
+
+    public static List<String> color(List<String> messages) {
+        return messages.stream()
+            .map(LovelyDropPlugin::color)
+            .collect(Collectors.toList());
+    }
 
     @Override
     public void onEnable() {
@@ -129,16 +139,6 @@ public class LovelyDropPlugin extends JavaPlugin {
         }
 
         return new V1_13SpigotAdapter();
-    }
-
-    public static String color(String message) {
-        return ChatColor.translateAlternateColorCodes('&', message);
-    }
-
-    public static List<String> color(List<String> messages) {
-        return messages.stream()
-            .map(LovelyDropPlugin::color)
-            .collect(Collectors.toList());
     }
 
 }

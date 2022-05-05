@@ -88,7 +88,7 @@ public class DropItemParser {
             Entry<Integer, Integer> amounts = ParserHelper.parseRange(amountRaw, false);
 
             int experience = fortune.getInt("experience");
-            if (experience < 0 ) {
+            if (experience < 0) {
                 throw new InvalidConfigurationException("Key 'experience' cannot be lower than 0.");
             }
 
