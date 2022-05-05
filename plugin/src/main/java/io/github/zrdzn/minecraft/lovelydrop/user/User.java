@@ -64,7 +64,8 @@ public class User {
             .filter(key -> key.getId().equals(itemId))
             .findAny()
             .orElseThrow(() ->
-                new IllegalArgumentException(String.format("Drop with the specified item id does not exist (%s).", itemId)));
+                new IllegalArgumentException(String.format("Drop with the specified item id does not exist (%s).",
+                    itemId)));
 
         this.inventoryDrops.replace(dropItem, newValue);
     }
@@ -74,7 +75,8 @@ public class User {
             .filter((entry) -> entry.getKey().getId().equals(itemId))
             .findAny()
             .orElseThrow(() ->
-                new IllegalArgumentException(String.format("Drop with the specified item id does not exist (%s).", itemId)))
+                new IllegalArgumentException(String.format("Drop with the specified item id does not exist (%s).",
+                    itemId)))
             .getValue();
     }
 

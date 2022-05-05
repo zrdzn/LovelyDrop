@@ -47,8 +47,8 @@ public class DropListener implements Listener {
     private final DropItemCache dropItemCache;
     private final UserCache userCache;
 
-    public DropListener(Logger logger, MessageService messageService, SpigotAdapter adapter, DropItemCache dropItemCache,
-                        UserCache userCache) {
+    public DropListener(Logger logger, MessageService messageService, SpigotAdapter adapter,
+                        DropItemCache dropItemCache, UserCache userCache) {
         this.logger = logger;
         this.messageService = messageService;
         this.adapter = adapter;

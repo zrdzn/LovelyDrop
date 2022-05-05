@@ -38,7 +38,8 @@ public class UserListener implements Listener {
         UUID playerId = event.getPlayer().getUniqueId();
 
         User user = new User(playerId);
-        this.dropItemCache.getDrops().values().forEach(items -> items.forEach(item -> user.addInventoryDrop(item, false)));
+        this.dropItemCache.getDrops().values().forEach(items ->
+            items.forEach(item -> user.addInventoryDrop(item, false)));
 
         this.userCache.addUser(playerId, user);
     }

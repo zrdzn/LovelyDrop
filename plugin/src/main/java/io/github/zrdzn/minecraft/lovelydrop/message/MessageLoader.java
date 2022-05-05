@@ -38,7 +38,8 @@ public class MessageLoader {
             throw new InvalidConfigurationException("Provided section is not 'messages'.");
         }
 
-        section.getKeys(false).forEach(key -> this.cache.addMessage(key, LovelyDropPlugin.color(section.getString(key))));
+        section.getKeys(false).forEach(key ->
+            this.cache.addMessage(key, LovelyDropPlugin.color(section.getString(key))));
     }
 
 }

@@ -158,7 +158,8 @@ public class MenuService {
                     .map(line -> {
                         String[] replacements = {
                             !user.hasDisabledDrop(dropItem) ? dropSwitch.getKey() : dropSwitch.getValue(),
-                            user.hasSwitchedInventoryDrop(dropItem.getId()) ? inventorySwitch.getKey() : inventorySwitch.getValue()
+                            user.hasSwitchedInventoryDrop(dropItem.getId()) ? inventorySwitch.getKey() :
+                                inventorySwitch.getValue()
                         };
 
                         return StringUtils
@@ -168,7 +169,8 @@ public class MenuService {
 
             // Add enchantments if they should be shown.
             if (item.isShowEnchantments()) {
-                dropItem.getEnchantments().forEach((enchantment, level) -> menuItemBuilder.enchant(enchantment, level, true));
+                dropItem.getEnchantments().forEach((enchantment, level) ->
+                    menuItemBuilder.enchant(enchantment, level, true));
             }
 
             GuiItem menuItem = menuItemBuilder.asGuiItem();
@@ -223,7 +225,8 @@ public class MenuService {
                         .map(line -> {
                             String[] replacements = {
                                 !user.hasDisabledDrop(dropItem) ? dropSwitch.getKey() : dropSwitch.getValue(),
-                                user.hasSwitchedInventoryDrop(dropItem.getId()) ? inventorySwitch.getKey() : inventorySwitch.getValue()
+                                user.hasSwitchedInventoryDrop(dropItem.getId()) ? inventorySwitch.getKey() :
+                                    inventorySwitch.getValue()
                             };
 
                             return StringUtils

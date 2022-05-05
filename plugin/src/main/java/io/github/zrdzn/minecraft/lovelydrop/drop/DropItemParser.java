@@ -117,8 +117,8 @@ public class DropItemParser {
         for (String enchantmentRaw : section.getStringList("meta.enchantments")) {
             String[] enchantmentRawArray = enchantmentRaw.split(":");
 
-            Enchantment enchantment = this.enchantmentMatcher.matchEnchantment(enchantmentRawArray[0])
-                .orElseThrow(() -> new InvalidConfigurationException("Key in 'enchantments' is an invalid enchantment."));
+            Enchantment enchantment = this.enchantmentMatcher.matchEnchantment(enchantmentRawArray[0]).orElseThrow(() ->
+                new InvalidConfigurationException("Key in 'enchantments' is an invalid enchantment."));
 
             int level;
             try {

@@ -62,8 +62,8 @@ public class LovelyDropPlugin extends JavaPlugin {
         PluginManager pluginManager = this.getServer().getPluginManager();
 
         pluginManager.registerEvents(new UserListener(this.userCache, this.dropItemCache), this);
-        pluginManager.registerEvents(new DropListener(this.logger, this.messageService, spigotAdapter, this.dropItemCache,
-            this.userCache), this);
+        pluginManager.registerEvents(new DropListener(this.logger, this.messageService, spigotAdapter,
+            this.dropItemCache, this.userCache), this);
 
         MenuService menuService = new MenuService(this.logger, this.messageService, this.menu, this.userCache);
 
@@ -87,7 +87,8 @@ public class LovelyDropPlugin extends JavaPlugin {
             EnchantmentMatcher enchantmentMatcher = spigotAdapter.getEnchantmentMatcher();
 
             DropItemParser dropItemParser = new DropItemParser(this.logger, enchantmentMatcher);
-            dropItemParser.parseMany(configuration.getConfigurationSection("drops")).forEach(this.dropItemCache::addDrop);
+            dropItemParser.parseMany(configuration.getConfigurationSection("drops"))
+                .forEach(this.dropItemCache::addDrop);
 
             MenuParser menuParser = new MenuParser(this.logger, this.dropItemCache);
             this.menu = menuParser.parse(configuration.getConfigurationSection("menu"));

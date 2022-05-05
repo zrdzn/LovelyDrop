@@ -24,7 +24,8 @@ import java.util.Map.Entry;
 
 public class ParserHelper {
 
-    public static Entry<Integer, Integer> parseRange(String input, boolean negative) throws InvalidConfigurationException {
+    public static Entry<Integer, Integer> parseRange(String input, boolean negative)
+        throws InvalidConfigurationException {
         String[] inputArray = input.split(":");
         if (inputArray.length == 0) {
             throw new InvalidConfigurationException("The value for the entry is empty.");
