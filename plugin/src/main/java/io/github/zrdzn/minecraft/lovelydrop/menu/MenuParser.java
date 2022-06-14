@@ -94,11 +94,14 @@ public class MenuParser {
 
         Entry<String, String> heightFormat = new AbstractMap.SimpleEntry<>(heightSingular, heightPlural);
 
+        boolean defaultDropToInventory = section.getBoolean("default-drop-to-inventory", true);
+
         MenuItemParser menuItemParser = new MenuItemParser(this.logger, this.dropItemCache);
 
         List<MenuItem> menuItems = menuItemParser.parseMany(section.getConfigurationSection("items"));
 
-        return new Menu(title, rows, filler, dropSwitch, inventorySwitch, amountFormat, heightFormat, menuItems);
+        return new Menu(title, rows, filler, dropSwitch, inventorySwitch, amountFormat, heightFormat, defaultDropToInventory,
+            menuItems);
     }
 
 }

@@ -57,6 +57,10 @@ menu:
     plural: "&e{HEIGHT-MIN}&8-&e{HEIGHT-MAX}"
 
 
+  # If drop to inventory should be enabled by default or not.
+  default-drop-to-inventory: true
+
+
   # All items that will appear in the menu. There are 3 available types of items in the menu.
   # They are based on the action that they do when they are clicked. Actions:
   # NONE                      - it will not do anything;

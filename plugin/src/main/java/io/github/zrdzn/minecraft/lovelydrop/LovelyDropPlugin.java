@@ -71,7 +71,8 @@ public class LovelyDropPlugin extends JavaPlugin {
 
         PluginManager pluginManager = this.getServer().getPluginManager();
 
-        pluginManager.registerEvents(new UserListener(this.userCache, this.dropItemCache), this);
+        pluginManager.registerEvents(new UserListener(this.userCache, this.dropItemCache,
+            this.menu.isDefaultDropToInventory()), this);
         pluginManager.registerEvents(new DropListener(this.logger, this.messageService, spigotAdapter,
             this.dropItemCache, this.userCache), this);
 

@@ -27,10 +27,12 @@ public class UserListener implements Listener {
 
     private final UserCache userCache;
     private final DropItemCache dropItemCache;
+    private final boolean defaultDropToInventory;
 
-    public UserListener(UserCache userCache, DropItemCache dropItemCache) {
+    public UserListener(UserCache userCache, DropItemCache dropItemCache, boolean defaultDropToInventory) {
         this.userCache = userCache;
         this.dropItemCache = dropItemCache;
+        this.defaultDropToInventory = defaultDropToInventory;
     }
 
     @EventHandler
@@ -39,7 +41,7 @@ public class UserListener implements Listener {
 
         User user = new User(playerId);
         this.dropItemCache.getDrops().values().forEach(items ->
-            items.forEach(item -> user.addInventoryDrop(item, false)));
+            items.forEach(item -> user.addInventoryDrop(item, this.defaultDropToInventory)));
 
         this.userCache.addUser(playerId, user);
     }
