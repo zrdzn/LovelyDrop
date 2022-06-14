@@ -20,6 +20,7 @@ import io.github.zrdzn.minecraft.lovelydrop.user.User;
 import io.github.zrdzn.minecraft.lovelydrop.user.UserCache;
 import io.github.zrdzn.minecraft.spigot.SpigotAdapter;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
@@ -62,10 +63,6 @@ public class DropListener implements Listener {
 
         ItemStack pickaxe = player.getItemInHand();
         if (!pickaxe.getType().name().contains("PICKAXE")) {
-            return;
-        }
-
-        if (pickaxe.containsEnchantment(Enchantment.SILK_TOUCH)) {
             return;
         }
 
@@ -126,6 +123,11 @@ public class DropListener implements Listener {
                 return;
             }
 
+            MaterialData finalData = item.getType();
+            if (item.getType().getItemType() == Material.COBBLESTONE && pickaxe.containsEnchantment(Enchantment.SILK_TOUCH)) {
+                finalData = new MaterialData(Material.STONE);
+            }
+
             player.giveExp(property.getExperience());
 
             Entry<Integer, Integer> amountEntry = property.getAmount();
@@ -135,7 +137,7 @@ public class DropListener implements Listener {
                 amount = random.nextInt(amountEntry.getKey(), amountEntry.getValue());
             }
 
-            ItemStack droppedItem = item.getType().toItemStack(amount);
+            ItemStack droppedItem = finalData.toItemStack(amount);
 
             ItemMeta droppedItemMeta = droppedItem.getItemMeta();
 
