@@ -1,5 +1,5 @@
 name: LovelyDrop
-version: 1.4.0
+version: 1.4.1
 main: io.github.zrdzn.minecraft.lovelydrop.LovelyDropPlugin
 api-version: 1.13
 author: zrdzn

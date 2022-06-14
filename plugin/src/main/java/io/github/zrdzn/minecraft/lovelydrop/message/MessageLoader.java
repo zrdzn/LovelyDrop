@@ -21,8 +21,6 @@ import org.bukkit.configuration.InvalidConfigurationException;
 
 public class MessageLoader {
 
-    public static final String DEFAULT_MESSAGE = "<message not found>";
-
     private final MessageCache cache;
 
     public MessageLoader(MessageCache cache) {
