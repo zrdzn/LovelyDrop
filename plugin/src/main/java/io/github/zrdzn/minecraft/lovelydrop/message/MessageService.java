@@ -31,6 +31,9 @@ public class MessageService {
     public CompletableFuture<Void> send(CommandSender receiver, String key, String... placeholders) {
         return CompletableFuture.runAsync(() -> {
             String message = this.cache.getMessage(key);
+            if (message == null) {
+                return;
+            }
 
             int length = placeholders.length;
             if (length <= 0 || length % 2 != 0) {

@@ -28,7 +28,7 @@ public class MessageCache {
     }
 
     public String getMessage(String key) {
-        return this.messages.getOrDefault(key, MessageLoader.DEFAULT_MESSAGE);
+        return this.messages.get(key);
     }
 
     public Map<String, String> getMessages() {
