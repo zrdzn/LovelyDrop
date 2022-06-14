@@ -65,6 +65,10 @@ public class DropListener implements Listener {
             return;
         }
 
+        if (pickaxe.containsEnchantment(Enchantment.SILK_TOUCH)) {
+            return;
+        }
+
         Block block = event.getBlock();
 
         MaterialData source = null;
