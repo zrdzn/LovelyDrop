@@ -1,8 +1,5 @@
 repositories {
-    maven {
-        name "mattstudios-repository"
-        url "https://repo.mattstudios.me/artifactory/public/"
-    }
+    mavenCentral()
 }
 
 dependencies {
