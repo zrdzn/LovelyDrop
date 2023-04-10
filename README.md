@@ -1,5 +1,5 @@
 # LovelyDrop
-[![Build Status](https://img.shields.io/github/workflow/status/zrdzn/LovelyDrop/LovelyDrop%20Build)](https://github.com/zrdzn/LovelyDrop/actions/workflows/build.yml)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/zrdzn/LovelyDrop/build.yml?branch=master)](https://github.com/zrdzn/LovelyDrop/actions/workflows/build.yml)
 [![Release](https://img.shields.io/github/v/release/zrdzn/LovelyDrop?color=44CC44)](https://github.com/zrdzn/LovelyDrop/releases/latest)
 
 LovelyDrop is a Minecraft plugin that adds a drop system to a server. You can customize what items should be dropped by specifying various properties. Besides, the whole drop menu is also configurable, you can add items that should perform specific actions when clicked, and you can name them as you want.
@@ -46,7 +46,7 @@ The whole configuration of the plugin is explained in this
 | /ldp reload | lovelydrop.reload | reloads the whole plugin including configuration                                 |
 
 ## Requirements
-The plugin runs on the spigot servers and its forks. Minecraft versions above **1.8 up to 1.18.2** are fully supported by the plugin.
+The plugin runs on the spigot servers and its forks. Minecraft versions **1.8 up to 1.19.4** are fully supported by the plugin.
 
 ## How to download
 1. Read the [requirements](#requirements)
