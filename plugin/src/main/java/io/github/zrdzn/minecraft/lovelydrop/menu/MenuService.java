@@ -15,6 +15,12 @@
  */
 package io.github.zrdzn.minecraft.lovelydrop.menu;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Optional;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.components.InteractionModifier;
 import dev.triumphteam.gui.guis.Gui;
@@ -28,13 +34,6 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Optional;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 public class MenuService {
 
@@ -130,7 +129,7 @@ public class MenuService {
                 for (int lineNumber = 0; lineNumber < lore.size(); lineNumber++) {
                     String line = StringUtils.replaceEach(lore.get(lineNumber),
                         new String[]{ String.format("{CHANCE-%d}", level), String.format("{EXPERIENCE-%d}", level) },
-                        new String[]{ String.valueOf(property.getChance()), String.valueOf(property.getExperience()) });
+                        new String[]{ property.getFormattedChance(), String.valueOf(property.getExperience()) });
 
                     String placeholder = String.format("{AMOUNT-%d}", level);
                     if (minimumAmount.equals(maximumAmount)) {

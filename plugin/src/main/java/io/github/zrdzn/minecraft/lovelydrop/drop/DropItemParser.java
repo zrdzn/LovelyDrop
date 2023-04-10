@@ -15,6 +15,12 @@
  */
 package io.github.zrdzn.minecraft.lovelydrop.drop;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.logging.Logger;
 import io.github.zrdzn.minecraft.lovelydrop.LovelyDropPlugin;
 import io.github.zrdzn.minecraft.lovelydrop.ParserHelper;
 import io.github.zrdzn.minecraft.spigot.EnchantmentMatcher;
@@ -22,13 +28,6 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.material.MaterialData;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.logging.Logger;
 
 public class DropItemParser {
 
@@ -80,6 +79,10 @@ public class DropItemParser {
                 throw new InvalidConfigurationException("Key 'chance' cannot be 0 and lower.");
             }
 
+            String formattedChance = String.valueOf(chance);
+            // Remove trailing zeros from chance.
+            formattedChance = formattedChance.contains(".") ? formattedChance.replaceAll("0*$","").replaceAll("\\.$","") : formattedChance;
+
             String amountRaw = fortune.getString("amount");
             if (amountRaw == null) {
                 throw new InvalidConfigurationException("Key 'amount' is null.");
@@ -92,7 +95,7 @@ public class DropItemParser {
                 throw new InvalidConfigurationException("Key 'experience' cannot be lower than 0.");
             }
 
-            properties.put(level, new DropProperty(chance, amounts, experience));
+            properties.put(level, new DropProperty(chance, formattedChance, amounts, experience));
         }
 
         String heightRaw = section.getString("height");
