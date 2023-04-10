@@ -64,6 +64,10 @@ public class DropItemParser {
                 throw new InvalidConfigurationException("Key 'chance' cannot be 0 and lower.");
             }
 
+            String formattedChance = String.valueOf(chance);
+            // Remove trailing zeros from chance.
+            formattedChance = formattedChance.contains(".") ? formattedChance.replaceAll("0*$","").replaceAll("\\.$","") : formattedChance;
+
             String amountRaw = fortune.getString("amount");
             if (amountRaw == null) {
                 throw new InvalidConfigurationException("Key 'amount' is null.");
@@ -76,7 +80,7 @@ public class DropItemParser {
                 throw new InvalidConfigurationException("Key 'experience' cannot be lower than 0.");
             }
 
-            properties.put(level, new DropProperty(chance, amounts, experience));
+            properties.put(level, new DropProperty(chance, formattedChance, amounts, experience));
         }
 
         String heightRaw = section.getString("height");

@@ -114,7 +114,7 @@ public class MenuService {
                 for (int lineNumber = 0; lineNumber < lore.size(); lineNumber++) {
                     String line = StringUtils.replaceEach(lore.get(lineNumber),
                         new String[]{ String.format("{CHANCE-%d}", level), String.format("{EXPERIENCE-%d}", level) },
-                        new String[]{ String.valueOf(property.getChance()), String.valueOf(property.getExperience()) });
+                        new String[]{ property.getFormattedChance(), String.valueOf(property.getExperience()) });
 
                     String placeholder = String.format("{AMOUNT-%d}", level);
                     if (minimumAmount.equals(maximumAmount)) {
