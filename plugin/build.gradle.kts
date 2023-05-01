@@ -12,7 +12,7 @@ dependencies {
 
     compileOnly("org.spigotmc:spigot-api:1.8-R0.1-SNAPSHOT")
 
-    implementation("dev.triumphteam:triumph-gui:3.1.4")
+    implementation("dev.triumphteam:triumph-gui:3.1.5")
 }
 
 java {
