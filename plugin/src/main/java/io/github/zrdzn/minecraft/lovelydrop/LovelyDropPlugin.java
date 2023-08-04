@@ -20,6 +20,7 @@ import io.github.zrdzn.minecraft.spigot.SpigotAdapter;
 import io.github.zrdzn.minecraft.spigot.V1_12SpigotAdapter;
 import io.github.zrdzn.minecraft.spigot.V1_13SpigotAdapter;
 import io.github.zrdzn.minecraft.spigot.V1_8SpigotAdapter;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -64,6 +65,8 @@ public class LovelyDropPlugin extends JavaPlugin {
 
         this.getCommand("lovelydrop").setExecutor(new LovelyDropCommand(this.messageService, this));
         this.getCommand("drop").setExecutor(new DropCommand(this.messageService, menuService));
+
+        new Metrics(this, 19396);
     }
 
     @Override

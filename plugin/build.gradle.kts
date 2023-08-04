@@ -12,6 +12,7 @@ dependencies {
 
     compileOnly("org.spigotmc:spigot-api:1.8-R0.1-SNAPSHOT")
 
+    implementation("org.bstats:bstats-bukkit:3.0.2")
     implementation("dev.triumphteam:triumph-gui:3.1.4")
 }
 
@@ -22,5 +23,7 @@ java {
 tasks.withType<ShadowJar> {
     archiveFileName.set("LovelyDrop v${project.version}.jar")
 
-    relocate("dev.triumphteam.gui", "io.github.zrdzn.minecraft.lovelydrop.gui")
+    val libsPackage = "io.github.zrdzn.minecraft.lovelydrop"
+    relocate("org.bstats", "$libsPackage.bstats")
+    relocate("dev.triumphteam.gui", "$libsPackage.gui")
 }
