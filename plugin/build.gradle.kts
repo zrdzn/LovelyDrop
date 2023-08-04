@@ -11,8 +11,8 @@ dependencies {
     implementation(project(":v1_13"))
 
     compileOnly("org.spigotmc:spigot-api:1.8-R0.1-SNAPSHOT")
-    compileOnly("org.bstats:bstats-bukkit:3.0.2")
 
+    implementation("org.bstats:bstats-bukkit:3.0.2")
     implementation("dev.triumphteam:triumph-gui:3.1.4")
 }
 
