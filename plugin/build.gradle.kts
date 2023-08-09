@@ -12,7 +12,7 @@ dependencies {
 
     compileOnly("org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT")
 
-    val okaeriConfigs = "4.0.9"
+    val okaeriConfigs = "5.0.0-beta.5"
     implementation("eu.okaeri:okaeri-configs-yaml-bukkit:$okaeriConfigs")
     implementation("eu.okaeri:okaeri-configs-serdes-bukkit:$okaeriConfigs")
     implementation("eu.okaeri:okaeri-configs-serdes-okaeri:$okaeriConfigs")

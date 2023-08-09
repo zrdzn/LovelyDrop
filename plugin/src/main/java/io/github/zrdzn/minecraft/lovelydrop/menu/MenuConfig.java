@@ -32,7 +32,7 @@ public class MenuConfig extends OkaeriConfig {
         @Comment("For example:")
         @Comment("1.8  - damage_all  |  1.8  - durability  |  1.8  - loot_bonus_mobs")
         @Comment("1.18 - sharpness   |  1.18 - unbreaking  |  1.18 - loot")
-        private ItemStack item = new ItemStack(Material.STAINED_GLASS_PANE);
+        private ItemStack item = new ItemStack(Material.GLASS);
 
         public boolean isEnabled() {
             return this.enabled;
