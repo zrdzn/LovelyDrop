@@ -10,20 +10,33 @@ dependencies {
     implementation(project(":v1_12"))
     implementation(project(":v1_13"))
 
-    compileOnly("org.spigotmc:spigot-api:1.8-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT")
+
+    val okaeriConfigs = "4.0.9"
+    implementation("eu.okaeri:okaeri-configs-yaml-bukkit:$okaeriConfigs")
+    implementation("eu.okaeri:okaeri-configs-serdes-bukkit:$okaeriConfigs")
+    implementation("eu.okaeri:okaeri-configs-serdes-okaeri:$okaeriConfigs")
+    implementation("eu.okaeri:okaeri-configs-validator-okaeri:$okaeriConfigs")
+
+    implementation("org.slf4j:slf4j-reload4j:2.0.7")
 
     implementation("org.bstats:bstats-bukkit:3.0.2")
-    implementation("dev.triumphteam:triumph-gui:3.1.4")
+
+    implementation("dev.triumphteam:triumph-gui:3.1.5")
 }
 
 java {
     withSourcesJar()
 }
 
+tasks.withType<ProcessResources> {
+    expand("version" to version)
+}
+
 tasks.withType<ShadowJar> {
     archiveFileName.set("LovelyDrop v${project.version}.jar")
 
-    val libsPackage = "io.github.zrdzn.minecraft.lovelydrop"
-    relocate("org.bstats", "$libsPackage.bstats")
-    relocate("dev.triumphteam.gui", "$libsPackage.gui")
+    val libsPath = "io.github.zrdzn.minecraft.lovelydrop.libs"
+    relocate("org.bstats", "$libsPath.bstats")
+    relocate("dev.triumphteam.gui", "$libsPath.gui")
 }
