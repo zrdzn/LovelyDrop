@@ -21,11 +21,11 @@ public class PluginConfig extends OkaeriConfig {
     @Comment("By default it is 180 seconds (3 minutes).")
     private long userSettingsSaveInterval = 180L;
 
-    @Comment(" ")
+    @Comment("")
     @Comment("Whole configuration for the drop menu.")
     private MenuConfig menu = new MenuConfig();
 
-    @Comment(" ")
+    @Comment("")
     @Comment("All drops that will be available on the server.")
     private Map<String, DropConfig> drops = new HashMap<String, DropConfig>() {{
         this.put(
@@ -182,7 +182,7 @@ public class PluginConfig extends OkaeriConfig {
         );
     }};
 
-    @Comment(" ")
+    @Comment("")
     @Comment("All messages that can be sent by plugin to players.")
     @Comment("If you want to disable specific messages just place a '#' before them.")
     private MessageConfig messages = new MessageConfig();

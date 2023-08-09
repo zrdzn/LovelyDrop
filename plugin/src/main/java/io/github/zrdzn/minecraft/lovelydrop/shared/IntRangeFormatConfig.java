@@ -9,7 +9,7 @@ public class IntRangeFormatConfig extends OkaeriConfig {
     @Comment("Used when minimum and maximum are equal.")
     private ColoredText fixed;
 
-    @Comment(" ")
+    @Comment("")
     @Comment("Used when minimum and maximum are different.")
     private ColoredText different;
 

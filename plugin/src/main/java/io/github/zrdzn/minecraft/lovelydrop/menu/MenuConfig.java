@@ -22,7 +22,7 @@ public class MenuConfig extends OkaeriConfig {
         @Comment("Whether empty slots should be filled with specified item or not.")
         private boolean enabled = false;
 
-        @Comment(" ")
+        @Comment("")
         @Comment("Item representation of the drop.")
         @Comment("If you want to use legacy materials, set a durability to some number, e.g. material: stone with durability: 5 for andesite.")
         @Comment("Check https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html for list of materials.")
@@ -57,7 +57,7 @@ public class MenuConfig extends OkaeriConfig {
         @Comment("Used when the switch is enabled.")
         private ColoredText enabled = new ColoredText("&eon");
 
-        @Comment(" ")
+        @Comment("")
         @Comment("Used when the switch is disabled.")
         private ColoredText disabled = new ColoredText("&coff");
 
@@ -82,35 +82,35 @@ public class MenuConfig extends OkaeriConfig {
     @Comment("Title of the drop menu.")
     private ColoredText title = new ColoredText("&2&lDrop Menu");
 
-    @Comment(" ")
+    @Comment("")
     @Comment("Rows amount of the drop menu.")
     private int rows = 4;
 
-    @Comment(" ")
+    @Comment("")
     @Comment("Item that is filled in empty slots.")
     private FillerConfig filler = new FillerConfig();
 
-    @Comment(" ")
+    @Comment("")
     @Comment("Text placeholder which stands for {SWITCH} that could be used in items section.")
     private SwitchConfig dropSwitch = new SwitchConfig();
 
-    @Comment(" ")
+    @Comment("")
     @Comment("Text placeholder which stands for {SWITCH_INVENTORY} that could be used in items section.")
     private SwitchConfig inventoryDropSwitch = new SwitchConfig();
 
-    @Comment(" ")
+    @Comment("")
     @Comment("Text placeholder which stands for {AMOUNT-{LEVEL}} that could be used in items section.")
     private IntRangeFormatConfig amountFormat = new IntRangeFormatConfig("&e{AMOUNT}", "&e{AMOUNT-MIN}&8-&e{AMOUNT-MAX}");
 
-    @Comment(" ")
+    @Comment("")
     @Comment("Text placeholder which stands for {HEIGHT} that could be used in items section.")
     private IntRangeFormatConfig heightFormat = new IntRangeFormatConfig("&e{HEIGHT}", "&e{HEIGHT-MIN}&8-&e{HEIGHT-MAX}");
 
-    @Comment(" ")
+    @Comment("")
     @Comment("If drop to inventory should be enabled by default or not.")
     private boolean defaultDropToInventory = true;
 
-    @Comment(" ")
+    @Comment("")
     @Comment("All items that will appear in the menu.")
     @Comment("Available placeholders ({LEVEL} placeholder stands for fortune enchantment level, 0 is when there is no fortune):")
     @Comment("{CHANCE-{LEVEL}} - a chance of the item to drop")

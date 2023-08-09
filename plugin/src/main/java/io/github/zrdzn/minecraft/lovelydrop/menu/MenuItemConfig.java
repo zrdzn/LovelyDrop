@@ -13,7 +13,7 @@ public class MenuItemConfig extends OkaeriConfig {
         @Comment("Row of the menu item.")
         private int row;
 
-        @Comment(" ")
+        @Comment("")
         @Comment("Column of the menu item.")
         private int column;
 
@@ -51,7 +51,7 @@ public class MenuItemConfig extends OkaeriConfig {
     @Comment("1.18 - sharpness   |  1.18 - unbreaking  |  1.18 - loot")
     private ItemStack item;
 
-    @Comment(" ")
+    @Comment("")
     @Comment("What should happen when the player clicks the item.")
     @Comment("Available options:")
     @Comment("NONE - nothing happens")
@@ -62,7 +62,7 @@ public class MenuItemConfig extends OkaeriConfig {
     @Comment("Section contains key and value fields where the key is the specified field in the https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/event/inventory/ClickType.html.")
     private Map<ClickType, MenuAction> clickAction;
 
-    @Comment(" ")
+    @Comment("")
     @Comment("Item position in the menu.")
     private SlotConfig slot;
 

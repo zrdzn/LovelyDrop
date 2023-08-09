@@ -14,11 +14,11 @@ public class DropConfig extends OkaeriConfig {
         @Comment("Percentage chance of dropping the item.")
         private FloatFormat chance;
 
-        @Comment(" ")
+        @Comment("")
         @Comment("Range of the amount of items that can be dropped.")
         private IntRange amount;
 
-        @Comment(" ")
+        @Comment("")
         @Comment("Amount of experience given to the player when they have a successful drop.")
         private int experience;
 
@@ -69,17 +69,17 @@ public class DropConfig extends OkaeriConfig {
     @Comment("1.18 - sharpness   |  1.18 - unbreaking  |  1.18 - loot")
     private ItemStack item;
 
-    @Comment(" ")
+    @Comment("")
     @Comment("Item representation of the block from which 'item' should be dropped.")
     @Comment("If you want to use legacy materials, set a durability to some number, e.g. material: stone with durability: 5 for andesite.")
     @Comment("Check https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html for list of materials.")
     private ItemStack source;
 
-    @Comment(" ")
+    @Comment("")
     @Comment("Height range within which the item can be dropped.")
     private IntRange height;
 
-    @Comment(" ")
+    @Comment("")
     @Comment("All properties will be applied to the drop, depending on the current pickaxe fortune level.")
     @Comment("It must contain at least one section.")
     private Map<Integer, FortuneConfig> fortune;
