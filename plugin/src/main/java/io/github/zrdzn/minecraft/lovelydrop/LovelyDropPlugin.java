@@ -43,8 +43,6 @@ public class LovelyDropPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         this.start();
-
-        new Metrics(this, 19396);
     }
 
     @Override
@@ -53,6 +51,8 @@ public class LovelyDropPlugin extends JavaPlugin {
     }
 
     public void start() {
+        new Metrics(this, 19396);
+
         PluginConfig config;
         try {
             config = ConfigManager.create(PluginConfig.class, (it) -> {
