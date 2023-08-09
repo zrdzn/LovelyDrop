@@ -7,7 +7,9 @@ import java.util.UUID;
 
 public interface UserSettingRepository {
 
-    UserSetting createUserSetting(UUID playerId, Set<String> disabledDrops, Map<String, Boolean> dropsToInventory);
+    void createOrUpdateUserSettings(Set<UserSetting> userSettings);
+
+    void createOrUpdateUserSetting(UUID playerId, Set<String> disabledDrops, Map<String, Boolean> dropsToInventory);
 
     Optional<UserSetting> findUserSettingByPlayerId(UUID playerId);
 

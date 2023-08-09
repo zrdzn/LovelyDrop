@@ -69,7 +69,7 @@ public class UserSettingListener implements Listener {
         UserSetting userSetting = userSettingMaybe.get();
         this.scheduler.runTaskAsynchronously(this.plugin, () -> {
             try {
-                this.userSettingFacade.saveUserSettingToStorage(userSetting.getPlayerId(), userSetting.getDisabledDrops(), userSetting.getDropsToInventory());
+                this.userSettingFacade.saveOrUpdateUserSettingToStorage(userSetting.getPlayerId(), userSetting.getDisabledDrops(), userSetting.getDropsToInventory());
                 this.logger.info("Drop settings for {} were successfully saved.", name);
             } catch (UserSettingException exception) {
                 this.logger.error("Could not save or update user settings.", exception);

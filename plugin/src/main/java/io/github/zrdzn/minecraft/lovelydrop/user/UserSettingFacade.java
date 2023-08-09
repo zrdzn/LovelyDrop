@@ -16,6 +16,13 @@ public class UserSettingFacade {
     }
 
     /**
+     * Save all user settings from cache to storage.
+     */
+    public void saveOrUpdateAllUserSettingsToStorage() {
+        this.userSettingRepository.createOrUpdateUserSettings(this.userSettingCache.findAllUserSettings());
+    }
+
+    /**
      * Add user settings to cache.
      *
      * @param playerId a player id
@@ -38,14 +45,13 @@ public class UserSettingFacade {
      * @param disabledDrops a set of disabled drops
      * @param dropsToInventory a map of drops to inventory
      */
-    // TODO saveOrUpdate
-    public void saveUserSettingToStorage(UUID playerId, Set<String> disabledDrops, Map<String, Boolean> dropsToInventory) {
+    public void saveOrUpdateUserSettingToStorage(UUID playerId, Set<String> disabledDrops, Map<String, Boolean> dropsToInventory) {
         if (playerId == null) {
             throw new UserSettingException("Player id cannot be null.");
         }
 
         // Save user settings to storage.
-        this.userSettingRepository.createUserSetting(playerId, disabledDrops, dropsToInventory);
+        this.userSettingRepository.createOrUpdateUserSetting(playerId, disabledDrops, dropsToInventory);
 
         // Remove user settings from cache.
         this.removeUserSettingByPlayerIdFromCache(playerId);

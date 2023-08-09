@@ -15,8 +15,13 @@ public class InMemoryUserSettingRepository implements UserSettingRepository {
     }
 
     @Override
-    public UserSetting createUserSetting(UUID playerId, Set<String> disabledDrops, Map<String, Boolean> dropsToInventory) {
-        return this.usersSettings.put(playerId, new UserSetting(playerId, disabledDrops, dropsToInventory));
+    public void createOrUpdateUserSettings(Set<UserSetting> userSettings) {
+        userSettings.forEach(userSetting -> this.usersSettings.put(userSetting.getPlayerId(), userSetting));
+    }
+
+    @Override
+    public void createOrUpdateUserSetting(UUID playerId, Set<String> disabledDrops, Map<String, Boolean> dropsToInventory) {
+        this.usersSettings.put(playerId, new UserSetting(playerId, disabledDrops, dropsToInventory));
     }
 
     @Override

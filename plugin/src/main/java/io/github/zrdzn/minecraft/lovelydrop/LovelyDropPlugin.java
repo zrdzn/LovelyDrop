@@ -19,6 +19,7 @@ import io.github.zrdzn.minecraft.lovelydrop.user.UserSettingCache;
 import io.github.zrdzn.minecraft.lovelydrop.user.UserSettingFacade;
 import io.github.zrdzn.minecraft.lovelydrop.user.UserSettingListener;
 import io.github.zrdzn.minecraft.lovelydrop.user.UserSettingRepository;
+import io.github.zrdzn.minecraft.lovelydrop.user.UserSettingTask;
 import io.github.zrdzn.minecraft.spigot.SpigotAdapter;
 import io.github.zrdzn.minecraft.spigot.V1_12SpigotAdapter;
 import io.github.zrdzn.minecraft.spigot.V1_13SpigotAdapter;
@@ -30,6 +31,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitScheduler;
+import org.bukkit.scheduler.BukkitTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,6 +42,8 @@ public class LovelyDropPlugin extends JavaPlugin {
 
     private Listener userSettingListener;
     private Listener dropListener;
+
+    private BukkitTask userSettingBukkitTask;
 
     @Override
     public void onEnable() {
@@ -80,6 +85,10 @@ public class LovelyDropPlugin extends JavaPlugin {
         // TODO Add support for database.
         UserSettingRepository userSettingRepository = new InMemoryUserSettingRepository();
         UserSettingFacade userSettingFacade = new UserSettingFacade(userSettingCache, userSettingRepository);
+        UserSettingTask userSettingTask = new UserSettingTask(userSettingFacade);
+
+        BukkitScheduler scheduler = this.getServer().getScheduler();
+        this.userSettingBukkitTask = scheduler.runTaskTimerAsynchronously(this, userSettingTask, 20L, config.getUserSettingsSaveInterval() * 20L);
 
         this.registerListeners(config, spigotAdapter, messageFacade, userSettingFacade);
 
@@ -91,6 +100,10 @@ public class LovelyDropPlugin extends JavaPlugin {
 
     public void shutdown() {
         this.getServer().getPluginManager().disablePlugin(this);
+
+        if (this.userSettingBukkitTask != null) {
+            this.userSettingBukkitTask.cancel();
+        }
 
         this.unregisterListeners();
     }

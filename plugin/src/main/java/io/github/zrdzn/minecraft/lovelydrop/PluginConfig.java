@@ -17,6 +17,11 @@ import org.bukkit.inventory.ItemStack;
 
 public class PluginConfig extends OkaeriConfig {
 
+    @Comment("How often should all users settings be saved to the database (in seconds)?")
+    @Comment("By default it is 180 seconds (3 minutes).")
+    private long userSettingsSaveInterval = 180L;
+
+    @Comment(" ")
     @Comment("Whole configuration for the drop menu.")
     private MenuConfig menu = new MenuConfig();
 
@@ -181,6 +186,14 @@ public class PluginConfig extends OkaeriConfig {
     @Comment("All messages that can be sent by plugin to players.")
     @Comment("If you want to disable specific messages just place a '#' before them.")
     private MessageConfig messages = new MessageConfig();
+
+    public long getUserSettingsSaveInterval() {
+        return this.userSettingsSaveInterval;
+    }
+
+    public void setUserSettingsSaveInterval(long userSettingsSaveInterval) {
+        this.userSettingsSaveInterval = userSettingsSaveInterval;
+    }
 
     public MenuConfig getMenu() {
         return this.menu;
