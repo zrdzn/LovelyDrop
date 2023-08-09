@@ -5,7 +5,7 @@ plugins {
 
 allprojects {
     group = "io.github.zrdzn.minecraft.lovelydrop"
-    version = "1.4.2-SNAPSHOT"
+    version = "2.0-SNAPSHOT"
 }
 
 subprojects {
