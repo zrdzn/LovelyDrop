@@ -34,6 +34,14 @@ public class UserSettingFacade {
             throw new UserSettingException("Player id cannot be null.");
         }
 
+        if (disabledDrops == null) {
+            throw new UserSettingException("Disabled drops cannot be null.");
+        }
+
+        if (dropsToInventory == null) {
+            throw new UserSettingException("Drops to inventory cannot be null.");
+        }
+
         // Add user settings to cache.
         this.userSettingCache.addUserSetting(new UserSetting(playerId, disabledDrops, dropsToInventory));
     }
@@ -48,6 +56,14 @@ public class UserSettingFacade {
     public void saveOrUpdateUserSettingToStorage(UUID playerId, Set<String> disabledDrops, Map<String, Boolean> dropsToInventory) {
         if (playerId == null) {
             throw new UserSettingException("Player id cannot be null.");
+        }
+
+        if (disabledDrops == null) {
+            throw new UserSettingException("Disabled drops cannot be null.");
+        }
+
+        if (dropsToInventory == null) {
+            throw new UserSettingException("Drops to inventory cannot be null.");
         }
 
         // Save user settings to storage.

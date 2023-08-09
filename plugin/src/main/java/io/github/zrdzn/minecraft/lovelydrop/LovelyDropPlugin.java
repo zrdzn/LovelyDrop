@@ -1,6 +1,8 @@
 package io.github.zrdzn.minecraft.lovelydrop;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 import eu.okaeri.configs.ConfigManager;
 import eu.okaeri.configs.exception.OkaeriException;
 import eu.okaeri.configs.serdes.okaeri.SerdesOkaeri;
@@ -111,7 +113,10 @@ public class LovelyDropPlugin extends JavaPlugin {
     public void registerListeners(PluginConfig config, SpigotAdapter spigotAdapter, MessageFacade messageFacade, UserSettingFacade userSettingFacade) {
         PluginManager pluginManager = this.getServer().getPluginManager();
 
-        this.userSettingListener = new UserSettingListener(this, userSettingFacade);
+        Map<String, Boolean> defaultDropsToInventory = new HashMap<>();
+        config.getDrops().keySet().forEach(key -> defaultDropsToInventory.put(key, true));
+
+        this.userSettingListener = new UserSettingListener(this, userSettingFacade, defaultDropsToInventory);
         pluginManager.registerEvents(this.userSettingListener, this);
 
         this.dropListener = new DropListener(config, spigotAdapter, messageFacade, userSettingFacade);

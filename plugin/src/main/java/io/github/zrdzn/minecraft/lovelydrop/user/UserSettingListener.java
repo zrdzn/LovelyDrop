@@ -1,5 +1,7 @@
 package io.github.zrdzn.minecraft.lovelydrop.user;
 
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import org.bukkit.entity.Player;
@@ -19,11 +21,13 @@ public class UserSettingListener implements Listener {
     private final Plugin plugin;
     private final BukkitScheduler scheduler;
     private final UserSettingFacade userSettingFacade;
+    private final Map<String, Boolean> defaultDropsToInventory;
 
-    public UserSettingListener(Plugin plugin, UserSettingFacade userSettingFacade) {
+    public UserSettingListener(Plugin plugin, UserSettingFacade userSettingFacade, Map<String, Boolean> defaultDropsToInventory) {
         this.plugin = plugin;
         this.scheduler = plugin.getServer().getScheduler();
         this.userSettingFacade = userSettingFacade;
+        this.defaultDropsToInventory = defaultDropsToInventory;
     }
 
     @EventHandler
@@ -48,8 +52,8 @@ public class UserSettingListener implements Listener {
                     return;
                 }
 
-                this.logger.info("Drop settings for {} not found, creating new ones.", playerId);
-                this.userSettingFacade.addUserSettingToCache(playerId, null, null);
+                this.logger.info("Drop settings for {} not found, creating new ones.", name);
+                this.userSettingFacade.addUserSettingToCache(playerId, new HashSet<>(), this.defaultDropsToInventory);
             } catch (UserSettingException exception) {
                 this.logger.error("Could not find or create user setting.", exception);
             }
