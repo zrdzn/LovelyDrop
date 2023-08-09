@@ -9,14 +9,14 @@ import org.jetbrains.annotations.NotNull;
 
 class LovelyDropCommand implements CommandExecutor {
 
+    private final PluginConfig config;
     private final MessageFacade messageFacade;
     private final MessageConfig messageConfig;
-    private final LovelyDropPlugin plugin;
 
-    public LovelyDropCommand(MessageFacade messageFacade, MessageConfig messageConfig, LovelyDropPlugin plugin) {
+    public LovelyDropCommand(PluginConfig config, MessageFacade messageFacade, MessageConfig messageConfig) {
+        this.config = config;
         this.messageFacade = messageFacade;
         this.messageConfig = messageConfig;
-        this.plugin = plugin;
     }
 
     @Override
@@ -36,8 +36,7 @@ class LovelyDropCommand implements CommandExecutor {
             return true;
         }
 
-        this.plugin.getPluginLoader().disablePlugin(this.plugin);
-        this.plugin.getPluginLoader().enablePlugin(this.plugin);
+        this.config.load(true);
 
         this.messageFacade.sendMessageAsync(sender, this.messageConfig.getPluginReloaded());
 
