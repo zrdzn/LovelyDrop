@@ -1,6 +1,6 @@
 package io.github.zrdzn.minecraft.lovelydrop;
 
-import io.github.zrdzn.minecraft.lovelydrop.message.MessageService;
+import io.github.zrdzn.minecraft.lovelydrop.message.MessageFacade;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -8,36 +8,34 @@ import org.jetbrains.annotations.NotNull;
 
 class LovelyDropCommand implements CommandExecutor {
 
-    private final MessageService messageService;
-    private final LovelyDropPlugin plugin;
+    private final PluginConfig config;
+    private final MessageFacade messageFacade;
 
-    public LovelyDropCommand(MessageService messageService, LovelyDropPlugin plugin) {
-        this.messageService = messageService;
-        this.plugin = plugin;
+    public LovelyDropCommand(PluginConfig config, MessageFacade messageFacade) {
+        this.config = config;
+        this.messageFacade = messageFacade;
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label,
-                             String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (!sender.hasPermission("lovelydrop.reload")) {
-            this.messageService.send(sender, "no-permissions");
+            this.messageFacade.sendMessageAsync(sender, this.config.getMessages().getNoPermissions());
             return true;
         }
 
         if (args.length == 0) {
-            this.messageService.send(sender, "not-enough-arguments");
+            this.messageFacade.sendMessageAsync(sender, this.config.getMessages().getNotEnoughArguments());
             return true;
         }
 
         if (!args[0].equalsIgnoreCase("reload")) {
-            this.messageService.send(sender, "not-valid-argument");
+            this.messageFacade.sendMessageAsync(sender, this.config.getMessages().getNotValidArgument());
             return true;
         }
 
-        this.plugin.getPluginLoader().disablePlugin(this.plugin);
-        this.plugin.getPluginLoader().enablePlugin(this.plugin);
+        this.config.load();
 
-        this.messageService.send(sender, "plugin-reloaded");
+        this.messageFacade.sendMessageAsync(sender, this.config.getMessages().getPluginReloaded());
 
         return true;
     }

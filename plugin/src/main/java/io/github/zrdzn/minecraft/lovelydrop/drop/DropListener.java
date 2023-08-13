@@ -4,11 +4,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.logging.Logger;
-import io.github.zrdzn.minecraft.lovelydrop.message.MessageService;
-import io.github.zrdzn.minecraft.lovelydrop.user.User;
-import io.github.zrdzn.minecraft.lovelydrop.user.UserCache;
+import java.util.stream.Collectors;
+import eu.okaeri.commons.range.IntRange;
+import io.github.zrdzn.minecraft.lovelydrop.PluginConfig;
+import io.github.zrdzn.minecraft.lovelydrop.drop.DropConfig.FortuneConfig;
+import io.github.zrdzn.minecraft.lovelydrop.message.MessageFacade;
+import io.github.zrdzn.minecraft.lovelydrop.user.UserSetting;
+import io.github.zrdzn.minecraft.lovelydrop.user.UserSettingFacade;
 import io.github.zrdzn.minecraft.spigot.SpigotAdapter;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -21,24 +23,23 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.material.MaterialData;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DropListener implements Listener {
 
-    private final Logger logger;
-    private final MessageService messageService;
-    private final SpigotAdapter adapter;
-    private final DropItemCache dropItemCache;
-    private final UserCache userCache;
+    private final Logger logger = LoggerFactory.getLogger(DropListener.class);
 
-    public DropListener(Logger logger, MessageService messageService, SpigotAdapter adapter,
-                        DropItemCache dropItemCache, UserCache userCache) {
-        this.logger = logger;
-        this.messageService = messageService;
-        this.adapter = adapter;
-        this.dropItemCache = dropItemCache;
-        this.userCache = userCache;
+    private final PluginConfig config;
+    private final SpigotAdapter spigotAdapter;
+    private final MessageFacade messageFacade;
+    private final UserSettingFacade userSettingFacade;
+
+    public DropListener(PluginConfig config, SpigotAdapter spigotAdapter, MessageFacade messageFacade, UserSettingFacade userSettingFacade) {
+        this.config = config;
+        this.messageFacade = messageFacade;
+        this.spigotAdapter = spigotAdapter;
+        this.userSettingFacade = userSettingFacade;
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
@@ -52,108 +53,82 @@ public class DropListener implements Listener {
 
         Block block = event.getBlock();
 
-        MaterialData source = null;
-        for (MaterialData legacyData : this.dropItemCache.getDrops().keySet()) {
-            if (block.getType() == legacyData.getItemType() && block.getData() == legacyData.getData()) {
-                source = legacyData;
-                break;
-            }
-        }
-
-        if (source == null) {
+        // Get user settings from the cache.
+        Optional<UserSetting> userSettingMaybe = this.userSettingFacade.findUserSettingByPlayerIdFromCache(player.getUniqueId());
+        if (!userSettingMaybe.isPresent()) {
+            this.logger.error("User settings not found for {}.", player.getName());
+            this.messageFacade.sendMessageAsync(player, this.config.getMessages().getNeedToJoinAgain());
             return;
         }
 
-        // Get optional drops from source blocks.
-        Set<DropItem> sourceDrops = this.dropItemCache.getDrops(source);
-        if (sourceDrops.isEmpty()) {
+        UserSetting userSetting = userSettingMaybe.get();
+
+        // Get all drops from the source.
+        Set<Entry<String, DropConfig>> drops = this.config.getDrops().entrySet().stream()
+                .filter(drop -> !userSetting.hasDisabledDrop(drop.getKey()))
+                .filter(drop -> drop.getValue().getSource().getType() == block.getType())
+                .filter(drop -> drop.getValue().getSource().getDurability() == block.getData())
+                .collect(Collectors.toSet());
+        if (drops.isEmpty()) {
             return;
         }
 
-        // Get user from the cache.
-        Optional<User> userMaybe = this.userCache.getUser(player.getUniqueId());
-        if (!userMaybe.isPresent()) {
-            this.logger.severe("User " + player.getName() + " is not added to cached users.");
-            return;
-        }
-
-        this.adapter.getBlockBreakHelper().disableDrop(event);
-
-        User user = userMaybe.get();
-
-        // Remove all disabled drops from the source drops list.
-        sourceDrops.removeIf(sourceDrop -> user.getDisabledDrops().contains(sourceDrop));
-
-        ThreadLocalRandom random = ThreadLocalRandom.current();
+        // Disable drop depending on the server version.
+        this.spigotAdapter.getBlockBreakHelper().disableDrop(event);
 
         int blockHeight = block.getY();
 
         int fortuneLevel = pickaxe.getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS);
 
-        sourceDrops.forEach(item -> {
-            Entry<Integer, Integer> height = item.getHeight();
-            if (blockHeight < height.getKey() || blockHeight > height.getValue()) {
+        drops.forEach(keyAndDrop -> {
+            DropConfig drop = keyAndDrop.getValue();
+
+            IntRange heightRange = drop.getHeight();
+            if (blockHeight < heightRange.getMin() || blockHeight > heightRange.getMax()) {
                 return;
             }
 
-            Map<Integer, DropProperty> properties = item.getProperties();
-
-            DropProperty property = properties.getOrDefault(fortuneLevel, properties.get(0));
-            if (property == null) {
+            FortuneConfig fortune = drop.getFortune().getOrDefault(fortuneLevel, drop.getFortune().get(0));
+            if (fortune == null) {
                 return;
             }
 
-            if (property.getChance() <= Math.random() * 100.0D) {
+            if (fortune.getChance().getValue() <= Math.random() * 100.0F) {
                 return;
             }
 
-            MaterialData finalData = item.getType();
-            if (item.getType().getItemType() == Material.COBBLESTONE && pickaxe.containsEnchantment(Enchantment.SILK_TOUCH)) {
-                finalData = new MaterialData(Material.STONE);
+            ItemStack dropItem = drop.getItem();
+
+            // If pickaxe has silk touch and drop is cobblestone, change drop to stone.
+            if (drop.getItem().getType() == Material.COBBLESTONE && pickaxe.containsEnchantment(Enchantment.SILK_TOUCH)) {
+                dropItem.setType(Material.STONE);
             }
 
-            player.giveExp(property.getExperience());
+            // Give experience to player.
+            player.giveExp(fortune.getExperience());
 
-            Entry<Integer, Integer> amountEntry = property.getAmount();
+            // Randomize amount from range and set it for item.
+            int amount = fortune.getAmount().getRandom();
+            dropItem.setAmount(amount);
 
-            int amount = amountEntry.getKey();
-            if (amount != amountEntry.getValue()) {
-                amount = random.nextInt(amountEntry.getKey(), amountEntry.getValue());
-            }
-
-            ItemStack droppedItem = finalData.toItemStack(amount);
-
-            ItemMeta droppedItemMeta = droppedItem.getItemMeta();
-
-            droppedItemMeta.setDisplayName(item.getDisplayName());
-
-            String[] placeholders = { "{DROP}", item.getId(), "{AMOUNT}", String.valueOf(amount) };
-            this.messageService.send(player, "drop-successful", placeholders);
-
-            droppedItemMeta.setLore(item.getLore());
-            droppedItem.setItemMeta(droppedItemMeta);
-
-            // Add additional enchantments.
-            Map<Enchantment, Integer> enchantments = item.getEnchantments();
-            if (enchantments.size() > 0) {
-                droppedItem.addUnsafeEnchantments(enchantments);
-            }
+            String[] placeholders = { "{DROP}", keyAndDrop.getKey(), "{AMOUNT}", String.valueOf(amount) };
+            this.messageFacade.sendMessage(player, this.config.getMessages().getDropSuccessful(), placeholders);
 
             World world = player.getWorld();
 
             Location location = block.getLocation();
 
-            if (user.hasSwitchedInventoryDrop(item.getId())) {
-                Map<Integer, ItemStack> itemsLeft = player.getInventory().addItem(droppedItem);
+            if (userSetting.getDropsToInventory().getOrDefault(keyAndDrop.getKey(), true)) {
+                // Add items to inventory.
+                Map<Integer, ItemStack> itemsLeft = player.getInventory().addItem(dropItem);
 
                 // Drop items on the floor if player has full inventory.
-                itemsLeft.forEach((key, value) ->
-                    world.dropItemNaturally(location, value));
+                itemsLeft.forEach((index, item) -> world.dropItemNaturally(location, item));
 
                 return;
             }
 
-            world.dropItemNaturally(location, droppedItem);
+            world.dropItemNaturally(location, dropItem);
         });
     }
 

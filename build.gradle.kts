@@ -4,8 +4,8 @@ plugins {
 }
 
 allprojects {
-    group = "io.github.zrdzn.minecraft"
-    version = "1.4.2-SNAPSHOT"
+    group = "io.github.zrdzn.minecraft.lovelydrop"
+    version = "2.0-SNAPSHOT"
 }
 
 subprojects {
@@ -31,7 +31,12 @@ subprojects {
 
         maven {
             name = "sonatype-repository"
-            url = uri("https://oss.sonatype.org/content/repositories/snapshots")
+            url = uri("https://oss.sonatype.org/content/repositories/snapshots/")
+        }
+
+        maven {
+            name = "okaeri-repository"
+            url = uri("https://storehouse.okaeri.eu/repository/maven-public/")
         }
     }
 }
