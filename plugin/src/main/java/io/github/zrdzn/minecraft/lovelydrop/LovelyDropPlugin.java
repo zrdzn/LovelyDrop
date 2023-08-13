@@ -96,7 +96,7 @@ public class LovelyDropPlugin extends JavaPlugin {
 
         MenuFacade menuFacade = new MenuFacade(config, messageFacade, userSettingFacade);
 
-        this.getCommand("lovelydrop").setExecutor(new LovelyDropCommand(config, messageFacade, config.getMessages()));
+        this.getCommand("lovelydrop").setExecutor(new LovelyDropCommand(config, messageFacade));
         this.getCommand("drop").setExecutor(new DropCommand(messageFacade, config.getMessages(), menuFacade));
     }
 

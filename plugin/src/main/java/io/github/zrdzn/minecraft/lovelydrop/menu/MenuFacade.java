@@ -32,36 +32,35 @@ public class MenuFacade {
     private final Logger logger = LoggerFactory.getLogger(MenuFacade.class);
 
     private final PluginConfig config;
-    private final MenuConfig menuConfig;
-    private final MessageConfig messageConfig;
     private final MessageFacade messageFacade;
     private final UserSettingFacade userSettingFacade;
 
     public MenuFacade(PluginConfig config, MessageFacade messageFacade, UserSettingFacade userSettingFacade) {
         this.config = config;
-        this.menuConfig = config.getMenu();
-        this.messageConfig = config.getMessages();
         this.messageFacade = messageFacade;
         this.userSettingFacade = userSettingFacade;
     }
 
     public void open(Player player) {
+        MessageConfig messageConfig = this.config.getMessages();
+        MenuConfig menuConfig = this.config.getMenu();
+
         // Get user settings from the cache.
         Optional<UserSetting> userSettingMaybe = this.userSettingFacade.findUserSettingByPlayerIdFromCache(player.getUniqueId());
         if (!userSettingMaybe.isPresent()) {
             this.logger.error("User settings not found for {}.", player.getName());
-            this.messageFacade.sendMessageAsync(player, this.messageConfig.getNeedToJoinAgain());
+            this.messageFacade.sendMessageAsync(player, messageConfig.getNeedToJoinAgain());
             return;
         }
 
         UserSetting userSetting = userSettingMaybe.get();
 
-        Gui menu = new Gui(this.menuConfig.getRows(), this.menuConfig.getTitle().getText(), InteractionModifier.VALUES);
+        Gui menu = new Gui(menuConfig.getRows(), menuConfig.getTitle().getText(), InteractionModifier.VALUES);
 
         // Forbid the player from getting the item from the inventory.
         menu.setDefaultClickAction(event -> event.setCancelled(true));
 
-        this.menuConfig.getItems().forEach((menuSlotItemKey, menuSlotItem) -> {
+        menuConfig.getItems().forEach((menuSlotItemKey, menuSlotItem) -> {
             SlotConfig slot = menuSlotItem.getSlot();
             int row = slot.getRow();
             int column = slot.getColumn();
@@ -92,7 +91,7 @@ public class MenuFacade {
                 return;
             }
 
-            IntRangeFormatConfig heightFormat = this.menuConfig.getHeightFormat();
+            IntRangeFormatConfig heightFormat = menuConfig.getHeightFormat();
             IntRange heightRange = drop.getHeight();
             String minimumHeight = String.valueOf(heightRange.getMin());
             String maximumHeight = String.valueOf(heightRange.getMax());
@@ -117,7 +116,7 @@ public class MenuFacade {
             for (int level = 0; level < fortunes.size(); level++) {
                 FortuneConfig fortune = fortunes.get(level);
 
-                IntRangeFormatConfig amountFormat = this.menuConfig.getAmountFormat();
+                IntRangeFormatConfig amountFormat = menuConfig.getAmountFormat();
                 IntRange amountRange = fortune.getAmount();
                 String minimumAmount = String.valueOf(amountRange.getMin());
                 String maximumAmount = String.valueOf(amountRange.getMax());
@@ -144,8 +143,8 @@ public class MenuFacade {
                 }
             }
 
-            SwitchConfig dropSwitch = this.menuConfig.getDropSwitch();
-            SwitchConfig inventorySwitch = this.menuConfig.getInventoryDropSwitch();
+            SwitchConfig dropSwitch = menuConfig.getDropSwitch();
+            SwitchConfig inventorySwitch = menuConfig.getInventoryDropSwitch();
 
             ItemBuilder menuItemBuilder = ItemBuilder.from(menuItemStack)
                 .setLore(lore.stream()
@@ -180,10 +179,10 @@ public class MenuFacade {
                                 userSetting.removeDisabledDrop(menuSlotItemKey);
                             }
 
-                            this.messageFacade.sendMessage(player, this.messageConfig.getDropSwitched(), "{DROP}", menuSlotItemKey);
+                            this.messageFacade.sendMessage(player, messageConfig.getDropSwitched(), "{DROP}", menuSlotItemKey);
                         } else if (action == MenuAction.SWITCH_DROP_TO_INVENTORY) {
                             userSetting.setDropToInventory(menuSlotItemKey, !userSetting.hasDropToInventory(menuSlotItemKey));
-                            this.messageFacade.sendMessage(player, this.messageConfig.getDropSwitchedInventory(), "{DROP}", menuSlotItemKey);
+                            this.messageFacade.sendMessage(player, messageConfig.getDropSwitchedInventory(), "{DROP}", menuSlotItemKey);
                         }
                     }
                 } else {
@@ -198,10 +197,10 @@ public class MenuFacade {
                             userSetting.removeDisabledDrop(menuSlotItemKey);
                         }
 
-                        this.messageFacade.sendMessage(player, this.messageConfig.getDropSwitched(), "{DROP}", menuSlotItemKey);
+                        this.messageFacade.sendMessage(player, messageConfig.getDropSwitched(), "{DROP}", menuSlotItemKey);
                     } else if (action == MenuAction.SWITCH_DROP_TO_INVENTORY) {
                         userSetting.setDropToInventory(menuSlotItemKey, !userSetting.hasDropToInventory(menuSlotItemKey));
-                        this.messageFacade.sendMessage(player, this.messageConfig.getDropSwitchedInventory(), "{DROP}", menuSlotItemKey);
+                        this.messageFacade.sendMessage(player, messageConfig.getDropSwitchedInventory(), "{DROP}", menuSlotItemKey);
                     }
                 }
 
@@ -226,7 +225,7 @@ public class MenuFacade {
         });
 
         // Fill the rest inventory with the specified item if enabled.
-        FillerConfig filler = this.menuConfig.getFiller();
+        FillerConfig filler = menuConfig.getFiller();
         if (filler.isEnabled()) {
             menu.getFiller().fill(ItemBuilder.from(filler.getItem()).asGuiItem());
         }

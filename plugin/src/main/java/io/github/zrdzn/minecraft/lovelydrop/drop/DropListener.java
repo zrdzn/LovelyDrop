@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 import eu.okaeri.commons.range.IntRange;
 import io.github.zrdzn.minecraft.lovelydrop.PluginConfig;
 import io.github.zrdzn.minecraft.lovelydrop.drop.DropConfig.FortuneConfig;
-import io.github.zrdzn.minecraft.lovelydrop.message.MessageConfig;
 import io.github.zrdzn.minecraft.lovelydrop.message.MessageFacade;
 import io.github.zrdzn.minecraft.lovelydrop.user.UserSetting;
 import io.github.zrdzn.minecraft.lovelydrop.user.UserSettingFacade;
@@ -32,14 +31,12 @@ public class DropListener implements Listener {
     private final Logger logger = LoggerFactory.getLogger(DropListener.class);
 
     private final PluginConfig config;
-    private final MessageConfig messageConfig;
     private final SpigotAdapter spigotAdapter;
     private final MessageFacade messageFacade;
     private final UserSettingFacade userSettingFacade;
 
     public DropListener(PluginConfig config, SpigotAdapter spigotAdapter, MessageFacade messageFacade, UserSettingFacade userSettingFacade) {
         this.config = config;
-        this.messageConfig = config.getMessages();
         this.messageFacade = messageFacade;
         this.spigotAdapter = spigotAdapter;
         this.userSettingFacade = userSettingFacade;
@@ -60,7 +57,7 @@ public class DropListener implements Listener {
         Optional<UserSetting> userSettingMaybe = this.userSettingFacade.findUserSettingByPlayerIdFromCache(player.getUniqueId());
         if (!userSettingMaybe.isPresent()) {
             this.logger.error("User settings not found for {}.", player.getName());
-            this.messageFacade.sendMessageAsync(player, this.messageConfig.getNeedToJoinAgain());
+            this.messageFacade.sendMessageAsync(player, this.config.getMessages().getNeedToJoinAgain());
             return;
         }
 
@@ -115,7 +112,7 @@ public class DropListener implements Listener {
             dropItem.setAmount(amount);
 
             String[] placeholders = { "{DROP}", keyAndDrop.getKey(), "{AMOUNT}", String.valueOf(amount) };
-            this.messageFacade.sendMessage(player, this.messageConfig.getDropSuccessful(), placeholders);
+            this.messageFacade.sendMessage(player, this.config.getMessages().getDropSuccessful(), placeholders);
 
             World world = player.getWorld();
 

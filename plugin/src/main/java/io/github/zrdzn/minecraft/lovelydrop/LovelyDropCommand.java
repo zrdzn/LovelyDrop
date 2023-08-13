@@ -1,6 +1,5 @@
 package io.github.zrdzn.minecraft.lovelydrop;
 
-import io.github.zrdzn.minecraft.lovelydrop.message.MessageConfig;
 import io.github.zrdzn.minecraft.lovelydrop.message.MessageFacade;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -11,34 +10,32 @@ class LovelyDropCommand implements CommandExecutor {
 
     private final PluginConfig config;
     private final MessageFacade messageFacade;
-    private final MessageConfig messageConfig;
 
-    public LovelyDropCommand(PluginConfig config, MessageFacade messageFacade, MessageConfig messageConfig) {
+    public LovelyDropCommand(PluginConfig config, MessageFacade messageFacade) {
         this.config = config;
         this.messageFacade = messageFacade;
-        this.messageConfig = messageConfig;
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (!sender.hasPermission("lovelydrop.reload")) {
-            this.messageFacade.sendMessageAsync(sender, this.messageConfig.getNoPermissions());
+            this.messageFacade.sendMessageAsync(sender, this.config.getMessages().getNoPermissions());
             return true;
         }
 
         if (args.length == 0) {
-            this.messageFacade.sendMessageAsync(sender, this.messageConfig.getNotEnoughArguments());
+            this.messageFacade.sendMessageAsync(sender, this.config.getMessages().getNotEnoughArguments());
             return true;
         }
 
         if (!args[0].equalsIgnoreCase("reload")) {
-            this.messageFacade.sendMessageAsync(sender, this.messageConfig.getNotValidArgument());
+            this.messageFacade.sendMessageAsync(sender, this.config.getMessages().getNotValidArgument());
             return true;
         }
 
-        this.config.load(true);
+        this.config.load();
 
-        this.messageFacade.sendMessageAsync(sender, this.messageConfig.getPluginReloaded());
+        this.messageFacade.sendMessageAsync(sender, this.config.getMessages().getPluginReloaded());
 
         return true;
     }
