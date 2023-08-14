@@ -1,4 +1,4 @@
-package io.github.zrdzn.minecraft.lovelydrop.transformer;
+package io.github.zrdzn.minecraft.lovelydrop.serdes;
 
 import eu.okaeri.configs.schema.GenericsPair;
 import eu.okaeri.configs.serdes.BidirectionalTransformer;

@@ -38,5 +38,10 @@ subprojects {
             name = "okaeri-repository"
             url = uri("https://storehouse.okaeri.eu/repository/maven-public/")
         }
+
+        maven {
+            name = "codemc-repository"
+            url = uri("https://repo.codemc.io/repository/maven-public/")
+        }
     }
 }

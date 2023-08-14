@@ -10,7 +10,7 @@ import eu.okaeri.configs.annotation.Comment;
 import io.github.zrdzn.minecraft.lovelydrop.menu.MenuItemConfig.SlotConfig;
 import io.github.zrdzn.minecraft.lovelydrop.shared.IntRangeFormatConfig;
 import io.github.zrdzn.minecraft.lovelydrop.shared.ItemFactory;
-import io.github.zrdzn.minecraft.lovelydrop.transformer.ColoredText;
+import io.github.zrdzn.minecraft.lovelydrop.serdes.ColoredText;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
@@ -123,7 +123,7 @@ public class MenuConfig extends OkaeriConfig {
         this.put(
                 "close",
                 new MenuItemConfig(
-                        ItemFactory.createItem(Material.BARRIER, "&c&lClose", Collections.singletonList("&7Click to close the menu.")),
+                        ItemFactory.createItem(Material.BARRIER, "&c&lClose", Collections.singletonList("&7Click to close the menu.")).getItemStack(),
                         Collections.singletonMap(ClickType.LEFT, MenuAction.CLOSE_MENU),
                         new SlotConfig(4, 5)
                 )
@@ -158,7 +158,7 @@ public class MenuConfig extends OkaeriConfig {
                             this.add(" &aLeft click to switch the drop.");
                             this.add(" &eRight click to switch the inventory drop.");
                             this.add("&8-------------------------------------");
-                        }}),
+                        }}).getItemStack(),
                         new HashMap<ClickType, MenuAction>() {{
                             this.put(ClickType.LEFT, MenuAction.SWITCH_DROP);
                             this.put(ClickType.RIGHT, MenuAction.SWITCH_DROP_TO_INVENTORY);
@@ -184,7 +184,7 @@ public class MenuConfig extends OkaeriConfig {
         this.put(
                 "gold",
                 new MenuItemConfig(
-                        ItemFactory.createItem(Material.GOLD_INGOT, "&e&lGold", sharedLore),
+                        ItemFactory.createItem(Material.GOLD_INGOT, "&e&lGold", sharedLore).getItemStack(),
                         new HashMap<ClickType, MenuAction>() {{
                             this.put(ClickType.LEFT, MenuAction.SWITCH_DROP);
                             this.put(ClickType.RIGHT, MenuAction.SWITCH_DROP_TO_INVENTORY);
@@ -196,7 +196,7 @@ public class MenuConfig extends OkaeriConfig {
         this.put(
                 "diamond",
                 new MenuItemConfig(
-                        ItemFactory.createItem(Material.DIAMOND, "&b&lDiamond", sharedLore),
+                        ItemFactory.createItem(Material.DIAMOND, "&b&lDiamond", sharedLore).getItemStack(),
                         new HashMap<ClickType, MenuAction>() {{
                             this.put(ClickType.LEFT, MenuAction.SWITCH_DROP);
                             this.put(ClickType.RIGHT, MenuAction.SWITCH_DROP_TO_INVENTORY);
@@ -208,7 +208,7 @@ public class MenuConfig extends OkaeriConfig {
         this.put(
                 "tnt",
                 new MenuItemConfig(
-                        ItemFactory.createItem(Material.TNT, "&c&lTNT", sharedLore),
+                        ItemFactory.createItem(Material.TNT, "&c&lTNT", sharedLore).getItemStack(),
                         new HashMap<ClickType, MenuAction>() {{
                             this.put(ClickType.LEFT, MenuAction.SWITCH_DROP);
                             this.put(ClickType.RIGHT, MenuAction.SWITCH_DROP_TO_INVENTORY);
@@ -220,7 +220,7 @@ public class MenuConfig extends OkaeriConfig {
         this.put(
                 "emerald",
                 new MenuItemConfig(
-                        ItemFactory.createItem(Material.EMERALD, "&a&lEmerald", sharedLore),
+                        ItemFactory.createItem(Material.EMERALD, "&a&lEmerald", sharedLore).getItemStack(),
                         new HashMap<ClickType, MenuAction>() {{
                             this.put(ClickType.LEFT, MenuAction.SWITCH_DROP);
                             this.put(ClickType.RIGHT, MenuAction.SWITCH_DROP_TO_INVENTORY);
@@ -232,7 +232,7 @@ public class MenuConfig extends OkaeriConfig {
         this.put(
                 "obsidian",
                 new MenuItemConfig(
-                        ItemFactory.createItem(Material.OBSIDIAN, "&7&lObsidian", sharedLore),
+                        ItemFactory.createItem(Material.OBSIDIAN, "&7&lObsidian", sharedLore).getItemStack(),
                         new HashMap<ClickType, MenuAction>() {{
                             this.put(ClickType.LEFT, MenuAction.SWITCH_DROP);
                             this.put(ClickType.RIGHT, MenuAction.SWITCH_DROP_TO_INVENTORY);

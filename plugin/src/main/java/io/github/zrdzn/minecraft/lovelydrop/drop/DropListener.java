@@ -97,10 +97,10 @@ public class DropListener implements Listener {
                 return;
             }
 
-            ItemStack dropItem = drop.getItem();
+            ItemStack dropItem = drop.getItem().getItemStack();
 
             // If pickaxe has silk touch and drop is cobblestone, change drop to stone.
-            if (drop.getItem().getType() == Material.COBBLESTONE && pickaxe.containsEnchantment(Enchantment.SILK_TOUCH)) {
+            if (dropItem.getType() == Material.COBBLESTONE && pickaxe.containsEnchantment(Enchantment.SILK_TOUCH)) {
                 dropItem.setType(Material.STONE);
             }
 

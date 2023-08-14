@@ -1,4 +1,4 @@
-package io.github.zrdzn.minecraft.lovelydrop.transformer;
+package io.github.zrdzn.minecraft.lovelydrop.serdes;
 
 /**
  * Utility class that holds colored text by its transformer.

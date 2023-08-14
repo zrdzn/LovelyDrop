@@ -4,7 +4,8 @@ import java.util.Map;
 import eu.okaeri.commons.range.IntRange;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
-import io.github.zrdzn.minecraft.lovelydrop.transformer.FloatFormat;
+import io.github.zrdzn.minecraft.lovelydrop.serdes.ComplexItemStack;
+import io.github.zrdzn.minecraft.lovelydrop.serdes.FloatFormat;
 import org.bukkit.inventory.ItemStack;
 
 public class DropConfig extends OkaeriConfig {
@@ -67,7 +68,7 @@ public class DropConfig extends OkaeriConfig {
     @Comment("For example:")
     @Comment("1.8  - damage_all  |  1.8  - durability  |  1.8  - loot_bonus_mobs")
     @Comment("1.18 - sharpness   |  1.18 - unbreaking  |  1.18 - loot")
-    private ItemStack item;
+    private ComplexItemStack item;
 
     @Comment("")
     @Comment("Item representation of the block from which 'item' should be dropped.")
@@ -84,18 +85,18 @@ public class DropConfig extends OkaeriConfig {
     @Comment("It must contain at least one section.")
     private Map<Integer, FortuneConfig> fortune;
 
-    public DropConfig(ItemStack item, ItemStack source, IntRange height, Map<Integer, FortuneConfig> fortune) {
+    public DropConfig(ComplexItemStack item, ItemStack source, IntRange height, Map<Integer, FortuneConfig> fortune) {
         this.item = item;
         this.source = source;
         this.height = height;
         this.fortune = fortune;
     }
 
-    public ItemStack getItem() {
-        return this.item.clone();
+    public ComplexItemStack getItem() {
+        return this.item;
     }
 
-    public void setItem(ItemStack item) {
+    public void setItem(ComplexItemStack item) {
         this.item = item;
     }
 
