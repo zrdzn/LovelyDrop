@@ -38,6 +38,10 @@ public class PluginConfig extends OkaeriConfig {
                                 new HashMap<Enchantment, Integer>() {{
                                     this.put(Enchantment.FIRE_ASPECT, 1);
                                     this.put(Enchantment.KNOCKBACK, 1);
+                                }},
+                                new HashMap<String, Object>() {{
+                                    this.put("identifier", "sword-drop");
+                                    this.put("number", 5);
                                 }}
                         ),
                         new ItemStack(Material.STONE),
@@ -108,7 +112,7 @@ public class PluginConfig extends OkaeriConfig {
         this.put(
                 "diamond",
                 new DropConfig(
-                        new ItemStack(Material.DIAMOND),
+                        ItemFactory.createItem(Material.DIAMOND),
                         new ItemStack(Material.STONE),
                         IntRange.of(-20, 50),
                         new HashMap<Integer, FortuneConfig>() {{
@@ -127,7 +131,7 @@ public class PluginConfig extends OkaeriConfig {
         this.put(
                 "tnt",
                 new DropConfig(
-                        new ItemStack(Material.TNT),
+                        ItemFactory.createItem(Material.TNT),
                         new ItemStack(Material.STONE),
                         IntRange.of(0, 256),
                         new HashMap<Integer, FortuneConfig>() {{
@@ -146,7 +150,7 @@ public class PluginConfig extends OkaeriConfig {
         this.put(
                 "emerald",
                 new DropConfig(
-                        new ItemStack(Material.EMERALD),
+                        ItemFactory.createItem(Material.EMERALD),
                         new ItemStack(Material.STONE),
                         IntRange.of(30, 60),
                         new HashMap<Integer, FortuneConfig>() {{
@@ -165,7 +169,7 @@ public class PluginConfig extends OkaeriConfig {
         this.put(
                 "obsidian",
                 new DropConfig(
-                        new ItemStack(Material.OBSIDIAN),
+                        ItemFactory.createItem(Material.OBSIDIAN),
                         new ItemStack(Material.STONE),
                         IntRange.of(0, 256),
                         new HashMap<Integer, FortuneConfig>() {{

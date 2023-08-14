@@ -1,6 +1,6 @@
 package io.github.zrdzn.minecraft.lovelydrop.message;
 
-import io.github.zrdzn.minecraft.lovelydrop.transformer.ColoredText;
+import io.github.zrdzn.minecraft.lovelydrop.serdes.ColoredText;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;

@@ -1,4 +1,4 @@
-package io.github.zrdzn.minecraft.lovelydrop.transformer;
+package io.github.zrdzn.minecraft.lovelydrop.serdes;
 
 /**
  * Utility class that holds float with removed trailing zeroes along with original value.

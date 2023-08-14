@@ -14,8 +14,9 @@ import io.github.zrdzn.minecraft.lovelydrop.drop.DropCommand;
 import io.github.zrdzn.minecraft.lovelydrop.drop.DropListener;
 import io.github.zrdzn.minecraft.lovelydrop.menu.MenuFacade;
 import io.github.zrdzn.minecraft.lovelydrop.message.MessageFacade;
-import io.github.zrdzn.minecraft.lovelydrop.transformer.ColoredTextTransformer;
-import io.github.zrdzn.minecraft.lovelydrop.transformer.FloatFormatTransformer;
+import io.github.zrdzn.minecraft.lovelydrop.serdes.ColoredTextTransformer;
+import io.github.zrdzn.minecraft.lovelydrop.serdes.ComplexItemStackSerializer;
+import io.github.zrdzn.minecraft.lovelydrop.serdes.FloatFormatTransformer;
 import io.github.zrdzn.minecraft.lovelydrop.user.InMemoryUserSettingRepository;
 import io.github.zrdzn.minecraft.lovelydrop.user.UserSettingCache;
 import io.github.zrdzn.minecraft.lovelydrop.user.UserSettingFacade;
@@ -68,6 +69,7 @@ public class LovelyDropPlugin extends JavaPlugin {
                 it.withSerdesPack(registry -> {
                     registry.register(new ColoredTextTransformer());
                     registry.register(new FloatFormatTransformer());
+                    registry.register(new ComplexItemStackSerializer());
                 });
                 it.withRemoveOrphans(true);
                 it.saveDefaults();
