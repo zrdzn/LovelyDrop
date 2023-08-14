@@ -1,6 +1,5 @@
 package io.github.zrdzn.minecraft.lovelydrop.user;
 
-import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -30,7 +29,7 @@ public class UserSetting {
     }
 
     public Set<String> getDisabledDrops() {
-        return Collections.unmodifiableSet(this.disabledDrops);
+        return this.disabledDrops;
     }
 
     public void removeDisabledDrop(String dropKey) {
@@ -50,7 +49,7 @@ public class UserSetting {
     }
 
     public Map<String, Boolean> getDropsToInventory() {
-        return Collections.unmodifiableMap(this.dropsToInventory);
+        return this.dropsToInventory;
     }
 
 }

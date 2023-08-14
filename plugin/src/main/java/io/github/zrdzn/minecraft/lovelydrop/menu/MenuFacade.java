@@ -174,9 +174,9 @@ public class MenuFacade {
                             return;
                         } else if (action == MenuAction.SWITCH_DROP) {
                             if (userSetting.hasDisabledDrop(menuSlotItemKey)) {
-                                userSetting.addDisabledDrop(menuSlotItemKey);
-                            } else {
                                 userSetting.removeDisabledDrop(menuSlotItemKey);
+                            } else {
+                                userSetting.addDisabledDrop(menuSlotItemKey);
                             }
 
                             this.messageFacade.sendMessage(player, messageConfig.getDropSwitched(), "{DROP}", menuSlotItemKey);
@@ -192,9 +192,9 @@ public class MenuFacade {
                         return;
                     } else if (action == MenuAction.SWITCH_DROP) {
                         if (userSetting.hasDisabledDrop(menuSlotItemKey)) {
-                            userSetting.addDisabledDrop(menuSlotItemKey);
-                        } else {
                             userSetting.removeDisabledDrop(menuSlotItemKey);
+                        } else {
+                            userSetting.addDisabledDrop(menuSlotItemKey);
                         }
 
                         this.messageFacade.sendMessage(player, messageConfig.getDropSwitched(), "{DROP}", menuSlotItemKey);
