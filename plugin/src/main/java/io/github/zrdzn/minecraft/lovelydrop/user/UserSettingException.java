@@ -6,4 +6,8 @@ public class UserSettingException extends RuntimeException {
         super(message);
     }
 
+    public UserSettingException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
 }

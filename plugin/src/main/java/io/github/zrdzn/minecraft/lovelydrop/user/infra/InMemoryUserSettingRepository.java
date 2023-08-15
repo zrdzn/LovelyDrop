@@ -1,10 +1,12 @@
-package io.github.zrdzn.minecraft.lovelydrop.user;
+package io.github.zrdzn.minecraft.lovelydrop.user.infra;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import io.github.zrdzn.minecraft.lovelydrop.user.UserSetting;
+import io.github.zrdzn.minecraft.lovelydrop.user.UserSettingRepository;
 
 public class InMemoryUserSettingRepository implements UserSettingRepository {
 
@@ -15,13 +17,13 @@ public class InMemoryUserSettingRepository implements UserSettingRepository {
     }
 
     @Override
-    public void createOrUpdateUserSettings(Set<UserSetting> userSettings) {
+    public void createOrUpdateUserSettings(List<UserSetting> userSettings) {
         userSettings.forEach(userSetting -> this.usersSettings.put(userSetting.getPlayerId(), userSetting));
     }
 
     @Override
-    public void createOrUpdateUserSetting(UUID playerId, Set<String> disabledDrops, Map<String, Boolean> dropsToInventory) {
-        this.usersSettings.put(playerId, new UserSetting(playerId, disabledDrops, dropsToInventory));
+    public void createOrUpdateUserSetting(UserSetting userSetting) {
+        this.usersSettings.put(userSetting.getPlayerId(), userSetting);
     }
 
     @Override

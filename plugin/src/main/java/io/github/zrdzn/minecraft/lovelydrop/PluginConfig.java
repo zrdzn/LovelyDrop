@@ -11,6 +11,7 @@ import io.github.zrdzn.minecraft.lovelydrop.drop.DropConfig.FortuneConfig;
 import io.github.zrdzn.minecraft.lovelydrop.menu.MenuConfig;
 import io.github.zrdzn.minecraft.lovelydrop.message.MessageConfig;
 import io.github.zrdzn.minecraft.lovelydrop.shared.ItemFactory;
+import io.github.zrdzn.minecraft.lovelydrop.storage.StorageConfig;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
@@ -187,6 +188,9 @@ public class PluginConfig extends OkaeriConfig {
     }};
 
     @Comment("")
+    private StorageConfig storage = new StorageConfig();
+
+    @Comment("")
     @Comment("All messages that can be sent by plugin to players.")
     @Comment("If you want to disable specific messages just place a '#' before them.")
     private MessageConfig messages = new MessageConfig();
@@ -213,6 +217,14 @@ public class PluginConfig extends OkaeriConfig {
 
     public void setDrops(Map<String, DropConfig> drops) {
         this.drops = drops;
+    }
+
+    public StorageConfig getStorage() {
+        return this.storage;
+    }
+
+    public void setStorage(StorageConfig storage) {
+        this.storage = storage;
     }
 
     public MessageConfig getMessages() {

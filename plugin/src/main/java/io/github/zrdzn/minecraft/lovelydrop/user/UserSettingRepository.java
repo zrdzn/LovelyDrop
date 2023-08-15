@@ -1,15 +1,14 @@
 package io.github.zrdzn.minecraft.lovelydrop.user;
 
-import java.util.Map;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 
 public interface UserSettingRepository {
 
-    void createOrUpdateUserSettings(Set<UserSetting> userSettings);
+    void createOrUpdateUserSettings(List<UserSetting> userSettings);
 
-    void createOrUpdateUserSetting(UUID playerId, Set<String> disabledDrops, Map<String, Boolean> dropsToInventory);
+    void createOrUpdateUserSetting(UserSetting userSetting);
 
     Optional<UserSetting> findUserSettingByPlayerId(UUID playerId);
 
