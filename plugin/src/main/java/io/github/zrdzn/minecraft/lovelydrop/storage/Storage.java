@@ -2,6 +2,9 @@ package io.github.zrdzn.minecraft.lovelydrop.storage;
 
 import javax.sql.DataSource;
 
+/**
+ * Class that represents storage by holding data source instance with associated storage type.
+ */
 public class Storage {
 
     private final DataSource dataSource;

@@ -18,6 +18,9 @@ import io.github.zrdzn.minecraft.lovelydrop.user.UserSetting;
 import io.github.zrdzn.minecraft.lovelydrop.user.UserSettingException;
 import io.github.zrdzn.minecraft.lovelydrop.user.UserSettingRepository;
 
+/**
+ * Generic SQL implementation upon which SQL databases are based.
+ */
 class SqlUserSettingRepository implements UserSettingRepository {
 
     private final DataSource dataSource;

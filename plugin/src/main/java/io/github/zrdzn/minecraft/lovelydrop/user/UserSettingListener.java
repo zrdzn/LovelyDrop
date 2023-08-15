@@ -14,6 +14,9 @@ import org.bukkit.scheduler.BukkitScheduler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * This class is responsible for handling user settings.
+ */
 public class UserSettingListener implements Listener {
 
     private final Logger logger = LoggerFactory.getLogger(UserSettingListener.class);

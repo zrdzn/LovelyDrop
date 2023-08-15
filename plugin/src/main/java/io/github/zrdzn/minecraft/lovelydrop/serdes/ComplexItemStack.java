@@ -3,6 +3,11 @@ package io.github.zrdzn.minecraft.lovelydrop.serdes;
 import java.util.Map;
 import org.bukkit.inventory.ItemStack;
 
+/**
+ * Utility class that holds item stack and its NBT data.
+ *
+ * @param <T> type of NBT data
+ */
 public class ComplexItemStack<T> {
 
     private ItemStack itemStack;

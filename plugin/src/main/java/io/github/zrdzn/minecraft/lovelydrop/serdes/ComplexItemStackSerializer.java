@@ -8,6 +8,9 @@ import eu.okaeri.configs.serdes.SerializationData;
 import io.github.zrdzn.minecraft.lovelydrop.shared.ItemFactory;
 import org.bukkit.inventory.ItemStack;
 
+/**
+ * Complex itemstack serializer which serializes/deserializes it from/to configuration file.
+ */
 public class ComplexItemStackSerializer implements ObjectSerializer<ComplexItemStack<?>> {
 
     @Override

@@ -3,6 +3,9 @@ package io.github.zrdzn.minecraft.lovelydrop.user.infra;
 import javax.sql.DataSource;
 import com.google.gson.Gson;
 
+/**
+ * Sqlite implementation of {@link SqlUserSettingRepository}.
+ */
 public class SqliteUserSettingRepository extends SqlUserSettingRepository {
 
     private static final String CREATE_OR_UPDATE_USER_SETTING =

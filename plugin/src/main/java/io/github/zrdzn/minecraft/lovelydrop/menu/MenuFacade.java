@@ -27,6 +27,9 @@ import org.bukkit.inventory.ItemStack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * This class is responsible for handling the menu.
+ */
 public class MenuFacade {
 
     private final Logger logger = LoggerFactory.getLogger(MenuFacade.class);
@@ -41,6 +44,11 @@ public class MenuFacade {
         this.userSettingFacade = userSettingFacade;
     }
 
+    /**
+     * Open the menu for the specified player.
+     *
+     * @param player a player to open the menu for
+     */
     public void open(Player player) {
         MessageConfig messageConfig = this.config.getMessages();
         MenuConfig menuConfig = this.config.getMenu();

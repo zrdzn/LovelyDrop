@@ -16,8 +16,8 @@ public class UserSettingCache {
         this.usersSettings = new ConcurrentHashMap<>();
     }
 
-    UserSetting addUserSetting(UserSetting userSetting) {
-        return this.usersSettings.put(userSetting.getPlayerId(), userSetting);
+    void addUserSetting(UserSetting userSetting) {
+        this.usersSettings.put(userSetting.getPlayerId(), userSetting);
     }
 
     Optional<UserSetting> findUserSettingByPlayerId(UUID playerId) {

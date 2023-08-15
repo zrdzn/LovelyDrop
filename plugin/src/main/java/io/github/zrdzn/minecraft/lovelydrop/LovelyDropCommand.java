@@ -6,6 +6,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * This class is responsible for handling the /lovelydrop command.
+ */
 class LovelyDropCommand implements CommandExecutor {
 
     private final PluginConfig config;

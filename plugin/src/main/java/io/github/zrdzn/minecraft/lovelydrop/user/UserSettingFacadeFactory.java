@@ -6,6 +6,9 @@ import io.github.zrdzn.minecraft.lovelydrop.user.infra.InMemoryUserSettingReposi
 import io.github.zrdzn.minecraft.lovelydrop.user.infra.PostgresUserSettingRepository;
 import io.github.zrdzn.minecraft.lovelydrop.user.infra.SqliteUserSettingRepository;
 
+/**
+ * Factory that creates user setting facade instances.
+ */
 public class UserSettingFacadeFactory {
 
     private final Storage storage;
@@ -16,6 +19,11 @@ public class UserSettingFacadeFactory {
         this.gson = gson;
     }
 
+    /**
+     * Creates a new instance of user setting facade.
+     *
+     * @return the user setting facade instance
+     */
     public UserSettingFacade createUserSettingFacade() {
         UserSettingCache userSettingCache = new UserSettingCache();
 
