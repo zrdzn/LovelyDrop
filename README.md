@@ -53,7 +53,15 @@ The default storage is a SQLite database, but you can change it yourself in the 
 | /ldp reload | lovelydrop.reload    | reloads the whole plugin including configuration |
 
 ## Requirements
-The plugin runs on the spigot servers and its forks. Minecraft versions **1.8 up to 1.20.1** are fully supported by the plugin.
+### Java Version
+- Java 8 or higher
+### Server Software
+- [CraftBukkit](https://dev.bukkit.org/)
+- [Spigot](https://www.spigotmc.org/)
+- [PaperMC](https://papermc.io/)
+- ...and other server software based on Spigot
+### Server Version
+- 1.8 or higher
 
 ## How to download
 1. Read the [requirements](#requirements)
