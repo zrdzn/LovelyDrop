@@ -1,5 +1,6 @@
 package io.github.zrdzn.minecraft.lovelydrop.user;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -19,7 +20,7 @@ public class UserSettingFacade {
      * Save all user settings from cache to storage.
      */
     public void saveOrUpdateAllUserSettingsToStorage() {
-        this.userSettingRepository.createOrUpdateUserSettings(this.userSettingCache.findAllUserSettings());
+        this.userSettingRepository.createOrUpdateUserSettings(new ArrayList<>(this.userSettingCache.findAllUserSettings()));
     }
 
     /**
@@ -67,7 +68,7 @@ public class UserSettingFacade {
         }
 
         // Save user settings to storage.
-        this.userSettingRepository.createOrUpdateUserSetting(playerId, disabledDrops, dropsToInventory);
+        this.userSettingRepository.createOrUpdateUserSetting(new UserSetting(playerId, disabledDrops, dropsToInventory));
 
         // Remove user settings from cache.
         this.removeUserSettingByPlayerIdFromCache(playerId);

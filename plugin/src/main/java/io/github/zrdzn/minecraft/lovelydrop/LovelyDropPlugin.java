@@ -3,6 +3,8 @@ package io.github.zrdzn.minecraft.lovelydrop;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import eu.okaeri.configs.ConfigManager;
 import eu.okaeri.configs.exception.OkaeriException;
 import eu.okaeri.configs.serdes.okaeri.SerdesOkaeri;
@@ -17,11 +19,12 @@ import io.github.zrdzn.minecraft.lovelydrop.message.MessageFacade;
 import io.github.zrdzn.minecraft.lovelydrop.serdes.ColoredTextTransformer;
 import io.github.zrdzn.minecraft.lovelydrop.serdes.ComplexItemStackSerializer;
 import io.github.zrdzn.minecraft.lovelydrop.serdes.FloatFormatTransformer;
-import io.github.zrdzn.minecraft.lovelydrop.user.InMemoryUserSettingRepository;
-import io.github.zrdzn.minecraft.lovelydrop.user.UserSettingCache;
+import io.github.zrdzn.minecraft.lovelydrop.storage.Storage;
+import io.github.zrdzn.minecraft.lovelydrop.storage.StorageException;
+import io.github.zrdzn.minecraft.lovelydrop.storage.StorageFactory;
 import io.github.zrdzn.minecraft.lovelydrop.user.UserSettingFacade;
+import io.github.zrdzn.minecraft.lovelydrop.user.UserSettingFacadeFactory;
 import io.github.zrdzn.minecraft.lovelydrop.user.UserSettingListener;
-import io.github.zrdzn.minecraft.lovelydrop.user.UserSettingRepository;
 import io.github.zrdzn.minecraft.lovelydrop.user.UserSettingTask;
 import io.github.zrdzn.minecraft.spigot.SpigotAdapter;
 import io.github.zrdzn.minecraft.spigot.V1_12SpigotAdapter;
@@ -85,10 +88,20 @@ public class LovelyDropPlugin extends JavaPlugin {
 
         MessageFacade messageFacade = new MessageFacade(this);
 
-        UserSettingCache userSettingCache = new UserSettingCache();
-        // TODO Add support for database.
-        UserSettingRepository userSettingRepository = new InMemoryUserSettingRepository();
-        UserSettingFacade userSettingFacade = new UserSettingFacade(userSettingCache, userSettingRepository);
+        Storage storage;
+        try {
+            storage = new StorageFactory(config.getStorage(), this.getDataFolder()).createStorage();
+        } catch (StorageException exception) {
+            this.logger.error("Could not create the storage.", exception);
+            this.shutdown();
+            return;
+        }
+
+        Gson gson = new GsonBuilder()
+                .serializeNulls()
+                .create();
+
+        UserSettingFacade userSettingFacade = new UserSettingFacadeFactory(storage, gson).createUserSettingFacade();
         UserSettingTask userSettingTask = new UserSettingTask(userSettingFacade);
 
         BukkitScheduler scheduler = this.getServer().getScheduler();
@@ -103,13 +116,13 @@ public class LovelyDropPlugin extends JavaPlugin {
     }
 
     public void shutdown() {
-        this.getServer().getPluginManager().disablePlugin(this);
-
         if (this.userSettingBukkitTask != null) {
             this.userSettingBukkitTask.cancel();
         }
 
         this.unregisterListeners();
+
+        this.getServer().getPluginManager().disablePlugin(this);
     }
 
     public void registerListeners(PluginConfig config, SpigotAdapter spigotAdapter, MessageFacade messageFacade, UserSettingFacade userSettingFacade) {

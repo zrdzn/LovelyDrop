@@ -22,6 +22,8 @@ dependencies {
 
     implementation("org.bstats:bstats-bukkit:3.0.2")
 
+    implementation("com.zaxxer:HikariCP:4.0.3")
+
     implementation("dev.triumphteam:triumph-gui:3.1.5")
 
     implementation("de.tr7zw:item-nbt-api:2.11.3")
