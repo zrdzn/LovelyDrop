@@ -66,6 +66,7 @@ public class DropListener implements Listener {
         // Get all drops from the source.
         Set<Entry<String, DropConfig>> drops = this.config.getDrops().entrySet().stream()
                 .filter(drop -> !userSetting.hasDisabledDrop(drop.getKey()))
+                .filter(drop -> drop.getValue().getDisabledBioms().contains(block.getBiome()))
                 .filter(drop -> drop.getValue().getSource().getType() == block.getType())
                 .filter(drop -> drop.getValue().getSource().getDurability() == block.getData())
                 .collect(Collectors.toSet());

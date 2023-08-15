@@ -2,6 +2,7 @@ package io.github.zrdzn.minecraft.lovelydrop;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import eu.okaeri.commons.range.IntRange;
 import eu.okaeri.configs.OkaeriConfig;
@@ -13,6 +14,7 @@ import io.github.zrdzn.minecraft.lovelydrop.message.MessageConfig;
 import io.github.zrdzn.minecraft.lovelydrop.shared.ItemFactory;
 import io.github.zrdzn.minecraft.lovelydrop.storage.StorageConfig;
 import org.bukkit.Material;
+import org.bukkit.block.Biome;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 
@@ -87,6 +89,10 @@ public class PluginConfig extends OkaeriConfig {
                                             250
                                     )
                             );
+                        }},
+                        new HashSet<Biome>() {{
+                            this.add(Biome.COLD_TAIGA);
+                            this.add(Biome.COLD_BEACH);
                         }}
                 )
         );

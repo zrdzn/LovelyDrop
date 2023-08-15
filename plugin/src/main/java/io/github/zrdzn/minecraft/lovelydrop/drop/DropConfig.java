@@ -1,11 +1,14 @@
 package io.github.zrdzn.minecraft.lovelydrop.drop;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import eu.okaeri.commons.range.IntRange;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
 import io.github.zrdzn.minecraft.lovelydrop.serdes.ComplexItemStack;
 import io.github.zrdzn.minecraft.lovelydrop.serdes.FloatFormat;
+import org.bukkit.block.Biome;
 import org.bukkit.inventory.ItemStack;
 
 public class DropConfig extends OkaeriConfig {
@@ -85,11 +88,20 @@ public class DropConfig extends OkaeriConfig {
     @Comment("It must contain at least one section.")
     private Map<Integer, FortuneConfig> fortune;
 
+    @Comment("")
+    @Comment("List of biomes in which the drop will not be dropped.")
+    private Set<Biome> disabledBioms;
+
     public DropConfig(ComplexItemStack item, ItemStack source, IntRange height, Map<Integer, FortuneConfig> fortune) {
+        this(item, source, height, fortune, new HashSet<>());
+    }
+
+    public DropConfig(ComplexItemStack item, ItemStack source, IntRange height, Map<Integer, FortuneConfig> fortune, Set<Biome> disabledBioms) {
         this.item = item;
         this.source = source;
         this.height = height;
         this.fortune = fortune;
+        this.disabledBioms = disabledBioms;
     }
 
     public ComplexItemStack getItem() {
@@ -122,6 +134,14 @@ public class DropConfig extends OkaeriConfig {
 
     public void setFortune(Map<Integer, FortuneConfig> fortune) {
         this.fortune = fortune;
+    }
+
+    public Set<Biome> getDisabledBioms() {
+        return this.disabledBioms;
+    }
+
+    public void setDisabledBioms(Set<Biome> disabledBioms) {
+        this.disabledBioms = disabledBioms;
     }
 
 }
