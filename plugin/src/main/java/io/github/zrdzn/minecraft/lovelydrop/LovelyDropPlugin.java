@@ -15,6 +15,7 @@ import eu.okaeri.configs.yaml.bukkit.serdes.SerdesBukkit;
 import io.github.zrdzn.minecraft.lovelydrop.drop.DropCommand;
 import io.github.zrdzn.minecraft.lovelydrop.drop.DropListener;
 import io.github.zrdzn.minecraft.lovelydrop.menu.MenuFacade;
+import io.github.zrdzn.minecraft.lovelydrop.menu.MenuFactory;
 import io.github.zrdzn.minecraft.lovelydrop.message.MessageFacade;
 import io.github.zrdzn.minecraft.lovelydrop.serdes.ColoredTextTransformer;
 import io.github.zrdzn.minecraft.lovelydrop.serdes.ComplexItemStackSerializer;
@@ -109,7 +110,8 @@ public class LovelyDropPlugin extends JavaPlugin {
 
         this.registerListeners(config, spigotAdapter, messageFacade, userSettingFacade);
 
-        MenuFacade menuFacade = new MenuFacade(config, messageFacade, userSettingFacade);
+        MenuFactory menuFactory = new MenuFactory(config, messageFacade);
+        MenuFacade menuFacade = new MenuFacade(config, menuFactory, messageFacade, userSettingFacade);
 
         this.getCommand("lovelydrop").setExecutor(new LovelyDropCommand(config, messageFacade));
         this.getCommand("drop").setExecutor(new DropCommand(config, messageFacade, menuFacade));
