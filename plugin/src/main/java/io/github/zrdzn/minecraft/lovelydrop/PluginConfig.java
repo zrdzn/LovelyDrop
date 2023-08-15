@@ -91,8 +91,9 @@ public class PluginConfig extends OkaeriConfig {
                             );
                         }},
                         new HashSet<Biome>() {{
-                            this.add(Biome.COLD_TAIGA);
-                            this.add(Biome.COLD_BEACH);
+                            try {
+                                this.add(Biome.JUNGLE);
+                            } catch (NoSuchFieldError ignored) {}
                         }}
                 )
         );
