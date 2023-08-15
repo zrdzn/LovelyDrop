@@ -73,17 +73,9 @@ public class MenuFacade {
             if (drop == null) {
                 menu.setItem(row, column, ItemBuilder.from(menuSlotItem.getItem())
                     .asGuiItem(event -> {
-                        if (!actions.containsKey(ClickType.UNKNOWN)) {
-                            ClickType click = event.getClick();
+                        ClickType click = event.getClick();
 
-                            if (actions.containsKey(click) && actions.get(click) == MenuAction.CLOSE_MENU) {
-                                menu.close(player, true);
-                            }
-
-                            return;
-                        }
-
-                        if (actions.get(ClickType.UNKNOWN) == MenuAction.CLOSE_MENU) {
+                        if (actions.containsKey(click) && actions.get(click) == MenuAction.CLOSE_MENU) {
                             menu.close(player, true);
                         }
                     }));
@@ -147,75 +139,20 @@ public class MenuFacade {
             SwitchConfig inventorySwitch = menuConfig.getInventoryDropSwitch();
 
             ItemBuilder menuItemBuilder = ItemBuilder.from(menuItemStack)
-                .setLore(lore.stream()
-                    .map(line -> {
-                        String[] replacements = {
-                                userSetting.hasDisabledDrop(menuSlotItemKey) ? dropSwitch.getDisabled().getText() : dropSwitch.getEnabled().getText(),
-                                userSetting.hasDropToInventory(menuSlotItemKey) ? inventorySwitch.getEnabled().getText() : inventorySwitch.getDisabled().getText()
-                        };
-
-                        return StringUtils
-                            .replaceEach(line, new String[]{ "{SWITCH}", "{SWITCH_INVENTORY}" }, replacements);
-                    })
-                    .collect(Collectors.toList()));
+                .setLore(this.formatLore(lore, userSetting, menuSlotItemKey, dropSwitch, inventorySwitch));
 
             GuiItem menuItem = menuItemBuilder.asGuiItem();
 
             // Perform specific actions when player clicks the item.
-            List<String> finalLore = lore;
             menuItem.setAction(event -> {
-                if (!actions.containsKey(ClickType.UNKNOWN)) {
-                    ClickType click = event.getClick();
-
-                    if (actions.containsKey(click)) {
-                        MenuAction action = actions.get(click);
-                        if (action == MenuAction.CLOSE_MENU) {
-                            menu.close(player, true);
-                            return;
-                        } else if (action == MenuAction.SWITCH_DROP) {
-                            if (userSetting.hasDisabledDrop(menuSlotItemKey)) {
-                                userSetting.removeDisabledDrop(menuSlotItemKey);
-                            } else {
-                                userSetting.addDisabledDrop(menuSlotItemKey);
-                            }
-
-                            this.messageFacade.sendMessage(player, messageConfig.getDropSwitched(), "{DROP}", menuSlotItemKey);
-                        } else if (action == MenuAction.SWITCH_DROP_TO_INVENTORY) {
-                            userSetting.setDropToInventory(menuSlotItemKey, !userSetting.hasDropToInventory(menuSlotItemKey));
-                            this.messageFacade.sendMessage(player, messageConfig.getDropSwitchedInventory(), "{DROP}", menuSlotItemKey);
-                        }
-                    }
-                } else {
-                    MenuAction action = actions.get(ClickType.UNKNOWN);
-                    if (action == MenuAction.CLOSE_MENU) {
-                        menu.close(player, true);
-                        return;
-                    } else if (action == MenuAction.SWITCH_DROP) {
-                        if (userSetting.hasDisabledDrop(menuSlotItemKey)) {
-                            userSetting.removeDisabledDrop(menuSlotItemKey);
-                        } else {
-                            userSetting.addDisabledDrop(menuSlotItemKey);
-                        }
-
-                        this.messageFacade.sendMessage(player, messageConfig.getDropSwitched(), "{DROP}", menuSlotItemKey);
-                    } else if (action == MenuAction.SWITCH_DROP_TO_INVENTORY) {
-                        userSetting.setDropToInventory(menuSlotItemKey, !userSetting.hasDropToInventory(menuSlotItemKey));
-                        this.messageFacade.sendMessage(player, messageConfig.getDropSwitchedInventory(), "{DROP}", menuSlotItemKey);
-                    }
+                ClickType click = event.getClick();
+                if (actions.containsKey(click)) {
+                    MenuAction action = actions.get(click);
+                    this.handleClickAction(player, messageConfig, userSetting, menu, menuSlotItemKey, action);
                 }
 
                 ItemStack actionItem = ItemBuilder.from(menuItem.getItemStack())
-                    .setLore(finalLore.stream()
-                        .map(line -> {
-                            String[] replacements = {
-                                    userSetting.hasDisabledDrop(menuSlotItemKey) ? dropSwitch.getDisabled().getText() : dropSwitch.getEnabled().getText(),
-                                    userSetting.hasDropToInventory(menuSlotItemKey) ? inventorySwitch.getEnabled().getText() : inventorySwitch.getDisabled().getText()
-                            };
-
-                            return StringUtils
-                                .replaceEach(line, new String[]{ "{SWITCH}", "{SWITCH_INVENTORY}" }, replacements);
-                        })
-                        .collect(Collectors.toList()))
+                    .setLore(this.formatLore(lore, userSetting, menuSlotItemKey, dropSwitch, inventorySwitch))
                     .build();
 
                 menu.updateItem(row, column, actionItem);
@@ -231,6 +168,38 @@ public class MenuFacade {
         }
 
         menu.open(player);
+    }
+
+    private void handleClickAction(Player player, MessageConfig messageConfig, UserSetting userSetting, Gui menu,
+                                      String menuSlotItemKey, MenuAction action) {
+        if (action == MenuAction.CLOSE_MENU) {
+            menu.close(player, true);
+        } else if (action == MenuAction.SWITCH_DROP) {
+            if (userSetting.hasDisabledDrop(menuSlotItemKey)) {
+                userSetting.removeDisabledDrop(menuSlotItemKey);
+            } else {
+                userSetting.addDisabledDrop(menuSlotItemKey);
+            }
+
+            this.messageFacade.sendMessage(player, messageConfig.getDropSwitched(), "{DROP}", menuSlotItemKey);
+        } else if (action == MenuAction.SWITCH_DROP_TO_INVENTORY) {
+            userSetting.setDropToInventory(menuSlotItemKey, !userSetting.hasDropToInventory(menuSlotItemKey));
+            this.messageFacade.sendMessage(player, messageConfig.getDropSwitchedInventory(), "{DROP}", menuSlotItemKey);
+        }
+    }
+
+    private List<String> formatLore(List<String> lore, UserSetting userSetting, String menuSlotItemKey, SwitchConfig dropSwitch,
+                                    SwitchConfig inventorySwitch) {
+        return lore.stream()
+                .map(line -> {
+                    String[] replacements = {
+                            userSetting.hasDisabledDrop(menuSlotItemKey) ? dropSwitch.getDisabled().getText() : dropSwitch.getEnabled().getText(),
+                            userSetting.hasDropToInventory(menuSlotItemKey) ? inventorySwitch.getEnabled().getText() : inventorySwitch.getDisabled().getText()
+                    };
+
+                    return StringUtils.replaceEach(line, new String[]{ "{SWITCH}", "{SWITCH_INVENTORY}" }, replacements);
+                })
+                .collect(Collectors.toList());
     }
 
 }
