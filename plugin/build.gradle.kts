@@ -24,7 +24,7 @@ dependencies {
 
     implementation("com.zaxxer:HikariCP:4.0.3")
 
-    implementation("dev.triumphteam:triumph-gui:3.1.5")
+    implementation("dev.triumphteam:triumph-gui:3.1.7")
 
     implementation("de.tr7zw:item-nbt-api:2.11.3")
 }
