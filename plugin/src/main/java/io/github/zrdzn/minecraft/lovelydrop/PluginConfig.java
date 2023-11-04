@@ -199,7 +199,7 @@ public class PluginConfig extends OkaeriConfig {
 
     @Comment("")
     @Comment("All messages that can be sent by plugin to players.")
-    @Comment("If you want to disable specific messages just place a '#' before them.")
+    @Comment("If you want to disable specific messages just set them to '' (empty).")
     private MessageConfig messages = new MessageConfig();
 
     public long getUserSettingsSaveInterval() {
