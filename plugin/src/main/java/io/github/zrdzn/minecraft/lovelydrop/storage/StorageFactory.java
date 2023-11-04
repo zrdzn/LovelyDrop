@@ -121,6 +121,7 @@ public class StorageFactory {
                 storageType = StorageType.POSTGRESQL;
 
                 break;
+            case IN_MEMORY:
             default:
                 throw new IllegalArgumentException("There is no such storage type.");
         }

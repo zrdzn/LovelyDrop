@@ -32,6 +32,7 @@ public class UserSettingFacadeFactory {
                 return new UserSettingFacade(userSettingCache, new SqliteUserSettingRepository(this.storage.getDataSource(), this.gson));
             case POSTGRESQL:
                 return new UserSettingFacade(userSettingCache, new PostgresUserSettingRepository(this.storage.getDataSource(), this.gson));
+            case IN_MEMORY:
             default:
                 return new UserSettingFacade(userSettingCache, new InMemoryUserSettingRepository());
         }
