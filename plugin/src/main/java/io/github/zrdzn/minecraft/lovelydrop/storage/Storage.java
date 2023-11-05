@@ -1,9 +1,12 @@
 package io.github.zrdzn.minecraft.lovelydrop.storage;
 
+import org.jetbrains.annotations.Nullable;
+
 import javax.sql.DataSource;
 
 /**
  * Class that represents storage by holding data source instance with associated storage type.
+ * Some storage types may not have data source instance, such as in-memory storage, therefore data source instance is nullable.
  */
 public class Storage {
 
@@ -15,6 +18,7 @@ public class Storage {
         this.type = type;
     }
 
+    @Nullable
     public DataSource getDataSource() {
         return this.dataSource;
     }

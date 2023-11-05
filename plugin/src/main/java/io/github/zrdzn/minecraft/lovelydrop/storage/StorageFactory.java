@@ -122,6 +122,12 @@ public class StorageFactory {
 
                 break;
             case IN_MEMORY:
+                logger.info("Choosing in-memory as a storage provider.");
+
+                dataSource = null;
+                storageType = StorageType.IN_MEMORY;
+
+                break;
             default:
                 throw new IllegalArgumentException("There is no such storage type.");
         }

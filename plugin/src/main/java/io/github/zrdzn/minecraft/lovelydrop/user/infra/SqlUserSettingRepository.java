@@ -4,13 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import javax.sql.DataSource;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -31,8 +25,8 @@ class SqlUserSettingRepository implements UserSettingRepository {
 
     public SqlUserSettingRepository(DataSource dataSource, Gson gson, String createOrUpdateUserSettingQuery,
                                     String findUserSettingByPlayerId) {
-        this.dataSource = dataSource;
-        this.gson = gson;
+        this.dataSource = Objects.requireNonNull(dataSource, "Data source cannot be null.");
+        this.gson = Objects.requireNonNull(gson, "Gson cannot be null.");
 
         this.createOrUpdateUserSettingQuery = createOrUpdateUserSettingQuery;
         this.findUserSettingByPlayerId = findUserSettingByPlayerId;
