@@ -22,7 +22,7 @@ dependencies {
 
     implementation("org.bstats:bstats-bukkit:3.0.2")
 
-    implementation("com.zaxxer:HikariCP:4.0.3")
+    implementation("com.zaxxer:HikariCP:5.1.0")
 
     implementation("dev.triumphteam:triumph-gui:3.1.5")
 
