@@ -26,7 +26,7 @@ dependencies {
 
     implementation("dev.triumphteam:triumph-gui:3.1.5")
 
-    implementation("de.tr7zw:item-nbt-api:2.11.3")
+    implementation("de.tr7zw:item-nbt-api:2.12.1")
 }
 
 java {
