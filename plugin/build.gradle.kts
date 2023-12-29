@@ -38,7 +38,7 @@ tasks.withType<ProcessResources> {
 }
 
 tasks.withType<ShadowJar> {
-    archiveFileName.set("LovelyDrop v${project.version}.jar")
+    archiveFileName.set("lovelydrop-${project.version}.jar")
 
     val libsPath = "io.github.zrdzn.minecraft.lovelydrop.libs"
     relocate("org.bstats", "$libsPath.bstats")
