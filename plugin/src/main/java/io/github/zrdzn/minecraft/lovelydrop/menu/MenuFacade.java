@@ -37,7 +37,6 @@ public class MenuFacade {
      */
     public void open(Player player) {
         MessageConfig messageConfig = this.config.messages;
-        MenuConfig menuConfig = this.config.menu;
 
         // Get user settings from the cache.
         Optional<UserSetting> userSettingMaybe = this.userSettingFacade.findUserSettingByPlayerIdFromCache(player.getUniqueId());
