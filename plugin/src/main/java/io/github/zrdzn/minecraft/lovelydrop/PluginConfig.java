@@ -22,15 +22,15 @@ public class PluginConfig extends OkaeriConfig {
 
     @Comment("How often should all users settings be saved to the database (in seconds)?")
     @Comment("By default it is 180 seconds (3 minutes).")
-    private long userSettingsSaveInterval = 180L;
+    public long userSettingsSaveInterval = 180L;
 
     @Comment("")
     @Comment("Whole configuration for the drop menu.")
-    private MenuConfig menu = new MenuConfig();
+    public MenuConfig menu = new MenuConfig();
 
     @Comment("")
     @Comment("All drops that will be available on the server.")
-    private Map<String, DropConfig> drops = new HashMap<String, DropConfig>() {{
+    public Map<String, DropConfig> drops = new HashMap<String, DropConfig>() {{
         this.put(
                 "diamondSword",
                 new DropConfig(
@@ -195,51 +195,11 @@ public class PluginConfig extends OkaeriConfig {
     }};
 
     @Comment("")
-    private StorageConfig storage = new StorageConfig();
+    public StorageConfig storage = new StorageConfig();
 
     @Comment("")
     @Comment("All messages that can be sent by plugin to players.")
     @Comment("If you want to disable specific messages just set them to '' (empty).")
-    private MessageConfig messages = new MessageConfig();
-
-    public long getUserSettingsSaveInterval() {
-        return this.userSettingsSaveInterval;
-    }
-
-    public void setUserSettingsSaveInterval(long userSettingsSaveInterval) {
-        this.userSettingsSaveInterval = userSettingsSaveInterval;
-    }
-
-    public MenuConfig getMenu() {
-        return this.menu;
-    }
-
-    public void setMenu(MenuConfig menu) {
-        this.menu = menu;
-    }
-
-    public Map<String, DropConfig> getDrops() {
-        return this.drops;
-    }
-
-    public void setDrops(Map<String, DropConfig> drops) {
-        this.drops = drops;
-    }
-
-    public StorageConfig getStorage() {
-        return this.storage;
-    }
-
-    public void setStorage(StorageConfig storage) {
-        this.storage = storage;
-    }
-
-    public MessageConfig getMessages() {
-        return this.messages;
-    }
-
-    public void setMessages(MessageConfig messages) {
-        this.messages = messages;
-    }
+    public MessageConfig messages = new MessageConfig();
 
 }

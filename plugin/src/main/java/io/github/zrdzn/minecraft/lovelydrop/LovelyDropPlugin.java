@@ -86,12 +86,13 @@ public class LovelyDropPlugin extends JavaPlugin {
         }
 
         SpigotAdapter spigotAdapter = this.prepareSpigotAdapter();
+        this.logger.info("Using server engine adapter for version v" + spigotAdapter.getVersion());
 
         MessageFacade messageFacade = new MessageFacade(this);
 
         Storage storage;
         try {
-            storage = new StorageFactory(config.getStorage(), this.getDataFolder()).createStorage();
+            storage = new StorageFactory(config.storage, this.getDataFolder()).createStorage();
         } catch (StorageException exception) {
             this.logger.error("Could not create the storage.", exception);
             this.shutdown();
@@ -106,7 +107,7 @@ public class LovelyDropPlugin extends JavaPlugin {
         UserSettingTask userSettingTask = new UserSettingTask(userSettingFacade);
 
         BukkitScheduler scheduler = this.getServer().getScheduler();
-        this.userSettingBukkitTask = scheduler.runTaskTimerAsynchronously(this, userSettingTask, 20L, config.getUserSettingsSaveInterval() * 20L);
+        this.userSettingBukkitTask = scheduler.runTaskTimerAsynchronously(this, userSettingTask, 20L, config.userSettingsSaveInterval * 20L);
 
         this.registerListeners(config, spigotAdapter, messageFacade, userSettingFacade);
 
@@ -131,7 +132,7 @@ public class LovelyDropPlugin extends JavaPlugin {
         PluginManager pluginManager = this.getServer().getPluginManager();
 
         Map<String, Boolean> defaultDropsToInventory = new HashMap<>();
-        config.getDrops().keySet().forEach(key -> defaultDropsToInventory.put(key, true));
+        config.drops.keySet().forEach(key -> defaultDropsToInventory.put(key, true));
 
         this.userSettingListener = new UserSettingListener(this, userSettingFacade, defaultDropsToInventory);
         pluginManager.registerEvents(this.userSettingListener, this);
@@ -163,7 +164,6 @@ public class LovelyDropPlugin extends JavaPlugin {
         try {
             namespaced = Class.forName("org.bukkit.NamespacedKey");
         } catch (ClassNotFoundException exception) {
-            this.logger.info("Class 'NamespacedKey' not found on 1.12.2+. Using 1.8 spigot adapter.");
             return new V1_8SpigotAdapter();
         }
 

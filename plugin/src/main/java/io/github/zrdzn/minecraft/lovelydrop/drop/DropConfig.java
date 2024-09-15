@@ -16,15 +16,15 @@ public class DropConfig extends OkaeriConfig {
     public static class FortuneConfig extends OkaeriConfig {
 
         @Comment("Percentage chance of dropping the item.")
-        private FloatFormat chance;
+        public FloatFormat chance;
 
         @Comment("")
         @Comment("Range of the amount of items that can be dropped.")
-        private IntRange amount;
+        public IntRange amount;
 
         @Comment("")
         @Comment("Amount of experience given to the player when they have a successful drop.")
-        private int experience;
+        public int experience;
 
         public FortuneConfig(float chance, IntRange amount, int experience) {
             this(new FloatFormat(chance), amount, experience);
@@ -33,30 +33,6 @@ public class DropConfig extends OkaeriConfig {
         public FortuneConfig(FloatFormat chance, IntRange amount, int experience) {
             this.chance = chance;
             this.amount = amount;
-            this.experience = experience;
-        }
-
-        public FloatFormat getChance() {
-            return this.chance;
-        }
-
-        public void setChance(FloatFormat chance) {
-            this.chance = chance;
-        }
-
-        public IntRange getAmount() {
-            return this.amount;
-        }
-
-        public void setAmount(IntRange amount) {
-            this.amount = amount;
-        }
-
-        public int getExperience() {
-            return this.experience;
-        }
-
-        public void setExperience(int experience) {
             this.experience = experience;
         }
 
@@ -71,26 +47,26 @@ public class DropConfig extends OkaeriConfig {
     @Comment("For example:")
     @Comment("1.8  - damage_all  |  1.8  - durability  |  1.8  - loot_bonus_mobs")
     @Comment("1.18 - sharpness   |  1.18 - unbreaking  |  1.18 - loot")
-    private ComplexItemStack item;
+    public ComplexItemStack item;
 
     @Comment("")
     @Comment("Item representation of the block from which 'item' should be dropped.")
     @Comment("If you want to use legacy materials, set a durability to some number, e.g. material: stone with durability: 5 for andesite.")
     @Comment("Check https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html for list of materials.")
-    private ItemStack source;
+    public ItemStack source;
 
     @Comment("")
     @Comment("Height range within which the item can be dropped.")
-    private IntRange height;
+    public IntRange height;
 
     @Comment("")
     @Comment("All properties will be applied to the drop, depending on the current pickaxe fortune level.")
     @Comment("It must contain at least one section.")
-    private Map<Integer, FortuneConfig> fortune;
+    public Map<Integer, FortuneConfig> fortune;
 
     @Comment("")
     @Comment("List of biomes in which the drop will not be dropped.")
-    private Set<Biome> disabledBioms;
+    public Set<Biome> disabledBioms;
 
     public DropConfig(ComplexItemStack item, ItemStack source, IntRange height, Map<Integer, FortuneConfig> fortune) {
         this(item, source, height, fortune, new HashSet<>());
@@ -101,46 +77,6 @@ public class DropConfig extends OkaeriConfig {
         this.source = source;
         this.height = height;
         this.fortune = fortune;
-        this.disabledBioms = disabledBioms;
-    }
-
-    public ComplexItemStack getItem() {
-        return this.item;
-    }
-
-    public void setItem(ComplexItemStack item) {
-        this.item = item;
-    }
-
-    public ItemStack getSource() {
-        return this.source.clone();
-    }
-
-    public void setSource(ItemStack source) {
-        this.source = source;
-    }
-
-    public IntRange getHeight() {
-        return this.height;
-    }
-
-    public void setHeight(IntRange height) {
-        this.height = height;
-    }
-
-    public Map<Integer, FortuneConfig> getFortune() {
-        return this.fortune;
-    }
-
-    public void setFortune(Map<Integer, FortuneConfig> fortune) {
-        this.fortune = fortune;
-    }
-
-    public Set<Biome> getDisabledBioms() {
-        return this.disabledBioms;
-    }
-
-    public void setDisabledBioms(Set<Biome> disabledBioms) {
         this.disabledBioms = disabledBioms;
     }
 

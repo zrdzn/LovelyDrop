@@ -22,23 +22,23 @@ class LovelyDropCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (!sender.hasPermission("lovelydrop.reload")) {
-            this.messageFacade.sendMessageAsync(sender, this.config.getMessages().getNoPermissions());
+            this.messageFacade.sendMessageAsync(sender, this.config.messages.noPermissions);
             return true;
         }
 
         if (args.length == 0) {
-            this.messageFacade.sendMessageAsync(sender, this.config.getMessages().getNotEnoughArguments());
+            this.messageFacade.sendMessageAsync(sender, this.config.messages.notEnoughArguments);
             return true;
         }
 
         if (!args[0].equalsIgnoreCase("reload")) {
-            this.messageFacade.sendMessageAsync(sender, this.config.getMessages().getNotValidArgument());
+            this.messageFacade.sendMessageAsync(sender, this.config.messages.notValidArgument);
             return true;
         }
 
         this.config.load();
 
-        this.messageFacade.sendMessageAsync(sender, this.config.getMessages().getPluginReloaded());
+        this.messageFacade.sendMessageAsync(sender, this.config.messages.pluginReloaded);
 
         return true;
     }

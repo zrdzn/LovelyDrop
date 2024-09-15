@@ -60,18 +60,18 @@ public class DropListener implements Listener {
         Optional<UserSetting> userSettingMaybe = this.userSettingFacade.findUserSettingByPlayerIdFromCache(player.getUniqueId());
         if (!userSettingMaybe.isPresent()) {
             this.logger.error("User settings not found for {}.", player.getName());
-            this.messageFacade.sendMessageAsync(player, this.config.getMessages().getNeedToJoinAgain());
+            this.messageFacade.sendMessageAsync(player, this.config.messages.needToJoinAgain);
             return;
         }
 
         UserSetting userSetting = userSettingMaybe.get();
 
         // Get all drops from the source.
-        Set<Entry<String, DropConfig>> drops = this.config.getDrops().entrySet().stream()
+        Set<Entry<String, DropConfig>> drops = this.config.drops.entrySet().stream()
                 .filter(drop -> !userSetting.hasDisabledDrop(drop.getKey()))
-                .filter(drop -> !drop.getValue().getDisabledBioms().contains(block.getBiome()))
-                .filter(drop -> drop.getValue().getSource().getType() == block.getType())
-                .filter(drop -> drop.getValue().getSource().getDurability() == block.getData())
+                .filter(drop -> !drop.getValue().disabledBioms.contains(block.getBiome()))
+                .filter(drop -> drop.getValue().source.getType() == block.getType())
+                .filter(drop -> drop.getValue().source.getDurability() == block.getData())
                 .collect(Collectors.toSet());
         if (drops.isEmpty()) {
             return;
@@ -87,21 +87,21 @@ public class DropListener implements Listener {
         drops.forEach(keyAndDrop -> {
             DropConfig drop = keyAndDrop.getValue();
 
-            IntRange heightRange = drop.getHeight();
+            IntRange heightRange = drop.height;
             if (blockHeight < heightRange.getMin() || blockHeight > heightRange.getMax()) {
                 return;
             }
 
-            FortuneConfig fortune = drop.getFortune().getOrDefault(fortuneLevel, drop.getFortune().get(0));
+            FortuneConfig fortune = drop.fortune.getOrDefault(fortuneLevel, drop.fortune.get(0));
             if (fortune == null) {
                 return;
             }
 
-            if (fortune.getChance().getValue() <= Math.random() * 100.0F) {
+            if (fortune.chance.getValue() <= Math.random() * 100.0F) {
                 return;
             }
 
-            ItemStack dropItem = drop.getItem().getItemStack();
+            ItemStack dropItem = drop.item.getItemStack();
 
             // If pickaxe has silk touch and drop is cobblestone, change drop to stone.
             if (dropItem.getType() == Material.COBBLESTONE && pickaxe.containsEnchantment(Enchantment.SILK_TOUCH)) {
@@ -109,14 +109,14 @@ public class DropListener implements Listener {
             }
 
             // Give experience to player.
-            player.giveExp(fortune.getExperience());
+            player.giveExp(fortune.experience);
 
             // Randomize amount from range and set it for item.
-            int amount = fortune.getAmount().getRandom();
+            int amount = fortune.amount.getRandom();
             dropItem.setAmount(amount);
 
             String[] placeholders = { "{DROP}", keyAndDrop.getKey(), "{AMOUNT}", String.valueOf(amount) };
-            this.messageFacade.sendMessage(player, this.config.getMessages().getDropSuccessful(), placeholders);
+            this.messageFacade.sendMessage(player, this.config.messages.dropSuccessful, placeholders);
 
             World world = player.getWorld();
 

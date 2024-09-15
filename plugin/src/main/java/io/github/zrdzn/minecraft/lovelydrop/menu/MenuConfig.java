@@ -20,7 +20,7 @@ public class MenuConfig extends OkaeriConfig {
     public static class FillerConfig extends OkaeriConfig {
 
         @Comment("Whether empty slots should be filled with specified item or not.")
-        private boolean enabled = false;
+        public boolean enabled = false;
 
         @Comment("")
         @Comment("Item representation of the drop.")
@@ -32,83 +32,51 @@ public class MenuConfig extends OkaeriConfig {
         @Comment("For example:")
         @Comment("1.8  - damage_all  |  1.8  - durability  |  1.8  - loot_bonus_mobs")
         @Comment("1.18 - sharpness   |  1.18 - unbreaking  |  1.18 - loot")
-        private ItemStack item = new ItemStack(Material.GLASS);
-
-        public boolean isEnabled() {
-            return this.enabled;
-        }
-
-        public void setEnabled(boolean enabled) {
-            this.enabled = enabled;
-        }
-
-        public ItemStack getItem() {
-            return this.item;
-        }
-
-        public void setItem(ItemStack item) {
-            this.item = item;
-        }
+        public ItemStack item = new ItemStack(Material.GLASS);
 
     }
 
     public static class SwitchConfig extends OkaeriConfig {
 
         @Comment("Used when the switch is enabled.")
-        private ColoredText enabled = new ColoredText("&eon");
+        public ColoredText enabled = new ColoredText("&eon");
 
         @Comment("")
         @Comment("Used when the switch is disabled.")
-        private ColoredText disabled = new ColoredText("&coff");
-
-        public ColoredText getEnabled() {
-            return this.enabled;
-        }
-
-        public void setEnabled(ColoredText enabled) {
-            this.enabled = enabled;
-        }
-
-        public ColoredText getDisabled() {
-            return this.disabled;
-        }
-
-        public void setDisabled(ColoredText disabled) {
-            this.disabled = disabled;
-        }
+        public ColoredText disabled = new ColoredText("&coff");
 
     }
 
     @Comment("Title of the drop menu.")
-    private ColoredText title = new ColoredText("&2&lDrop Menu");
+    public ColoredText title = new ColoredText("&2&lDrop Menu");
 
     @Comment("")
     @Comment("Rows amount of the drop menu.")
-    private int rows = 4;
+    public int rows = 4;
 
     @Comment("")
     @Comment("Item that is filled in empty slots.")
-    private FillerConfig filler = new FillerConfig();
+    public FillerConfig filler = new FillerConfig();
 
     @Comment("")
     @Comment("Text placeholder which stands for {SWITCH} that could be used in items section.")
-    private SwitchConfig dropSwitch = new SwitchConfig();
+    public SwitchConfig dropSwitch = new SwitchConfig();
 
     @Comment("")
     @Comment("Text placeholder which stands for {SWITCH_INVENTORY} that could be used in items section.")
-    private SwitchConfig inventoryDropSwitch = new SwitchConfig();
+    public SwitchConfig inventoryDropSwitch = new SwitchConfig();
 
     @Comment("")
     @Comment("Text placeholder which stands for {AMOUNT-{LEVEL}} that could be used in items section.")
-    private IntRangeFormatConfig amountFormat = new IntRangeFormatConfig("&e{AMOUNT}", "&e{AMOUNT-MIN}&8-&e{AMOUNT-MAX}");
+    public IntRangeFormatConfig amountFormat = new IntRangeFormatConfig("&e{AMOUNT}", "&e{AMOUNT-MIN}&8-&e{AMOUNT-MAX}");
 
     @Comment("")
     @Comment("Text placeholder which stands for {HEIGHT} that could be used in items section.")
-    private IntRangeFormatConfig heightFormat = new IntRangeFormatConfig("&e{HEIGHT}", "&e{HEIGHT-MIN}&8-&e{HEIGHT-MAX}");
+    public IntRangeFormatConfig heightFormat = new IntRangeFormatConfig("&e{HEIGHT}", "&e{HEIGHT-MIN}&8-&e{HEIGHT-MAX}");
 
     @Comment("")
     @Comment("If drop to inventory should be enabled by default or not.")
-    private boolean defaultDropToInventory = true;
+    public boolean defaultDropToInventory = true;
 
     @Comment("")
     @Comment("All items that will appear in the menu.")
@@ -119,7 +87,7 @@ public class MenuConfig extends OkaeriConfig {
     @Comment("{SWITCH} - a text that will be shown depending on the drop switch status")
     @Comment("{SWITCH_INVENTORY} - a text that will be shown depending on the inventory drop switch status")
     @Comment("{HEIGHT} - a text that will be shown depending on the customized height range")
-    private Map<String, MenuItemConfig> items = new HashMap<String, MenuItemConfig>() {{
+    public Map<String, MenuItemConfig> items = new HashMap<String, MenuItemConfig>() {{
         this.put(
                 "close",
                 new MenuItemConfig(
@@ -241,77 +209,5 @@ public class MenuConfig extends OkaeriConfig {
                 )
         );
     }};
-
-    public ColoredText getTitle() {
-        return this.title;
-    }
-
-    public void setTitle(ColoredText title) {
-        this.title = title;
-    }
-
-    public int getRows() {
-        return this.rows;
-    }
-
-    public void setRows(int rows) {
-        this.rows = rows;
-    }
-
-    public FillerConfig getFiller() {
-        return this.filler;
-    }
-
-    public void setFiller(FillerConfig filler) {
-        this.filler = filler;
-    }
-
-    public SwitchConfig getDropSwitch() {
-        return this.dropSwitch;
-    }
-
-    public void setDropSwitch(SwitchConfig dropSwitch) {
-        this.dropSwitch = dropSwitch;
-    }
-
-    public SwitchConfig getInventoryDropSwitch() {
-        return this.inventoryDropSwitch;
-    }
-
-    public void setInventoryDropSwitch(SwitchConfig inventoryDropSwitch) {
-        this.inventoryDropSwitch = inventoryDropSwitch;
-    }
-
-    public IntRangeFormatConfig getAmountFormat() {
-        return this.amountFormat;
-    }
-
-    public void setAmountFormat(IntRangeFormatConfig amountFormat) {
-        this.amountFormat = amountFormat;
-    }
-
-    public IntRangeFormatConfig getHeightFormat() {
-        return this.heightFormat;
-    }
-
-    public void setHeightFormat(IntRangeFormatConfig heightFormat) {
-        this.heightFormat = heightFormat;
-    }
-
-    public boolean isDefaultDropToInventory() {
-        return this.defaultDropToInventory;
-    }
-
-    public void setDefaultDropToInventory(boolean defaultDropToInventory) {
-        this.defaultDropToInventory = defaultDropToInventory;
-    }
-
-    public Map<String, MenuItemConfig> getItems() {
-        return this.items;
-    }
-
-    public void setItems(Map<String, MenuItemConfig> items) {
-        this.items = items;
-    }
 
 }
