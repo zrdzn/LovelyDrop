@@ -44,7 +44,7 @@ public class MessageFacade {
 
     private String formatPlaceholders(String message, String... placeholders) {
         int length = placeholders.length;
-        if (length <= 0 || length % 2 != 0) {
+        if (length == 0 || length % 2 != 0) {
             return message;
         }
 
