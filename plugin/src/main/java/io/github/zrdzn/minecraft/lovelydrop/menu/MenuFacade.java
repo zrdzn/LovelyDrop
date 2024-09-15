@@ -36,14 +36,14 @@ public class MenuFacade {
      * @param player a player to open the menu for
      */
     public void open(Player player) {
-        MessageConfig messageConfig = this.config.getMessages();
-        MenuConfig menuConfig = this.config.getMenu();
+        MessageConfig messageConfig = this.config.messages;
+        MenuConfig menuConfig = this.config.menu;
 
         // Get user settings from the cache.
         Optional<UserSetting> userSettingMaybe = this.userSettingFacade.findUserSettingByPlayerIdFromCache(player.getUniqueId());
         if (!userSettingMaybe.isPresent()) {
             this.logger.error("User settings not found for {}.", player.getName());
-            this.messageFacade.sendMessageAsync(player, messageConfig.getNeedToJoinAgain());
+            this.messageFacade.sendMessageAsync(player, messageConfig.needToJoinAgain);
             return;
         }
 

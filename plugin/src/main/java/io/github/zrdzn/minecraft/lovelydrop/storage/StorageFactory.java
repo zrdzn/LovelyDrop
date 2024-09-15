@@ -38,8 +38,8 @@ public class StorageFactory {
         StorageType storageType;
 
         HikariConfig hikariConfig = new HikariConfig();
-        hikariConfig.setUsername(this.config.getUser());
-        hikariConfig.setPassword(this.config.getPassword());
+        hikariConfig.setUsername(this.config.user);
+        hikariConfig.setPassword(this.config.password);
         hikariConfig.addDataSourceProperty("cachePrepStmts", true);
         hikariConfig.addDataSourceProperty("prepStmtCacheSize", 250);
         hikariConfig.addDataSourceProperty("prepStmtCacheSqlLimit", 2048);
@@ -47,16 +47,16 @@ public class StorageFactory {
         hikariConfig.addDataSourceProperty("cacheResultSetMetadata", true);
         hikariConfig.addDataSourceProperty("tcpKeepAlive", true);
         hikariConfig.setLeakDetectionThreshold(60000L);
-        hikariConfig.setMaximumPoolSize(this.config.getMaximumPoolSize());
-        hikariConfig.setConnectionTimeout(this.config.getConnectionTimeout());
+        hikariConfig.setMaximumPoolSize(this.config.maximumPoolSize);
+        hikariConfig.setConnectionTimeout(this.config.connectionTimeout);
         hikariConfig.setMinimumIdle(0);
         hikariConfig.setIdleTimeout(30000L);
 
-        String host = this.config.getHost();
-        int port = this.config.getPort();
-        String database = this.config.getDatabase();
+        String host = this.config.host;
+        int port = this.config.port;
+        String database = this.config.database;
 
-        switch (this.config.getType()) {
+        switch (this.config.type) {
             case SQLITE:
                 try {
                     Class.forName("org.sqlite.JDBC");
@@ -64,7 +64,7 @@ public class StorageFactory {
                     throw new StorageException("SQLite driver not found.", exception);
                 }
 
-                File sqliteFile = new File(this.dataFolder, this.config.getSqliteFile());
+                File sqliteFile = new File(this.dataFolder, this.config.sqliteFile);
                 if (!sqliteFile.exists()) {
                     try {
                         Files.createParentDirs(sqliteFile);
@@ -96,7 +96,7 @@ public class StorageFactory {
 
                 break;
             case POSTGRESQL:
-                boolean enableSsl = this.config.isEnableSsl();
+                boolean enableSsl = this.config.enableSsl;
                 if (!enableSsl) {
                     this.logger.warn("Storage connection is configured without SSL enabled.");
                 }

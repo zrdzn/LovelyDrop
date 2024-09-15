@@ -28,14 +28,14 @@ public class DropCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         // Check if sender is console.
         if (!(sender instanceof Player)) {
-            this.messageFacade.sendMessageAsync(sender, this.config.getMessages().getExecutedAsConsole());
+            this.messageFacade.sendMessageAsync(sender, this.config.messages.executedAsConsole);
             return true;
         }
 
         Player player = (Player) sender;
 
         if (!player.hasPermission("lovelydrop.menu.open")) {
-            this.messageFacade.sendMessageAsync(sender, this.config.getMessages().getNoPermissions());
+            this.messageFacade.sendMessageAsync(sender, this.config.messages.noPermissions);
             return true;
         }
 

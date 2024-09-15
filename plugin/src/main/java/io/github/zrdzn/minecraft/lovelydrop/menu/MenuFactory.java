@@ -30,25 +30,25 @@ public class MenuFactory {
     }
 
     public Gui createDropMenu(Player player, UserSetting userSetting) {
-        MenuConfig menuConfig = this.config.getMenu();
+        MenuConfig menuConfig = this.config.menu;
 
-        Gui menu = new Gui(menuConfig.getRows(), menuConfig.getTitle().getText(), InteractionModifier.VALUES);
+        Gui menu = new Gui(menuConfig.rows, menuConfig.title.getText(), InteractionModifier.VALUES);
 
         // Forbid the player from getting the item from the inventory.
         menu.setDefaultClickAction(event -> event.setCancelled(true));
 
-        menuConfig.getItems().forEach((menuSlotItemKey, menuSlotItem) -> {
-            MenuItemConfig.SlotConfig slot = menuSlotItem.getSlot();
-            int row = slot.getRow();
-            int column = slot.getColumn();
+        menuConfig.items.forEach((menuSlotItemKey, menuSlotItem) -> {
+            MenuItemConfig.SlotConfig slot = menuSlotItem.slot;
+            int row = slot.row;
+            int column = slot.column;
 
-            Map<ClickType, MenuAction> actions = menuSlotItem.getClickAction();
+            Map<ClickType, MenuAction> actions = menuSlotItem.clickAction;
 
-            DropConfig drop = this.config.getDrops().get(menuSlotItemKey);
+            DropConfig drop = this.config.drops.get(menuSlotItemKey);
 
             // Set item that does not have drop item assigned to it.
             if (drop == null) {
-                menu.setItem(row, column, ItemBuilder.from(menuSlotItem.getItem())
+                menu.setItem(row, column, ItemBuilder.from(menuSlotItem.item)
                         .asGuiItem(event -> {
                             ClickType click = event.getClick();
 
@@ -60,12 +60,12 @@ public class MenuFactory {
                 return;
             }
 
-            IntRangeFormatConfig heightFormat = menuConfig.getHeightFormat();
-            IntRange heightRange = drop.getHeight();
+            IntRangeFormatConfig heightFormat = menuConfig.heightFormat;
+            IntRange heightRange = drop.height;
             String minimumHeight = String.valueOf(heightRange.getMin());
             String maximumHeight = String.valueOf(heightRange.getMax());
 
-            ItemStack menuItemStack = menuSlotItem.getItem();
+            ItemStack menuItemStack = menuSlotItem.item;
             List<String> lore = menuItemStack.getItemMeta().getLore().stream()
                     .map(line -> {
                         String formattedHeight;
@@ -81,12 +81,12 @@ public class MenuFactory {
                     })
                     .collect(Collectors.toList());
 
-            Map<Integer, DropConfig.FortuneConfig> fortunes = drop.getFortune();
+            Map<Integer, DropConfig.FortuneConfig> fortunes = drop.fortune;
             for (int level = 0; level < fortunes.size(); level++) {
                 DropConfig.FortuneConfig fortune = fortunes.get(level);
 
-                IntRangeFormatConfig amountFormat = menuConfig.getAmountFormat();
-                IntRange amountRange = fortune.getAmount();
+                IntRangeFormatConfig amountFormat = menuConfig.amountFormat;
+                IntRange amountRange = fortune.amount;
                 String minimumAmount = String.valueOf(amountRange.getMin());
                 String maximumAmount = String.valueOf(amountRange.getMax());
 
@@ -94,7 +94,7 @@ public class MenuFactory {
                     // Format lore with the chance and experience.
                     String line = StringUtils.replaceEach(lore.get(lineNumber),
                             new String[]{ String.format("{CHANCE-%d}", level), String.format("{EXPERIENCE-%d}", level) },
-                            new String[]{ fortune.getChance().getFormattedValue(), String.valueOf(fortune.getExperience()) });
+                            new String[]{ fortune.chance.getFormattedValue(), String.valueOf(fortune.experience) });
 
                     // Format lore with the fixed amount.
                     String placeholder = String.format("{AMOUNT-%d}", level);
@@ -112,8 +112,8 @@ public class MenuFactory {
                 }
             }
 
-            MenuConfig.SwitchConfig dropSwitch = menuConfig.getDropSwitch();
-            MenuConfig.SwitchConfig inventorySwitch = menuConfig.getInventoryDropSwitch();
+            MenuConfig.SwitchConfig dropSwitch = menuConfig.dropSwitch;
+            MenuConfig.SwitchConfig inventorySwitch = menuConfig.inventoryDropSwitch;
 
             ItemBuilder menuItemBuilder = ItemBuilder.from(menuItemStack)
                     .setLore(this.formatLore(lore, userSetting, menuSlotItemKey, dropSwitch, inventorySwitch));
@@ -139,9 +139,9 @@ public class MenuFactory {
         });
 
         // Fill the rest inventory with the specified item if enabled.
-        MenuConfig.FillerConfig filler = menuConfig.getFiller();
-        if (filler.isEnabled()) {
-            menu.getFiller().fill(ItemBuilder.from(filler.getItem()).asGuiItem());
+        MenuConfig.FillerConfig filler = menuConfig.filler;
+        if (filler.enabled) {
+            menu.getFiller().fill(ItemBuilder.from(filler.item).asGuiItem());
         }
 
         return menu;
@@ -157,10 +157,10 @@ public class MenuFactory {
                 userSetting.addDisabledDrop(menuSlotItemKey);
             }
 
-            this.messageFacade.sendMessage(player, this.config.getMessages().getDropSwitched(), "{DROP}", menuSlotItemKey);
+            this.messageFacade.sendMessage(player, this.config.messages.dropSwitched, "{DROP}", menuSlotItemKey);
         } else if (action == MenuAction.SWITCH_DROP_TO_INVENTORY) {
             userSetting.setDropToInventory(menuSlotItemKey, !userSetting.hasDropToInventory(menuSlotItemKey));
-            this.messageFacade.sendMessage(player, this.config.getMessages().getDropSwitchedInventory(), "{DROP}", menuSlotItemKey);
+            this.messageFacade.sendMessage(player, this.config.messages.dropSwitchedInventory, "{DROP}", menuSlotItemKey);
         }
     }
 
@@ -169,8 +169,8 @@ public class MenuFactory {
         return lore.stream()
                 .map(line -> {
                     String[] replacements = {
-                            userSetting.hasDisabledDrop(menuSlotItemKey) ? dropSwitch.getDisabled().getText() : dropSwitch.getEnabled().getText(),
-                            userSetting.hasDropToInventory(menuSlotItemKey) ? inventorySwitch.getEnabled().getText() : inventorySwitch.getDisabled().getText()
+                            userSetting.hasDisabledDrop(menuSlotItemKey) ? dropSwitch.disabled.getText() : dropSwitch.enabled.getText(),
+                            userSetting.hasDropToInventory(menuSlotItemKey) ? inventorySwitch.enabled.getText() : inventorySwitch.disabled.getText()
                     };
 
                     return StringUtils.replaceEach(line, new String[]{ "{SWITCH}", "{SWITCH_INVENTORY}" }, replacements);
