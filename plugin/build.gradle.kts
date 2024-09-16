@@ -20,7 +20,7 @@ dependencies {
 
     implementation("org.slf4j:slf4j-reload4j:2.0.13")
 
-    implementation("org.bstats:bstats-bukkit:3.0.2")
+    implementation("org.bstats:bstats-bukkit:3.0.3")
 
     implementation("com.zaxxer:HikariCP:4.0.3")
 
