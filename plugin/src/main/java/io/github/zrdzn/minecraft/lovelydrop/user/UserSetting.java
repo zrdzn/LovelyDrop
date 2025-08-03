@@ -4,9 +4,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-/**
- * Class that holds single drop user settings.
- */
 public class UserSetting {
 
     private final UUID playerId;

@@ -11,9 +11,6 @@ import org.bukkit.entity.Player;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * This class is responsible for handling the menu.
- */
 public class MenuFacade {
 
     private final Logger logger = LoggerFactory.getLogger(MenuFacade.class);

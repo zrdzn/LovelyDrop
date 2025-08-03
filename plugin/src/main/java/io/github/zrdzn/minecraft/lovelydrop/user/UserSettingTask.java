@@ -3,9 +3,6 @@ package io.github.zrdzn.minecraft.lovelydrop.user;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * Repeated task that saves all user drop settings to the storage.
- */
 public class UserSettingTask implements Runnable {
 
     private final Logger logger = LoggerFactory.getLogger(UserSettingTask.class);

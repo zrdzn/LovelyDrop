@@ -3,9 +3,6 @@ package io.github.zrdzn.minecraft.lovelydrop.user.infra;
 import javax.sql.DataSource;
 import com.google.gson.Gson;
 
-/**
- * Postgres implementation of {@link SqlUserSettingRepository}.
- */
 public class PostgresUserSettingRepository extends SqlUserSettingRepository {
 
     private static final String CREATE_OR_UPDATE_USER_SETTING =

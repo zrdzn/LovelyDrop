@@ -3,7 +3,7 @@ version: "${version}"
 main: io.github.zrdzn.minecraft.lovelydrop.LovelyDropPlugin
 api-version: 1.13
 author: zrdzn
-description: Universal multiversion customizable drop plugin with fully configurable gui
+description: Universal, multi-version drop plugin with a fully customizable GUI
 permissions:
   lovelydrop.menu.open:
     default: true

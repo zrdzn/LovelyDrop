@@ -8,10 +8,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import io.github.zrdzn.minecraft.lovelydrop.user.UserSetting;
 import io.github.zrdzn.minecraft.lovelydrop.user.UserSettingRepository;
 
-/**
- * In-memory implementation of {@link UserSettingRepository}.
- * After server restart all data will be lost.
- */
 public class InMemoryUserSettingRepository implements UserSettingRepository {
 
     private final Map<UUID, UserSetting> usersSettings;

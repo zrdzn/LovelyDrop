@@ -86,7 +86,7 @@ public class LovelyDropPlugin extends JavaPlugin {
         }
 
         SpigotAdapter spigotAdapter = this.prepareSpigotAdapter();
-        this.logger.info("Using server engine adapter for version v" + spigotAdapter.getVersion());
+        this.logger.info("Using server engine adapter for version v{}", spigotAdapter.getVersion());
 
         MessageFacade messageFacade = new MessageFacade(this);
 

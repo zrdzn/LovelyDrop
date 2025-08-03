@@ -9,9 +9,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-/**
- * This class is responsible for handling the /drop command.
- */
 public class DropCommand implements CommandExecutor {
 
     private final PluginConfig config;

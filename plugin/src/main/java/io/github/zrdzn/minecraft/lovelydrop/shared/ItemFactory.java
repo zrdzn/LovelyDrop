@@ -10,9 +10,6 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-/**
- * Factory that creates complex itemstacks.
- */
 public class ItemFactory {
 
     public static <T> ComplexItemStack<T> createItem(Material material) {

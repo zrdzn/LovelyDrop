@@ -26,9 +26,6 @@ import org.bukkit.inventory.ItemStack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * This class is responsible for handling the drop of the items.
- */
 public class DropListener implements Listener {
 
     private final Logger logger = LoggerFactory.getLogger(DropListener.class);

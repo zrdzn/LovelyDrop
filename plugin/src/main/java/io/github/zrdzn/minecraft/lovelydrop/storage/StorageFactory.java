@@ -12,9 +12,6 @@ import com.zaxxer.hikari.HikariDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * Factory class that creates storage instance based on configuration.
- */
 public class StorageFactory {
 
     private final Logger logger = LoggerFactory.getLogger(StorageFactory.class);
@@ -27,12 +24,6 @@ public class StorageFactory {
         this.dataFolder = dataFolder;
     }
 
-    /**
-     * Creates storage instance based on configuration.
-     *
-     * @return the storage instance
-     * @throws StorageException if storage instance cannot be created
-     */
     public Storage createStorage() {
         HikariDataSource dataSource;
         StorageType storageType;
