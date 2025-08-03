@@ -52,7 +52,7 @@ public class DropConfig extends OkaeriConfig {
     @Comment("Item representation of the block from which 'item' should be dropped.")
     @Comment("If you want to use legacy materials, set a durability to some number, e.g. material: stone with durability: 5 for andesite.")
     @Comment("Check https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html for list of materials.")
-    public ItemStack source;
+    public Set<ItemStack> sources;
 
     @Comment("")
     @Comment("Height range within which the item can be dropped.")
@@ -68,14 +68,23 @@ public class DropConfig extends OkaeriConfig {
     public Set<Biome> disabledBioms;
 
     public DropConfig(ComplexItemStack item, ItemStack source, IntRange height,
-                    Map<Integer, FortuneConfig> fortune) {
-        this(item, source, height, fortune, new HashSet<>());
+            Map<Integer, FortuneConfig> fortune) {
+        this(item, new HashSet<ItemStack>() {
+            {
+                this.add(source);
+            }
+        }, height, fortune, new HashSet<>());
     }
 
-    public DropConfig(ComplexItemStack item, ItemStack source, IntRange height,
-                    Map<Integer, FortuneConfig> fortune, Set<Biome> disabledBioms) {
+    public DropConfig(ComplexItemStack item, Set<ItemStack> sources, IntRange height,
+            Map<Integer, FortuneConfig> fortune) {
+        this(item, sources, height, fortune, new HashSet<>());
+    }
+
+    public DropConfig(ComplexItemStack item, Set<ItemStack> sources, IntRange height,
+            Map<Integer, FortuneConfig> fortune, Set<Biome> disabledBioms) {
         this.item = item;
-        this.source = source;
+        this.sources = sources;
         this.height = height;
         this.fortune = fortune;
         this.disabledBioms = disabledBioms;
