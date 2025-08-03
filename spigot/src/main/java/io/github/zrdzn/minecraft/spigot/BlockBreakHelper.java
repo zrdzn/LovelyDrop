@@ -5,5 +5,4 @@ import org.bukkit.event.block.BlockBreakEvent;
 public interface BlockBreakHelper {
 
     void disableDrop(BlockBreakEvent event);
-
 }

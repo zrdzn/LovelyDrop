@@ -25,5 +25,4 @@ public class FloatFormat {
     public String getFormattedValue() {
         return this.formattedValue;
     }
-
 }

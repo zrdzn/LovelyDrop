@@ -1,6 +1,7 @@
 plugins {
     id("java")
     id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("com.diffplug.spotless") version "6.12.0"
 }
 
 allprojects {
@@ -11,6 +12,7 @@ allprojects {
 subprojects {
     apply(plugin = "java")
     apply(plugin = "com.github.johnrengelman.shadow")
+    apply(plugin = "com.diffplug.spotless")
 
     java {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -42,6 +44,13 @@ subprojects {
         maven {
             name = "codemc-repository"
             url = uri("https://repo.codemc.io/repository/maven-public/")
+        }
+    }
+
+    spotless {
+        java {
+            eclipse().configFile(rootProject.file("config/codestyle.xml"))
+            target("src/**/*.java")
         }
     }
 }

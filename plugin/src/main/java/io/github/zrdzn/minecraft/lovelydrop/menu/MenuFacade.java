@@ -1,12 +1,12 @@
 package io.github.zrdzn.minecraft.lovelydrop.menu;
 
-import java.util.Optional;
 import dev.triumphteam.gui.guis.Gui;
 import io.github.zrdzn.minecraft.lovelydrop.PluginConfig;
 import io.github.zrdzn.minecraft.lovelydrop.message.MessageConfig;
 import io.github.zrdzn.minecraft.lovelydrop.message.MessageFacade;
 import io.github.zrdzn.minecraft.lovelydrop.user.UserSetting;
 import io.github.zrdzn.minecraft.lovelydrop.user.UserSettingFacade;
+import java.util.Optional;
 import org.bukkit.entity.Player;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +20,8 @@ public class MenuFacade {
     private final MessageFacade messageFacade;
     private final UserSettingFacade userSettingFacade;
 
-    public MenuFacade(PluginConfig config, MenuFactory menuFactory, MessageFacade messageFacade, UserSettingFacade userSettingFacade) {
+    public MenuFacade(PluginConfig config, MenuFactory menuFactory, MessageFacade messageFacade,
+            UserSettingFacade userSettingFacade) {
         this.config = config;
         this.menuFactory = menuFactory;
         this.messageFacade = messageFacade;
@@ -36,7 +37,8 @@ public class MenuFacade {
         MessageConfig messageConfig = this.config.messages;
 
         // Get user settings from the cache.
-        Optional<UserSetting> userSettingMaybe = this.userSettingFacade.findUserSettingByPlayerIdFromCache(player.getUniqueId());
+        Optional<UserSetting> userSettingMaybe =
+                this.userSettingFacade.findUserSettingByPlayerIdFromCache(player.getUniqueId());
         if (!userSettingMaybe.isPresent()) {
             this.logger.error("User settings not found for {}.", player.getName());
             this.messageFacade.sendMessageAsync(player, messageConfig.needToJoinAgain);
@@ -47,5 +49,4 @@ public class MenuFacade {
 
         menu.open(player);
     }
-
 }

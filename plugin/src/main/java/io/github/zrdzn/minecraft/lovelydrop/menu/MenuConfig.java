@@ -1,16 +1,16 @@
 package io.github.zrdzn.minecraft.lovelydrop.menu;
 
+import eu.okaeri.configs.OkaeriConfig;
+import eu.okaeri.configs.annotation.Comment;
+import io.github.zrdzn.minecraft.lovelydrop.menu.MenuItemConfig.SlotConfig;
+import io.github.zrdzn.minecraft.lovelydrop.serdes.ColoredText;
+import io.github.zrdzn.minecraft.lovelydrop.shared.IntRangeFormatConfig;
+import io.github.zrdzn.minecraft.lovelydrop.shared.ItemFactory;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import eu.okaeri.configs.OkaeriConfig;
-import eu.okaeri.configs.annotation.Comment;
-import io.github.zrdzn.minecraft.lovelydrop.menu.MenuItemConfig.SlotConfig;
-import io.github.zrdzn.minecraft.lovelydrop.shared.IntRangeFormatConfig;
-import io.github.zrdzn.minecraft.lovelydrop.shared.ItemFactory;
-import io.github.zrdzn.minecraft.lovelydrop.serdes.ColoredText;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
@@ -33,7 +33,6 @@ public class MenuConfig extends OkaeriConfig {
         @Comment("1.8  - damage_all  |  1.8  - durability  |  1.8  - loot_bonus_mobs")
         @Comment("1.18 - sharpness   |  1.18 - unbreaking  |  1.18 - loot")
         public ItemStack item = new ItemStack(Material.GLASS);
-
     }
 
     public static class SwitchConfig extends OkaeriConfig {
@@ -44,7 +43,6 @@ public class MenuConfig extends OkaeriConfig {
         @Comment("")
         @Comment("Used when the switch is disabled.")
         public ColoredText disabled = new ColoredText("&coff");
-
     }
 
     @Comment("Title of the drop menu.")
@@ -68,11 +66,13 @@ public class MenuConfig extends OkaeriConfig {
 
     @Comment("")
     @Comment("Text placeholder which stands for {AMOUNT-{LEVEL}} that could be used in items section.")
-    public IntRangeFormatConfig amountFormat = new IntRangeFormatConfig("&e{AMOUNT}", "&e{AMOUNT-MIN}&8-&e{AMOUNT-MAX}");
+    public IntRangeFormatConfig amountFormat =
+            new IntRangeFormatConfig("&e{AMOUNT}", "&e{AMOUNT-MIN}&8-&e{AMOUNT-MAX}");
 
     @Comment("")
     @Comment("Text placeholder which stands for {HEIGHT} that could be used in items section.")
-    public IntRangeFormatConfig heightFormat = new IntRangeFormatConfig("&e{HEIGHT}", "&e{HEIGHT-MIN}&8-&e{HEIGHT-MAX}");
+    public IntRangeFormatConfig heightFormat =
+            new IntRangeFormatConfig("&e{HEIGHT}", "&e{HEIGHT-MIN}&8-&e{HEIGHT-MAX}");
 
     @Comment("")
     @Comment("If drop to inventory should be enabled by default or not.")
@@ -87,20 +87,20 @@ public class MenuConfig extends OkaeriConfig {
     @Comment("{SWITCH} - a text that will be shown depending on the drop switch status")
     @Comment("{SWITCH_INVENTORY} - a text that will be shown depending on the inventory drop switch status")
     @Comment("{HEIGHT} - a text that will be shown depending on the customized height range")
-    public Map<String, MenuItemConfig> items = new HashMap<String, MenuItemConfig>() {{
-        this.put(
-                "close",
-                new MenuItemConfig(
-                        ItemFactory.createItem(Material.BARRIER, "&c&lClose", Collections.singletonList("&7Click to close the menu.")).getItemStack(),
-                        Collections.singletonMap(ClickType.LEFT, MenuAction.CLOSE_MENU),
-                        new SlotConfig(4, 5)
-                )
-        );
+    public Map<String, MenuItemConfig> items = new HashMap<String, MenuItemConfig>() {
+        {
+            this.put("close",
+                    new MenuItemConfig(
+                            ItemFactory
+                                    .createItem(Material.BARRIER, "&c&lClose",
+                                            Collections.singletonList("&7Click to close the menu."))
+                                    .getItemStack(),
+                            Collections.singletonMap(ClickType.LEFT, MenuAction.CLOSE_MENU),
+                            new SlotConfig(4, 5)));
 
-        this.put(
-                "diamondSword",
-                new MenuItemConfig(
-                        ItemFactory.createItem(Material.DIAMOND_SWORD, "&a&lEpic Sword", new ArrayList<String>() {{
+            this.put("diamondSword", new MenuItemConfig(ItemFactory
+                    .createItem(Material.DIAMOND_SWORD, "&a&lEpic Sword", new ArrayList<String>() {
+                        {
                             this.add(" &6Chance: &e{CHANCE-0}%");
                             this.add(" &6Amount: {AMOUNT-0}");
                             this.add(" &6Experience: &e{EXPERIENCE-0}");
@@ -126,88 +126,79 @@ public class MenuConfig extends OkaeriConfig {
                             this.add(" &aLeft click to switch the drop.");
                             this.add(" &eRight click to switch the inventory drop.");
                             this.add("&8-------------------------------------");
-                        }}).getItemStack(),
-                        new HashMap<ClickType, MenuAction>() {{
+                        }
+                    }).getItemStack(), new HashMap<ClickType, MenuAction>() {
+                        {
                             this.put(ClickType.LEFT, MenuAction.SWITCH_DROP);
                             this.put(ClickType.RIGHT, MenuAction.SWITCH_DROP_TO_INVENTORY);
-                        }},
-                        new SlotConfig(1, 5)
-                )
-        );
+                        }
+                    }, new SlotConfig(1, 5)));
 
-        List<String> sharedLore = new ArrayList<String>() {{
-            this.add(" &6Chance: &e{CHANCE-0}%");
-            this.add(" &6Amount: {AMOUNT-0}");
-            this.add(" &6Experience: &e{EXPERIENCE-0}");
-            this.add(" &6Height: {HEIGHT}");
-            this.add(" &6Status: {SWITCH}");
-            this.add(" &6To inventory: {SWITCH_INVENTORY}");
-            this.add("");
-            this.add("&8-------------------------------------");
-            this.add(" &aLeft click to switch the drop.");
-            this.add(" &eRight click to switch the inventory drop.");
-            this.add("&8-------------------------------------");
-        }};
+            List<String> sharedLore = new ArrayList<String>() {
+                {
+                    this.add(" &6Chance: &e{CHANCE-0}%");
+                    this.add(" &6Amount: {AMOUNT-0}");
+                    this.add(" &6Experience: &e{EXPERIENCE-0}");
+                    this.add(" &6Height: {HEIGHT}");
+                    this.add(" &6Status: {SWITCH}");
+                    this.add(" &6To inventory: {SWITCH_INVENTORY}");
+                    this.add("");
+                    this.add("&8-------------------------------------");
+                    this.add(" &aLeft click to switch the drop.");
+                    this.add(" &eRight click to switch the inventory drop.");
+                    this.add("&8-------------------------------------");
+                }
+            };
 
-        this.put(
-                "gold",
-                new MenuItemConfig(
-                        ItemFactory.createItem(Material.GOLD_INGOT, "&e&lGold", sharedLore).getItemStack(),
-                        new HashMap<ClickType, MenuAction>() {{
+            this.put("gold",
+                    new MenuItemConfig(ItemFactory
+                            .createItem(Material.GOLD_INGOT, "&e&lGold", sharedLore).getItemStack(),
+                            new HashMap<ClickType, MenuAction>() {
+                                {
+                                    this.put(ClickType.LEFT, MenuAction.SWITCH_DROP);
+                                    this.put(ClickType.RIGHT, MenuAction.SWITCH_DROP_TO_INVENTORY);
+                                }
+                            }, new SlotConfig(2, 3)));
+
+            this.put("diamond",
+                    new MenuItemConfig(ItemFactory
+                            .createItem(Material.DIAMOND, "&b&lDiamond", sharedLore).getItemStack(),
+                            new HashMap<ClickType, MenuAction>() {
+                                {
+                                    this.put(ClickType.LEFT, MenuAction.SWITCH_DROP);
+                                    this.put(ClickType.RIGHT, MenuAction.SWITCH_DROP_TO_INVENTORY);
+                                }
+                            }, new SlotConfig(2, 4)));
+
+            this.put("tnt", new MenuItemConfig(
+                    ItemFactory.createItem(Material.TNT, "&c&lTNT", sharedLore).getItemStack(),
+                    new HashMap<ClickType, MenuAction>() {
+                        {
                             this.put(ClickType.LEFT, MenuAction.SWITCH_DROP);
                             this.put(ClickType.RIGHT, MenuAction.SWITCH_DROP_TO_INVENTORY);
-                        }},
-                        new SlotConfig(2, 3)
-                )
-        );
+                        }
+                    }, new SlotConfig(2, 5)));
 
-        this.put(
-                "diamond",
-                new MenuItemConfig(
-                        ItemFactory.createItem(Material.DIAMOND, "&b&lDiamond", sharedLore).getItemStack(),
-                        new HashMap<ClickType, MenuAction>() {{
-                            this.put(ClickType.LEFT, MenuAction.SWITCH_DROP);
-                            this.put(ClickType.RIGHT, MenuAction.SWITCH_DROP_TO_INVENTORY);
-                        }},
-                        new SlotConfig(2, 4)
-                )
-        );
+            this.put("emerald",
+                    new MenuItemConfig(ItemFactory
+                            .createItem(Material.EMERALD, "&a&lEmerald", sharedLore).getItemStack(),
+                            new HashMap<ClickType, MenuAction>() {
+                                {
+                                    this.put(ClickType.LEFT, MenuAction.SWITCH_DROP);
+                                    this.put(ClickType.RIGHT, MenuAction.SWITCH_DROP_TO_INVENTORY);
+                                }
+                            }, new SlotConfig(2, 6)));
 
-        this.put(
-                "tnt",
-                new MenuItemConfig(
-                        ItemFactory.createItem(Material.TNT, "&c&lTNT", sharedLore).getItemStack(),
-                        new HashMap<ClickType, MenuAction>() {{
-                            this.put(ClickType.LEFT, MenuAction.SWITCH_DROP);
-                            this.put(ClickType.RIGHT, MenuAction.SWITCH_DROP_TO_INVENTORY);
-                        }},
-                        new SlotConfig(2, 5)
-                )
-        );
-
-        this.put(
-                "emerald",
-                new MenuItemConfig(
-                        ItemFactory.createItem(Material.EMERALD, "&a&lEmerald", sharedLore).getItemStack(),
-                        new HashMap<ClickType, MenuAction>() {{
-                            this.put(ClickType.LEFT, MenuAction.SWITCH_DROP);
-                            this.put(ClickType.RIGHT, MenuAction.SWITCH_DROP_TO_INVENTORY);
-                        }},
-                        new SlotConfig(2, 6)
-                )
-        );
-
-        this.put(
-                "obsidian",
-                new MenuItemConfig(
-                        ItemFactory.createItem(Material.OBSIDIAN, "&7&lObsidian", sharedLore).getItemStack(),
-                        new HashMap<ClickType, MenuAction>() {{
-                            this.put(ClickType.LEFT, MenuAction.SWITCH_DROP);
-                            this.put(ClickType.RIGHT, MenuAction.SWITCH_DROP_TO_INVENTORY);
-                        }},
-                        new SlotConfig(2, 7)
-                )
-        );
-    }};
-
+            this.put("obsidian",
+                    new MenuItemConfig(
+                            ItemFactory.createItem(Material.OBSIDIAN, "&7&lObsidian", sharedLore)
+                                    .getItemStack(),
+                            new HashMap<ClickType, MenuAction>() {
+                                {
+                                    this.put(ClickType.LEFT, MenuAction.SWITCH_DROP);
+                                    this.put(ClickType.RIGHT, MenuAction.SWITCH_DROP_TO_INVENTORY);
+                                }
+                            }, new SlotConfig(2, 7)));
+        }
+    };
 }

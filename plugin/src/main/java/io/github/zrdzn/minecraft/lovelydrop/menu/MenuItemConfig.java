@@ -1,8 +1,8 @@
 package io.github.zrdzn.minecraft.lovelydrop.menu;
 
-import java.util.Map;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
+import java.util.Map;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
@@ -21,7 +21,6 @@ public class MenuItemConfig extends OkaeriConfig {
             this.row = row;
             this.column = column;
         }
-
     }
 
     @Comment("Item representation of the drop.")
@@ -55,5 +54,4 @@ public class MenuItemConfig extends OkaeriConfig {
         this.clickAction = clickAction;
         this.slot = slot;
     }
-
 }

@@ -7,7 +7,8 @@ import org.bukkit.ChatColor;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Text transformer where left is the raw text with unparsed color codes and right is the colored text.
+ * Text transformer where left is the raw text with unparsed color codes and right is the colored
+ * text.
  */
 public class ColoredTextTransformer extends BidirectionalTransformer<String, ColoredText> {
 
@@ -25,5 +26,4 @@ public class ColoredTextTransformer extends BidirectionalTransformer<String, Col
     public String rightToLeft(ColoredText text, @NotNull SerdesContext serdesContext) {
         return text.getText().replace(ChatColor.COLOR_CHAR, '&');
     }
-
 }

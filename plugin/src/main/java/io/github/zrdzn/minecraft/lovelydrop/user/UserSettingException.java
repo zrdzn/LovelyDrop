@@ -9,5 +9,4 @@ public class UserSettingException extends RuntimeException {
     public UserSettingException(String message, Throwable cause) {
         super(message, cause);
     }
-
 }

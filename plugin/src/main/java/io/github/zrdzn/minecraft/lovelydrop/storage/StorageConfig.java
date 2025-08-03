@@ -43,5 +43,4 @@ public class StorageConfig extends OkaeriConfig {
     @Comment("")
     @Comment("Database connection timeout.")
     public int connectionTimeout = 5000;
-
 }

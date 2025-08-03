@@ -1,14 +1,14 @@
 package io.github.zrdzn.minecraft.lovelydrop.storage;
 
+import com.google.common.io.Files;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.sql.DataSource;
-import com.google.common.io.Files;
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -72,15 +72,15 @@ public class StorageFactory {
                     dataSource = new HikariDataSource(hikariConfig);
                     this.logger.info("Choosing SQLite as a storage provider.");
                 } catch (Exception exception) {
-                    throw new StorageException("Could not open connection to SQLite file.", exception);
+                    throw new StorageException("Could not open connection to SQLite file.",
+                            exception);
                 }
 
                 String sqliteCreateEliminationTableQuery =
-                        "CREATE TABLE IF NOT EXISTS users_settings (" +
-                                "   player_id VARCHAR(36) PRIMARY KEY," +
-                                "   disabled_drops JSON NOT NULL," +
-                                "   drops_to_inventory JSON NOT NULL" +
-                                ");";
+                        "CREATE TABLE IF NOT EXISTS users_settings ("
+                                + "   player_id VARCHAR(36) PRIMARY KEY,"
+                                + "   disabled_drops JSON NOT NULL,"
+                                + "   drops_to_inventory JSON NOT NULL" + ");";
                 this.applySchema(dataSource, sqliteCreateEliminationTableQuery);
 
                 storageType = StorageType.SQLITE;
@@ -92,21 +92,22 @@ public class StorageFactory {
                     this.logger.warn("Storage connection is configured without SSL enabled.");
                 }
 
-                hikariConfig.setJdbcUrl(String.format("jdbc:postgresql://%s:%s/%s?ssl=%s", host, port, database, enableSsl));
+                hikariConfig.setJdbcUrl(String.format("jdbc:postgresql://%s:%s/%s?ssl=%s", host,
+                        port, database, enableSsl));
 
                 try {
                     dataSource = new HikariDataSource(hikariConfig);
                     this.logger.info("Choosing PostgreSQL as a storage provider.");
                 } catch (Exception exception) {
-                    throw new StorageException("Could not open connection to PostgreSQL database.", exception);
+                    throw new StorageException("Could not open connection to PostgreSQL database.",
+                            exception);
                 }
 
                 String postgresCreateEliminationTableQuery =
-                        "CREATE TABLE IF NOT EXISTS users_settings (" +
-                                "   player_id VARCHAR(36) PRIMARY KEY," +
-                                "   disabled_drops JSON NOT NULL," +
-                                "   drops_to_inventory JSON NOT NULL" +
-                                ");";
+                        "CREATE TABLE IF NOT EXISTS users_settings ("
+                                + "   player_id VARCHAR(36) PRIMARY KEY,"
+                                + "   disabled_drops JSON NOT NULL,"
+                                + "   drops_to_inventory JSON NOT NULL" + ");";
                 this.applySchema(dataSource, postgresCreateEliminationTableQuery);
 
                 storageType = StorageType.POSTGRESQL;
@@ -128,11 +129,10 @@ public class StorageFactory {
 
     private void applySchema(DataSource dataSource, String schemaCreateQuery) {
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(schemaCreateQuery)) {
+                PreparedStatement statement = connection.prepareStatement(schemaCreateQuery)) {
             statement.executeUpdate();
         } catch (SQLException exception) {
             throw new StorageException("Could not create table.", exception);
         }
     }
-
 }

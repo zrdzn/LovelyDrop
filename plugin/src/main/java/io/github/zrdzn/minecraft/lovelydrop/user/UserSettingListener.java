@@ -23,7 +23,8 @@ public class UserSettingListener implements Listener {
     private final UserSettingFacade userSettingFacade;
     private final Map<String, Boolean> defaultDropsToInventory;
 
-    public UserSettingListener(Plugin plugin, UserSettingFacade userSettingFacade, Map<String, Boolean> defaultDropsToInventory) {
+    public UserSettingListener(Plugin plugin, UserSettingFacade userSettingFacade,
+            Map<String, Boolean> defaultDropsToInventory) {
         this.plugin = plugin;
         this.scheduler = plugin.getServer().getScheduler();
         this.userSettingFacade = userSettingFacade;
@@ -44,16 +45,20 @@ public class UserSettingListener implements Listener {
         this.scheduler.runTaskAsynchronously(this.plugin, () -> {
             try {
                 // Try to find user settings in storage, if found, add to cache.
-                Optional<UserSetting> userSettingMaybe = this.userSettingFacade.findUserSettingByPlayerId(playerId);
+                Optional<UserSetting> userSettingMaybe =
+                        this.userSettingFacade.findUserSettingByPlayerId(playerId);
                 if (userSettingMaybe.isPresent()) {
                     UserSetting userSetting = userSettingMaybe.get();
-                    this.userSettingFacade.addUserSettingToCache(userSetting.getPlayerId(), userSetting.getDisabledDrops(), userSetting.getDropsToInventory());
-                    this.logger.info("Drop settings for {} were found and successfully loaded.", name);
+                    this.userSettingFacade.addUserSettingToCache(userSetting.getPlayerId(),
+                            userSetting.getDisabledDrops(), userSetting.getDropsToInventory());
+                    this.logger.info("Drop settings for {} were found and successfully loaded.",
+                            name);
                     return;
                 }
 
                 this.logger.info("Drop settings for {} not found, creating new ones.", name);
-                this.userSettingFacade.addUserSettingToCache(playerId, new HashSet<>(), this.defaultDropsToInventory);
+                this.userSettingFacade.addUserSettingToCache(playerId, new HashSet<>(),
+                        this.defaultDropsToInventory);
             } catch (UserSettingException exception) {
                 this.logger.error("Could not find or create user setting.", exception);
             }
@@ -64,21 +69,24 @@ public class UserSettingListener implements Listener {
     public void onQuit(PlayerQuitEvent event) {
         String name = event.getPlayer().getName();
 
-        Optional<UserSetting> userSettingMaybe = this.userSettingFacade.findUserSettingByPlayerIdFromCache(event.getPlayer().getUniqueId());
+        Optional<UserSetting> userSettingMaybe = this.userSettingFacade
+                .findUserSettingByPlayerIdFromCache(event.getPlayer().getUniqueId());
         if (!userSettingMaybe.isPresent()) {
-            this.logger.warn("Drop settings for {} may have been reset due to their absence in the cache.", name);
+            this.logger.warn(
+                    "Drop settings for {} may have been reset due to their absence in the cache.",
+                    name);
             return;
         }
 
         UserSetting userSetting = userSettingMaybe.get();
         this.scheduler.runTaskAsynchronously(this.plugin, () -> {
             try {
-                this.userSettingFacade.saveOrUpdateUserSettingToStorage(userSetting.getPlayerId(), userSetting.getDisabledDrops(), userSetting.getDropsToInventory());
+                this.userSettingFacade.saveOrUpdateUserSettingToStorage(userSetting.getPlayerId(),
+                        userSetting.getDisabledDrops(), userSetting.getDropsToInventory());
                 this.logger.info("Drop settings for {} were successfully saved.", name);
             } catch (UserSettingException exception) {
                 this.logger.error("Could not save or update user settings.", exception);
             }
         });
     }
-
 }

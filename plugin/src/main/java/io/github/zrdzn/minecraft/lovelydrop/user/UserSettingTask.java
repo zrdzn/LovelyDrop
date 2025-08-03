@@ -21,10 +21,10 @@ public class UserSettingTask implements Runnable {
             long end = System.nanoTime();
             String difference = String.format("%.3f", (end - start) / 1e6F);
 
-            this.logger.info("All user drop settings have been saved to the storage. (Took {}ms)", difference);
+            this.logger.info("All user drop settings have been saved to the storage. (Took {}ms)",
+                    difference);
         } catch (UserSettingException exception) {
             this.logger.error("Could not save user drop settings to storage.", exception);
         }
     }
-
 }

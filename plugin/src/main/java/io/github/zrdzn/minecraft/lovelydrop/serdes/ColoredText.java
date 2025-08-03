@@ -1,8 +1,8 @@
 package io.github.zrdzn.minecraft.lovelydrop.serdes;
 
 /**
- * Utility class that holds colored text by its transformer.
- * Transformer serializes and deserializes colored text from/to configuration files.
+ * Utility class that holds colored text by its transformer. Transformer serializes and deserializes
+ * colored text from/to configuration files.
  */
 public class ColoredText {
 
@@ -30,5 +30,4 @@ public class ColoredText {
     public String toString() {
         return this.text;
     }
-
 }

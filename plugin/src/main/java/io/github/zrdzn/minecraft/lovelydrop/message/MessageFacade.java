@@ -19,8 +19,10 @@ public class MessageFacade {
         }
     }
 
-    public void sendMessageAsync(CommandSender receiver, ColoredText message, String... placeholders) {
-        this.plugin.getServer().getScheduler().runTaskAsynchronously(this.plugin, () -> this.sendMessage(receiver, message, placeholders));
+    public void sendMessageAsync(CommandSender receiver, ColoredText message,
+            String... placeholders) {
+        this.plugin.getServer().getScheduler().runTaskAsynchronously(this.plugin,
+                () -> this.sendMessage(receiver, message, placeholders));
     }
 
     private String formatPlaceholders(String message, String... placeholders) {
@@ -35,5 +37,4 @@ public class MessageFacade {
 
         return message;
     }
-
 }

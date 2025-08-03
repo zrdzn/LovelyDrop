@@ -33,5 +33,4 @@ public class IntRangeFormatConfig extends OkaeriConfig {
     public void setDifferent(ColoredText different) {
         this.different = different;
     }
-
 }

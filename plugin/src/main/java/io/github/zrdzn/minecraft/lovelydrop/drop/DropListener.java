@@ -1,10 +1,5 @@
 package io.github.zrdzn.minecraft.lovelydrop.drop;
 
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 import eu.okaeri.commons.range.IntRange;
 import io.github.zrdzn.minecraft.lovelydrop.PluginConfig;
 import io.github.zrdzn.minecraft.lovelydrop.drop.DropConfig.FortuneConfig;
@@ -12,6 +7,11 @@ import io.github.zrdzn.minecraft.lovelydrop.message.MessageFacade;
 import io.github.zrdzn.minecraft.lovelydrop.user.UserSetting;
 import io.github.zrdzn.minecraft.lovelydrop.user.UserSettingFacade;
 import io.github.zrdzn.minecraft.spigot.SpigotAdapter;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -35,7 +35,8 @@ public class DropListener implements Listener {
     private final MessageFacade messageFacade;
     private final UserSettingFacade userSettingFacade;
 
-    public DropListener(PluginConfig config, SpigotAdapter spigotAdapter, MessageFacade messageFacade, UserSettingFacade userSettingFacade) {
+    public DropListener(PluginConfig config, SpigotAdapter spigotAdapter,
+            MessageFacade messageFacade, UserSettingFacade userSettingFacade) {
         this.config = config;
         this.messageFacade = messageFacade;
         this.spigotAdapter = spigotAdapter;
@@ -54,7 +55,8 @@ public class DropListener implements Listener {
         Block block = event.getBlock();
 
         // Get user settings from the cache.
-        Optional<UserSetting> userSettingMaybe = this.userSettingFacade.findUserSettingByPlayerIdFromCache(player.getUniqueId());
+        Optional<UserSetting> userSettingMaybe =
+                this.userSettingFacade.findUserSettingByPlayerIdFromCache(player.getUniqueId());
         if (!userSettingMaybe.isPresent()) {
             this.logger.error("User settings not found for {}.", player.getName());
             this.messageFacade.sendMessageAsync(player, this.config.messages.needToJoinAgain);
@@ -65,11 +67,11 @@ public class DropListener implements Listener {
 
         // Get all drops from the source.
         Set<Entry<String, DropConfig>> drops = this.config.drops.entrySet().stream()
-                .filter(drop -> !userSetting.hasDisabledDrop(drop.getKey()))
-                .filter(drop -> !drop.getValue().disabledBioms.contains(block.getBiome()))
-                .filter(drop -> drop.getValue().source.getType() == block.getType())
-                .filter(drop -> drop.getValue().source.getDurability() == block.getData())
-                .collect(Collectors.toSet());
+                        .filter(drop -> !userSetting.hasDisabledDrop(drop.getKey()))
+                        .filter(drop -> !drop.getValue().disabledBioms.contains(block.getBiome()))
+                        .filter(drop -> drop.getValue().source.getType() == block.getType())
+                        .filter(drop -> drop.getValue().source.getDurability() == block.getData())
+                        .collect(Collectors.toSet());
         if (drops.isEmpty()) {
             return;
         }
@@ -101,7 +103,8 @@ public class DropListener implements Listener {
             ItemStack dropItem = drop.item.getItemStack();
 
             // If pickaxe has silk touch and drop is cobblestone, change drop to stone.
-            if (dropItem.getType() == Material.COBBLESTONE && pickaxe.containsEnchantment(Enchantment.SILK_TOUCH)) {
+            if (dropItem.getType() == Material.COBBLESTONE
+                    && pickaxe.containsEnchantment(Enchantment.SILK_TOUCH)) {
                 dropItem.setType(Material.STONE);
             }
 
@@ -112,8 +115,10 @@ public class DropListener implements Listener {
             int amount = fortune.amount.getRandom();
             dropItem.setAmount(amount);
 
-            String[] placeholders = { "{DROP}", keyAndDrop.getKey(), "{AMOUNT}", String.valueOf(amount) };
-            this.messageFacade.sendMessage(player, this.config.messages.dropSuccessful, placeholders);
+            String[] placeholders =
+                    {"{DROP}", keyAndDrop.getKey(), "{AMOUNT}", String.valueOf(amount)};
+            this.messageFacade.sendMessage(player, this.config.messages.dropSuccessful,
+                    placeholders);
 
             World world = player.getWorld();
 
@@ -132,5 +137,4 @@ public class DropListener implements Listener {
             world.dropItemNaturally(location, dropItem);
         });
     }
-
 }

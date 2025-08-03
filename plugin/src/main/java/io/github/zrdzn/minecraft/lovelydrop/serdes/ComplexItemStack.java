@@ -33,5 +33,4 @@ public class ComplexItemStack<T> {
     public void setNbtData(Map<String, T> nbtData) {
         this.nbtData = nbtData;
     }
-
 }

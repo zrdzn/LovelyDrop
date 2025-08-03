@@ -11,5 +11,4 @@ public interface UserSettingRepository {
     void createOrUpdateUserSetting(UserSetting userSetting);
 
     Optional<UserSetting> findUserSettingByPlayerId(UUID playerId);
-
 }

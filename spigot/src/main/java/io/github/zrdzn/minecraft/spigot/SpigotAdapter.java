@@ -5,5 +5,4 @@ public interface SpigotAdapter {
     String getVersion();
 
     BlockBreakHelper getBlockBreakHelper();
-
 }

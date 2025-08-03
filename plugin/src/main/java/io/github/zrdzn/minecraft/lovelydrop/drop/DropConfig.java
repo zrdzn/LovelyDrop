@@ -1,13 +1,13 @@
 package io.github.zrdzn.minecraft.lovelydrop.drop;
 
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 import eu.okaeri.commons.range.IntRange;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
 import io.github.zrdzn.minecraft.lovelydrop.serdes.ComplexItemStack;
 import io.github.zrdzn.minecraft.lovelydrop.serdes.FloatFormat;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import org.bukkit.block.Biome;
 import org.bukkit.inventory.ItemStack;
 
@@ -35,7 +35,6 @@ public class DropConfig extends OkaeriConfig {
             this.amount = amount;
             this.experience = experience;
         }
-
     }
 
     @Comment("Item representation of the drop.")
@@ -68,16 +67,17 @@ public class DropConfig extends OkaeriConfig {
     @Comment("List of biomes in which the drop will not be dropped.")
     public Set<Biome> disabledBioms;
 
-    public DropConfig(ComplexItemStack item, ItemStack source, IntRange height, Map<Integer, FortuneConfig> fortune) {
+    public DropConfig(ComplexItemStack item, ItemStack source, IntRange height,
+                    Map<Integer, FortuneConfig> fortune) {
         this(item, source, height, fortune, new HashSet<>());
     }
 
-    public DropConfig(ComplexItemStack item, ItemStack source, IntRange height, Map<Integer, FortuneConfig> fortune, Set<Biome> disabledBioms) {
+    public DropConfig(ComplexItemStack item, ItemStack source, IntRange height,
+                    Map<Integer, FortuneConfig> fortune, Set<Biome> disabledBioms) {
         this.item = item;
         this.source = source;
         this.height = height;
         this.fortune = fortune;
         this.disabledBioms = disabledBioms;
     }
-
 }

@@ -17,7 +17,8 @@ class LovelyDropCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command,
+            @NotNull String label, String[] args) {
         if (!sender.hasPermission("lovelydrop.reload")) {
             this.messageFacade.sendMessageAsync(sender, this.config.messages.noPermissions);
             return true;
@@ -39,5 +40,4 @@ class LovelyDropCommand implements CommandExecutor {
 
         return true;
     }
-
 }

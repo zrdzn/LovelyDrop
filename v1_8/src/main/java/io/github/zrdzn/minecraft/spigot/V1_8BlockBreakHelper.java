@@ -10,5 +10,4 @@ public class V1_8BlockBreakHelper implements BlockBreakHelper {
         event.setCancelled(true);
         event.getBlock().setType(Material.AIR);
     }
-
 }

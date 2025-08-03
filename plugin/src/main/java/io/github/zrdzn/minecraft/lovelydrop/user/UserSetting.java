@@ -10,7 +10,8 @@ public class UserSetting {
     private final Set<String> disabledDrops;
     private final Map<String, Boolean> dropsToInventory;
 
-    public UserSetting(UUID playerId, Set<String> disabledDrops, Map<String, Boolean> dropsToInventory) {
+    public UserSetting(UUID playerId, Set<String> disabledDrops,
+            Map<String, Boolean> dropsToInventory) {
         this.playerId = playerId;
         this.disabledDrops = disabledDrops;
         this.dropsToInventory = dropsToInventory;
@@ -42,7 +43,8 @@ public class UserSetting {
 
     public boolean hasDropToInventory(String dropKey) {
         if (!this.dropsToInventory.containsKey(dropKey)) {
-            throw new UserSettingException("Drop key " + dropKey + " does not exist in user settings cache.");
+            throw new UserSettingException(
+                    "Drop key " + dropKey + " does not exist in user settings cache.");
         }
 
         return this.dropsToInventory.get(dropKey);
@@ -51,5 +53,4 @@ public class UserSetting {
     public Map<String, Boolean> getDropsToInventory() {
         return this.dropsToInventory;
     }
-
 }

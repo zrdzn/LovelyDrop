@@ -1,10 +1,10 @@
 package io.github.zrdzn.minecraft.lovelydrop.shared;
 
-import java.util.List;
-import java.util.Map;
 import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import io.github.zrdzn.minecraft.lovelydrop.serdes.ComplexItemStack;
+import java.util.List;
+import java.util.Map;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
@@ -16,16 +16,18 @@ public class ItemFactory {
         return createItem(material, null, null, null, null);
     }
 
-    public static <T> ComplexItemStack<T> createItem(Material material, String displayName, List<String> lore) {
+    public static <T> ComplexItemStack<T> createItem(Material material, String displayName,
+            List<String> lore) {
         return createItem(material, displayName, lore, null, null);
     }
 
     public static <T> ComplexItemStack<T> createItem(ItemStack item, Map<String, T> nbtData) {
-        return createItem(item.getType(), item.getItemMeta().getDisplayName(), item.getItemMeta().getLore(), null, nbtData);
+        return createItem(item.getType(), item.getItemMeta().getDisplayName(),
+                item.getItemMeta().getLore(), null, nbtData);
     }
 
-    public static <T> ComplexItemStack<T> createItem(Material material, String displayName, List<String> lore,
-                                                     Map<Enchantment, Integer> enchantments, Map<String, T> nbtData) {
+    public static <T> ComplexItemStack<T> createItem(Material material, String displayName,
+            List<String> lore, Map<Enchantment, Integer> enchantments, Map<String, T> nbtData) {
         ItemStack item = new ItemStack(material);
         ItemMeta itemMeta = item.getItemMeta();
 
@@ -67,5 +69,4 @@ public class ItemFactory {
             }
         }
     }
-
 }

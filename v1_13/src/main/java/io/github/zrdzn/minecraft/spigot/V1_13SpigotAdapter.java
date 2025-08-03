@@ -11,5 +11,4 @@ public class V1_13SpigotAdapter implements SpigotAdapter {
     public BlockBreakHelper getBlockBreakHelper() {
         return new V1_12BlockBreakHelper();
     }
-
 }

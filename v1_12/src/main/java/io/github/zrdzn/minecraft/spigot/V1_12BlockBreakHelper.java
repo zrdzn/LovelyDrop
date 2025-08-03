@@ -8,5 +8,4 @@ public class V1_12BlockBreakHelper implements BlockBreakHelper {
     public void disableDrop(BlockBreakEvent event) {
         event.setDropItems(false);
     }
-
 }

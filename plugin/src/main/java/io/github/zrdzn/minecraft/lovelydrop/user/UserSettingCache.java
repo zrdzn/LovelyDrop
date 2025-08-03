@@ -31,5 +31,4 @@ public class UserSettingCache {
     void removeUserSettingByPlayerId(UUID playerId) {
         this.usersSettings.remove(playerId);
     }
-
 }

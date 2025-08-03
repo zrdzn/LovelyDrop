@@ -11,16 +11,19 @@ public class UserSettingFacade {
     private final UserSettingCache userSettingCache;
     private final UserSettingRepository userSettingRepository;
 
-    public UserSettingFacade(UserSettingCache userSettingCache, UserSettingRepository userSettingRepository) {
+    public UserSettingFacade(UserSettingCache userSettingCache,
+            UserSettingRepository userSettingRepository) {
         this.userSettingCache = userSettingCache;
         this.userSettingRepository = userSettingRepository;
     }
 
     public void saveOrUpdateAllUserSettingsToStorage() {
-        this.userSettingRepository.createOrUpdateUserSettings(new ArrayList<>(this.userSettingCache.findAllUserSettings()));
+        this.userSettingRepository.createOrUpdateUserSettings(
+                new ArrayList<>(this.userSettingCache.findAllUserSettings()));
     }
 
-    public void addUserSettingToCache(UUID playerId, Set<String> disabledDrops, Map<String, Boolean> dropsToInventory) {
+    public void addUserSettingToCache(UUID playerId, Set<String> disabledDrops,
+            Map<String, Boolean> dropsToInventory) {
         if (playerId == null) {
             throw new UserSettingException("Player id cannot be null.");
         }
@@ -34,10 +37,12 @@ public class UserSettingFacade {
         }
 
         // Add user settings to cache.
-        this.userSettingCache.addUserSetting(new UserSetting(playerId, disabledDrops, dropsToInventory));
+        this.userSettingCache
+                .addUserSetting(new UserSetting(playerId, disabledDrops, dropsToInventory));
     }
 
-    public void saveOrUpdateUserSettingToStorage(UUID playerId, Set<String> disabledDrops, Map<String, Boolean> dropsToInventory) {
+    public void saveOrUpdateUserSettingToStorage(UUID playerId, Set<String> disabledDrops,
+            Map<String, Boolean> dropsToInventory) {
         if (playerId == null) {
             throw new UserSettingException("Player id cannot be null.");
         }
@@ -51,7 +56,8 @@ public class UserSettingFacade {
         }
 
         // Save user settings to storage.
-        this.userSettingRepository.createOrUpdateUserSetting(new UserSetting(playerId, disabledDrops, dropsToInventory));
+        this.userSettingRepository.createOrUpdateUserSetting(
+                new UserSetting(playerId, disabledDrops, dropsToInventory));
 
         // Remove user settings from cache.
         this.removeUserSettingByPlayerIdFromCache(playerId);
@@ -82,5 +88,4 @@ public class UserSettingFacade {
         // Remove user settings from cache.
         this.userSettingCache.removeUserSettingByPlayerId(playerId);
     }
-
 }
