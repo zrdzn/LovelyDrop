@@ -89,11 +89,6 @@ public class PluginConfig extends OkaeriConfig {
                                             250
                                     )
                             );
-                        }},
-                        new HashSet<Biome>() {{
-                            try {
-                                this.add(Biome.JUNGLE);
-                            } catch (NoSuchFieldError ignored) {}
                         }}
                 )
         );
