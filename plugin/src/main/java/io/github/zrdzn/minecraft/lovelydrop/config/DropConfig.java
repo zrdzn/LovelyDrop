@@ -1,4 +1,4 @@
-package io.github.zrdzn.minecraft.lovelydrop.drop;
+package io.github.zrdzn.minecraft.lovelydrop.config;
 
 import eu.okaeri.commons.range.IntRange;
 import eu.okaeri.configs.OkaeriConfig;

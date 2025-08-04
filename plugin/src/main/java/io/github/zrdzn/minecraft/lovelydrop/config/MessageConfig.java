@@ -1,4 +1,4 @@
-package io.github.zrdzn.minecraft.lovelydrop.message;
+package io.github.zrdzn.minecraft.lovelydrop.config;
 
 import eu.okaeri.configs.OkaeriConfig;
 import io.github.zrdzn.minecraft.lovelydrop.serdes.ColoredText;

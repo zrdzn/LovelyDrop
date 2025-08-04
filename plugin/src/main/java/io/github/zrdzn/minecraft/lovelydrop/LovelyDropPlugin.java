@@ -9,6 +9,7 @@ import eu.okaeri.configs.serdes.okaeri.range.section.SerdesRangeSection;
 import eu.okaeri.configs.validator.okaeri.OkaeriValidator;
 import eu.okaeri.configs.yaml.bukkit.YamlBukkitConfigurer;
 import eu.okaeri.configs.yaml.bukkit.serdes.SerdesBukkit;
+import io.github.zrdzn.minecraft.lovelydrop.config.PluginConfig;
 import io.github.zrdzn.minecraft.lovelydrop.drop.DropCommand;
 import io.github.zrdzn.minecraft.lovelydrop.drop.DropListener;
 import io.github.zrdzn.minecraft.lovelydrop.menu.MenuFacade;

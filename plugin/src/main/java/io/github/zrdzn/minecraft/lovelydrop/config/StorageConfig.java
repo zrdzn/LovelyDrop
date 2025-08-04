@@ -1,7 +1,8 @@
-package io.github.zrdzn.minecraft.lovelydrop.storage;
+package io.github.zrdzn.minecraft.lovelydrop.config;
 
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
+import io.github.zrdzn.minecraft.lovelydrop.storage.StorageType;
 
 public class StorageConfig extends OkaeriConfig {
 

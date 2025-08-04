@@ -1,10 +1,10 @@
-package io.github.zrdzn.minecraft.lovelydrop.menu;
+package io.github.zrdzn.minecraft.lovelydrop.config;
 
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
-import io.github.zrdzn.minecraft.lovelydrop.menu.MenuItemConfig.SlotConfig;
+import io.github.zrdzn.minecraft.lovelydrop.menu.MenuAction;
+import io.github.zrdzn.minecraft.lovelydrop.config.MenuItemConfig.SlotConfig;
 import io.github.zrdzn.minecraft.lovelydrop.serdes.ColoredText;
-import io.github.zrdzn.minecraft.lovelydrop.shared.IntRangeFormatConfig;
 import io.github.zrdzn.minecraft.lovelydrop.shared.ItemFactory;
 import java.util.ArrayList;
 import java.util.Collections;

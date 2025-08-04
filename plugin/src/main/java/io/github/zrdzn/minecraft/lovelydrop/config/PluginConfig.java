@@ -1,14 +1,11 @@
-package io.github.zrdzn.minecraft.lovelydrop;
+package io.github.zrdzn.minecraft.lovelydrop.config;
 
 import eu.okaeri.commons.range.IntRange;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
-import io.github.zrdzn.minecraft.lovelydrop.drop.DropConfig;
-import io.github.zrdzn.minecraft.lovelydrop.drop.DropConfig.FortuneConfig;
-import io.github.zrdzn.minecraft.lovelydrop.menu.MenuConfig;
-import io.github.zrdzn.minecraft.lovelydrop.message.MessageConfig;
+import io.github.zrdzn.minecraft.lovelydrop.config.DropConfig.FortuneConfig;
 import io.github.zrdzn.minecraft.lovelydrop.shared.ItemFactory;
-import io.github.zrdzn.minecraft.lovelydrop.storage.StorageConfig;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;

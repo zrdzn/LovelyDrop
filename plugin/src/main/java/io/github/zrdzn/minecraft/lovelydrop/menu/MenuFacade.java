@@ -1,8 +1,8 @@
 package io.github.zrdzn.minecraft.lovelydrop.menu;
 
 import dev.triumphteam.gui.guis.Gui;
-import io.github.zrdzn.minecraft.lovelydrop.PluginConfig;
-import io.github.zrdzn.minecraft.lovelydrop.message.MessageConfig;
+import io.github.zrdzn.minecraft.lovelydrop.config.PluginConfig;
+import io.github.zrdzn.minecraft.lovelydrop.config.MessageConfig;
 import io.github.zrdzn.minecraft.lovelydrop.message.MessageFacade;
 import io.github.zrdzn.minecraft.lovelydrop.user.UserSetting;
 import io.github.zrdzn.minecraft.lovelydrop.user.UserSettingFacade;

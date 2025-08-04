@@ -1,5 +1,6 @@
 package io.github.zrdzn.minecraft.lovelydrop;
 
+import io.github.zrdzn.minecraft.lovelydrop.config.PluginConfig;
 import io.github.zrdzn.minecraft.lovelydrop.message.MessageFacade;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

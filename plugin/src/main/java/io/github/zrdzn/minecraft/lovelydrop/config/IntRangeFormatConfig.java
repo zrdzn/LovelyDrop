@@ -1,4 +1,4 @@
-package io.github.zrdzn.minecraft.lovelydrop.shared;
+package io.github.zrdzn.minecraft.lovelydrop.config;
 
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;

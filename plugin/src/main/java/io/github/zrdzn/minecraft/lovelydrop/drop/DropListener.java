@@ -1,8 +1,9 @@
 package io.github.zrdzn.minecraft.lovelydrop.drop;
 
 import eu.okaeri.commons.range.IntRange;
-import io.github.zrdzn.minecraft.lovelydrop.PluginConfig;
-import io.github.zrdzn.minecraft.lovelydrop.drop.DropConfig.FortuneConfig;
+import io.github.zrdzn.minecraft.lovelydrop.config.PluginConfig;
+import io.github.zrdzn.minecraft.lovelydrop.config.DropConfig;
+import io.github.zrdzn.minecraft.lovelydrop.config.DropConfig.FortuneConfig;
 import io.github.zrdzn.minecraft.lovelydrop.message.MessageFacade;
 import io.github.zrdzn.minecraft.lovelydrop.user.UserSetting;
 import io.github.zrdzn.minecraft.lovelydrop.user.UserSettingFacade;

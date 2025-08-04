@@ -1,8 +1,10 @@
-package io.github.zrdzn.minecraft.lovelydrop.menu;
+package io.github.zrdzn.minecraft.lovelydrop.config;
 
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
 import java.util.Map;
+
+import io.github.zrdzn.minecraft.lovelydrop.menu.MenuAction;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
