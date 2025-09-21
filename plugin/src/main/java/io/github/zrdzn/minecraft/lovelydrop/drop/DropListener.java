@@ -70,10 +70,14 @@ public class DropListener implements Listener {
         Set<Entry<String, DropConfig>> drops = this.config.drops.entrySet().stream()
                 .filter(drop -> !userSetting.hasDisabledDrop(drop.getKey()))
                 .filter(drop -> !drop.getValue().disabledBioms.contains(block.getBiome()))
-                .filter(drop -> drop.getValue().sources.stream()
-                        .anyMatch(item -> item.getType() == block.getType()
-                                && item.getDurability() == block.getData()))
-                .collect(Collectors.toSet());
+                .filter(drop -> drop.getValue().getSources().stream().anyMatch(item -> {
+                    if (item.getDurability() == 0) {
+                        return item.getType() == block.getType();
+                    }
+
+                    return item.getType() == block.getType()
+                            && item.getDurability() == block.getData();
+                })).collect(Collectors.toSet());
         if (drops.isEmpty()) {
             return;
         }

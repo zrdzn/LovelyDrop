@@ -34,7 +34,7 @@ public class MenuItemConfig extends OkaeriConfig {
     @Comment("For example:")
     @Comment("1.8  - damage_all  |  1.8  - durability  |  1.8  - loot_bonus_mobs")
     @Comment("1.18 - sharpness   |  1.18 - unbreaking  |  1.18 - loot")
-    public ItemStack item;
+    private ItemStack item;
 
     @Comment("")
     @Comment("What should happen when the player clicks the item.")
@@ -55,5 +55,13 @@ public class MenuItemConfig extends OkaeriConfig {
         this.item = item;
         this.clickAction = clickAction;
         this.slot = slot;
+    }
+
+    public ItemStack getItem() {
+        return item.clone();
+    }
+
+    public void setItem(ItemStack item) {
+        this.item = item;
     }
 }
