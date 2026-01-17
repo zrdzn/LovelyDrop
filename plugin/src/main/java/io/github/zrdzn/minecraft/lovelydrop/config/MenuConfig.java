@@ -87,7 +87,7 @@ public class MenuConfig extends OkaeriConfig {
     @Comment("{SWITCH} - a text that will be shown depending on the drop switch status")
     @Comment("{SWITCH_INVENTORY} - a text that will be shown depending on the inventory drop switch status")
     @Comment("{HEIGHT} - a text that will be shown depending on the customized height range")
-    public Map<String, MenuItemConfig> items = new HashMap<String, MenuItemConfig>() {
+    public Map<String, MenuItemConfig> items = new HashMap<>() {
         {
             this.put("close",
                     new MenuItemConfig(
@@ -99,7 +99,7 @@ public class MenuConfig extends OkaeriConfig {
                             new SlotConfig(4, 5)));
 
             this.put("diamondSword", new MenuItemConfig(ItemFactory
-                    .createItem(Material.DIAMOND_SWORD, "&a&lEpic Sword", new ArrayList<String>() {
+                    .createItem(Material.DIAMOND_SWORD, "&a&lEpic Sword", new ArrayList<>() {
                         {
                             this.add(" &6Chance: &e{CHANCE-0}%");
                             this.add(" &6Amount: {AMOUNT-0}");
@@ -127,14 +127,14 @@ public class MenuConfig extends OkaeriConfig {
                             this.add(" &eRight click to switch the inventory drop.");
                             this.add("&8-------------------------------------");
                         }
-                    }).getItemStack(), new HashMap<ClickType, MenuAction>() {
+                    }).getItemStack(), new HashMap<>() {
                         {
                             this.put(ClickType.LEFT, MenuAction.SWITCH_DROP);
                             this.put(ClickType.RIGHT, MenuAction.SWITCH_DROP_TO_INVENTORY);
                         }
                     }, new SlotConfig(1, 5)));
 
-            List<String> sharedLore = new ArrayList<String>() {
+            List<String> sharedLore = new ArrayList<>() {
                 {
                     this.add(" &6Chance: &e{CHANCE-0}%");
                     this.add(" &6Amount: {AMOUNT-0}");
@@ -153,7 +153,7 @@ public class MenuConfig extends OkaeriConfig {
             this.put("gold",
                     new MenuItemConfig(ItemFactory
                             .createItem(Material.GOLD_INGOT, "&e&lGold", sharedLore).getItemStack(),
-                            new HashMap<ClickType, MenuAction>() {
+                            new HashMap<>() {
                                 {
                                     this.put(ClickType.LEFT, MenuAction.SWITCH_DROP);
                                     this.put(ClickType.RIGHT, MenuAction.SWITCH_DROP_TO_INVENTORY);
@@ -163,7 +163,7 @@ public class MenuConfig extends OkaeriConfig {
             this.put("diamond",
                     new MenuItemConfig(ItemFactory
                             .createItem(Material.DIAMOND, "&b&lDiamond", sharedLore).getItemStack(),
-                            new HashMap<ClickType, MenuAction>() {
+                            new HashMap<>() {
                                 {
                                     this.put(ClickType.LEFT, MenuAction.SWITCH_DROP);
                                     this.put(ClickType.RIGHT, MenuAction.SWITCH_DROP_TO_INVENTORY);
@@ -172,7 +172,7 @@ public class MenuConfig extends OkaeriConfig {
 
             this.put("tnt", new MenuItemConfig(
                     ItemFactory.createItem(Material.TNT, "&c&lTNT", sharedLore).getItemStack(),
-                    new HashMap<ClickType, MenuAction>() {
+                    new HashMap<>() {
                         {
                             this.put(ClickType.LEFT, MenuAction.SWITCH_DROP);
                             this.put(ClickType.RIGHT, MenuAction.SWITCH_DROP_TO_INVENTORY);
@@ -182,7 +182,7 @@ public class MenuConfig extends OkaeriConfig {
             this.put("emerald",
                     new MenuItemConfig(ItemFactory
                             .createItem(Material.EMERALD, "&a&lEmerald", sharedLore).getItemStack(),
-                            new HashMap<ClickType, MenuAction>() {
+                            new HashMap<>() {
                                 {
                                     this.put(ClickType.LEFT, MenuAction.SWITCH_DROP);
                                     this.put(ClickType.RIGHT, MenuAction.SWITCH_DROP_TO_INVENTORY);
@@ -193,7 +193,7 @@ public class MenuConfig extends OkaeriConfig {
                     new MenuItemConfig(
                             ItemFactory.createItem(Material.OBSIDIAN, "&7&lObsidian", sharedLore)
                                     .getItemStack(),
-                            new HashMap<ClickType, MenuAction>() {
+                            new HashMap<>() {
                                 {
                                     this.put(ClickType.LEFT, MenuAction.SWITCH_DROP);
                                     this.put(ClickType.RIGHT, MenuAction.SWITCH_DROP_TO_INVENTORY);

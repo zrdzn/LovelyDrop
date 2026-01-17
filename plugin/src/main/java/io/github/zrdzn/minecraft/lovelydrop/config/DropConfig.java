@@ -71,7 +71,7 @@ public class DropConfig extends OkaeriConfig {
 
     public DropConfig(ComplexItemStack item, ItemStack source, IntRange height,
             Map<Integer, FortuneConfig> fortune) {
-        this(item, new HashSet<ItemStack>() {
+        this(item, new HashSet<>() {
             {
                 this.add(source);
             }
