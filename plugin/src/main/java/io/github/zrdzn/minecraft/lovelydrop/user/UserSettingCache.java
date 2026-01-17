@@ -25,7 +25,7 @@ public class UserSettingCache {
     }
 
     Set<UserSetting> findAllUserSettings() {
-        return Collections.unmodifiableSet(new HashSet<>(this.usersSettings.values()));
+        return Set.copyOf(this.usersSettings.values());
     }
 
     void removeUserSettingByPlayerId(UUID playerId) {

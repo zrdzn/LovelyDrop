@@ -36,12 +36,10 @@ public class MenuFactory {
 
         Gui menu = new Gui(menuConfig.rows, menuConfig.title.getText(), InteractionModifier.VALUES);
 
-        // Forbid the player from getting the item from the inventory.
         menu.setDefaultClickAction(event -> event.setCancelled(true));
 
         setupMenuItems(menu, player, userSetting, menuConfig, menuConfig.items);
 
-        // Fill the rest inventory with the specified item if enabled.
         MenuConfig.FillerConfig filler = menuConfig.filler;
         if (filler.enabled) {
             menu.getFiller().fill(ItemBuilder.from(filler.item).asGuiItem());

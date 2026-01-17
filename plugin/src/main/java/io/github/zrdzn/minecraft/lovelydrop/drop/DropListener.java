@@ -52,7 +52,7 @@ public class DropListener implements Listener {
 
         Block block = event.getBlock();
 
-        // Get user settings from the cache.
+        // get user settings from the cache
         Optional<UserSetting> userSettingMaybe =
                 this.userSettingFacade.findUserSettingByPlayerIdFromCache(player.getUniqueId());
         if (!userSettingMaybe.isPresent()) {
@@ -63,7 +63,7 @@ public class DropListener implements Listener {
 
         UserSetting userSetting = userSettingMaybe.get();
 
-        // Get all drops from the source.
+        // get all drops from the source
         Set<Entry<String, DropConfig>> drops = this.config.drops.entrySet().stream()
                 .filter(drop -> !userSetting.hasDisabledDrop(drop.getKey()))
                 .filter(drop -> !drop.getValue().disabledBioms.contains(block.getBiome()))
@@ -104,16 +104,13 @@ public class DropListener implements Listener {
 
             ItemStack dropItem = drop.item.getItemStack();
 
-            // If pickaxe has silk touch and drop is cobblestone, change drop to stone.
             if (dropItem.getType() == Material.COBBLESTONE
                     && pickaxe.containsEnchantment(Enchantment.SILK_TOUCH)) {
                 dropItem.setType(Material.STONE);
             }
 
-            // Give experience to player.
             player.giveExp(fortune.experience);
 
-            // Randomize amount from range and set it for item.
             int amount = fortune.amount.getRandom();
             dropItem.setAmount(amount);
 
@@ -127,10 +124,8 @@ public class DropListener implements Listener {
             Location location = block.getLocation();
 
             if (userSetting.getDropsToInventory().getOrDefault(keyAndDrop.getKey(), true)) {
-                // Add items to inventory.
                 Map<Integer, ItemStack> itemsLeft = player.getInventory().addItem(dropItem);
 
-                // Drop items on the floor if player has full inventory.
                 itemsLeft.forEach((index, item) -> world.dropItemNaturally(location, item));
 
                 return;

@@ -24,7 +24,6 @@ public class DropCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command,
             @NotNull String label, String[] args) {
-        // Check if sender is console.
         if (!(sender instanceof Player)) {
             this.messageFacade.sendMessageAsync(sender, this.config.messages.executedAsConsole);
             return true;
@@ -37,7 +36,6 @@ public class DropCommand implements CommandExecutor {
             return true;
         }
 
-        // Open inventory for player.
         this.menuFacade.open(player);
 
         return true;

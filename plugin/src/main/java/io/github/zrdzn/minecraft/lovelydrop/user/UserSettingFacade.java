@@ -36,7 +36,6 @@ public class UserSettingFacade {
             throw new UserSettingException("Drops to inventory cannot be null.");
         }
 
-        // Add user settings to cache.
         this.userSettingCache
                 .addUserSetting(new UserSetting(playerId, disabledDrops, dropsToInventory));
     }
@@ -55,11 +54,9 @@ public class UserSettingFacade {
             throw new UserSettingException("Drops to inventory cannot be null.");
         }
 
-        // Save user settings to storage.
         this.userSettingRepository.createOrUpdateUserSetting(
                 new UserSetting(playerId, disabledDrops, dropsToInventory));
 
-        // Remove user settings from cache.
         this.removeUserSettingByPlayerIdFromCache(playerId);
     }
 
@@ -76,7 +73,6 @@ public class UserSettingFacade {
             throw new UserSettingException("Player id cannot be null.");
         }
 
-        // Find user settings from storage.
         return this.userSettingRepository.findUserSettingByPlayerId(playerId);
     }
 
@@ -85,7 +81,6 @@ public class UserSettingFacade {
             throw new UserSettingException("Player id cannot be null.");
         }
 
-        // Remove user settings from cache.
         this.userSettingCache.removeUserSettingByPlayerId(playerId);
     }
 }

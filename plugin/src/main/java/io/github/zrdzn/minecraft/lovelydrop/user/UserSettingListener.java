@@ -37,14 +37,13 @@ public class UserSettingListener implements Listener {
         UUID playerId = player.getUniqueId();
         String name = player.getName();
 
-        // Remove any old cache.
         if (this.userSettingFacade.findUserSettingByPlayerIdFromCache(playerId).isPresent()) {
             this.userSettingFacade.removeUserSettingByPlayerIdFromCache(playerId);
         }
 
         this.scheduler.runTaskAsynchronously(this.plugin, () -> {
             try {
-                // Try to find user settings in storage, if found, add to cache.
+                // try to find user settings in storage, if found, add to the cache
                 Optional<UserSetting> userSettingMaybe =
                         this.userSettingFacade.findUserSettingByPlayerId(playerId);
                 if (userSettingMaybe.isPresent()) {
@@ -71,7 +70,7 @@ public class UserSettingListener implements Listener {
 
         Optional<UserSetting> userSettingMaybe = this.userSettingFacade
                 .findUserSettingByPlayerIdFromCache(event.getPlayer().getUniqueId());
-        if (!userSettingMaybe.isPresent()) {
+        if (userSettingMaybe.isEmpty()) {
             this.logger.warn(
                     "Drop settings for {} may have been reset due to their absence in the cache.",
                     name);
