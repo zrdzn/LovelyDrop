@@ -16,13 +16,7 @@ public class UserSettingTask implements Runnable {
     @Override
     public void run() {
         try {
-            long start = System.nanoTime();
             this.userSettingFacade.saveOrUpdateAllUserSettingsToStorage();
-            long end = System.nanoTime();
-            String difference = String.format("%.3f", (end - start) / 1e6F);
-
-            this.logger.info("All user drop settings have been saved to the storage. (Took {}ms)",
-                    difference);
         } catch (UserSettingException exception) {
             this.logger.error("Could not save user drop settings to storage.", exception);
         }
