@@ -8,6 +8,8 @@ import io.github.zrdzn.minecraft.lovelydrop.serdes.FloatFormat;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.bukkit.block.Biome;
 import org.bukkit.inventory.ItemStack;
 
@@ -52,7 +54,7 @@ public class DropConfig extends OkaeriConfig {
     @Comment("Item representation of the block from which 'item' should be dropped.")
     @Comment("If you want to use legacy materials, set a durability to some number, e.g. material: stone with durability: 5 for andesite.")
     @Comment("Check https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html for list of materials.")
-    public Set<ItemStack> sources;
+    private Set<ItemStack> sources;
 
     @Comment("")
     @Comment("Height range within which the item can be dropped.")
@@ -88,5 +90,13 @@ public class DropConfig extends OkaeriConfig {
         this.height = height;
         this.fortune = fortune;
         this.disabledBioms = disabledBioms;
+    }
+
+    public Set<ItemStack> getSources() {
+        return sources.stream().map(ItemStack::clone).collect(Collectors.toSet());
+    }
+
+    public void setSources(Set<ItemStack> sources) {
+        this.sources = sources;
     }
 }

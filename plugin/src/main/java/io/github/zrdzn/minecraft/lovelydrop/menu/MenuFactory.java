@@ -59,14 +59,15 @@ public class MenuFactory {
 
             DropConfig drop = this.config.drops.get(menuSlotItemKey);
             if (drop == null) {
-                setDefaultItem(menu, row, column, menuSlotItem.item, menuSlotItem.clickAction,
+                setDefaultItem(menu, row, column, menuSlotItem.getItem(), menuSlotItem.clickAction,
                         player);
                 return;
             }
 
-            List<String> lore = formatLoreForDrop(menuSlotItem.item, drop, menuConfig.heightFormat);
-            setItemWithDrop(menu, row, column, menuSlotItem.item, menuSlotItem.clickAction, player,
-                    userSetting, menuSlotItemKey, drop, menuConfig, lore);
+            List<String> lore =
+                    formatLoreForDrop(menuSlotItem.getItem(), drop, menuConfig.heightFormat);
+            setItemWithDrop(menu, row, column, menuSlotItem.getItem(), menuSlotItem.clickAction,
+                    player, userSetting, menuSlotItemKey, drop, menuConfig, lore);
         });
     }
 
