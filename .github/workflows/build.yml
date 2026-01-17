@@ -10,16 +10,16 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        jdk: [8]
+        jdk: [21]
     steps:
-      - uses: actions/checkout@v2
-      - name: Use JDK
-        uses: actions/setup-java@v1
+      - uses: actions/checkout@v4
+      - name: Set up JDK ${{ matrix.jdk }}
+        uses: actions/setup-java@v4
         with:
           java-version: ${{ matrix.jdk }}
-      - name: Add execute permission for gradlew
-        run: chmod +x gradlew
-      - name: Build via shadowjar
-        run: ./gradlew build shadowJar --stacktrace -i
+          distribution: 'temurin'
+          cache: 'maven'
+      - name: Build and Package
+        run: mvn -B clean package
       - name: Check codestyle
-        run: ./gradlew spotlessCheck
+        run: mvn spotless:check

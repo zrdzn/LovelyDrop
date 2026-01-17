@@ -25,10 +25,6 @@ import io.github.zrdzn.minecraft.lovelydrop.user.UserSettingFacade;
 import io.github.zrdzn.minecraft.lovelydrop.user.UserSettingFacadeFactory;
 import io.github.zrdzn.minecraft.lovelydrop.user.UserSettingListener;
 import io.github.zrdzn.minecraft.lovelydrop.user.UserSettingTask;
-import io.github.zrdzn.minecraft.spigot.SpigotAdapter;
-import io.github.zrdzn.minecraft.spigot.V1_12SpigotAdapter;
-import io.github.zrdzn.minecraft.spigot.V1_13SpigotAdapter;
-import io.github.zrdzn.minecraft.spigot.V1_8SpigotAdapter;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -87,9 +83,6 @@ public class LovelyDropPlugin extends JavaPlugin {
             return;
         }
 
-        SpigotAdapter spigotAdapter = this.prepareSpigotAdapter();
-        this.logger.info("Using server engine adapter for version v{}", spigotAdapter.getVersion());
-
         MessageFacade messageFacade = new MessageFacade(this);
 
         Storage storage;
@@ -111,7 +104,7 @@ public class LovelyDropPlugin extends JavaPlugin {
         this.userSettingBukkitTask = scheduler.runTaskTimerAsynchronously(this, userSettingTask,
                 20L, config.userSettingsSaveInterval * 20L);
 
-        this.registerListeners(config, spigotAdapter, messageFacade, userSettingFacade);
+        this.registerListeners(config, messageFacade, userSettingFacade);
 
         MenuFactory menuFactory = new MenuFactory(config, messageFacade);
         MenuFacade menuFacade =
@@ -131,8 +124,8 @@ public class LovelyDropPlugin extends JavaPlugin {
         this.getServer().getPluginManager().disablePlugin(this);
     }
 
-    public void registerListeners(PluginConfig config, SpigotAdapter spigotAdapter,
-            MessageFacade messageFacade, UserSettingFacade userSettingFacade) {
+    public void registerListeners(PluginConfig config, MessageFacade messageFacade,
+            UserSettingFacade userSettingFacade) {
         PluginManager pluginManager = this.getServer().getPluginManager();
 
         Map<String, Boolean> defaultDropsToInventory = new HashMap<>();
@@ -142,8 +135,7 @@ public class LovelyDropPlugin extends JavaPlugin {
                 new UserSettingListener(this, userSettingFacade, defaultDropsToInventory);
         pluginManager.registerEvents(this.userSettingListener, this);
 
-        this.dropListener =
-                new DropListener(config, spigotAdapter, messageFacade, userSettingFacade);
+        this.dropListener = new DropListener(config, messageFacade, userSettingFacade);
         pluginManager.registerEvents(this.dropListener, this);
     }
 
@@ -156,31 +148,5 @@ public class LovelyDropPlugin extends JavaPlugin {
         if (this.dropListener != null) {
             BlockBreakEvent.getHandlerList().unregister(this.dropListener);
         }
-    }
-
-    public SpigotAdapter prepareSpigotAdapter() {
-        // Checks if the api version is greater than 1.12.2.
-        try {
-            Class.forName("org.bukkit.event.block.BlockBreakEvent")
-                    .getDeclaredMethod("setDropItems", boolean.class);
-        } catch (Exception exception) {
-            return new V1_8SpigotAdapter();
-        }
-
-        Class<?> namespaced;
-        try {
-            namespaced = Class.forName("org.bukkit.NamespacedKey");
-        } catch (ClassNotFoundException exception) {
-            return new V1_8SpigotAdapter();
-        }
-
-        try {
-            Class.forName("org.bukkit.enchantments.Enchantment").getDeclaredMethod("getByKey",
-                    namespaced);
-        } catch (Exception exception) {
-            return new V1_12SpigotAdapter();
-        }
-
-        return new V1_13SpigotAdapter();
     }
 }

@@ -16,7 +16,6 @@ import io.github.zrdzn.minecraft.lovelydrop.user.UserSetting;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -89,16 +88,16 @@ public class MenuFactory {
 
         return itemStack.getItemMeta().getLore().stream().map(line -> {
             String formattedHeight = formatHeight(minimumHeight, maximumHeight, heightFormat);
-            return StringUtils.replace(line, "{HEIGHT}", formattedHeight);
+            return replace(line, "{HEIGHT}", formattedHeight);
         }).collect(Collectors.toList());
     }
 
     private String formatHeight(String minHeight, String maxHeight,
             IntRangeFormatConfig heightFormat) {
         if (minHeight.equals(maxHeight)) {
-            return StringUtils.replace(heightFormat.getFixed().getText(), "{HEIGHT}", minHeight);
+            return replace(heightFormat.getFixed().getText(), "{HEIGHT}", minHeight);
         } else {
-            return StringUtils.replaceEach(heightFormat.getDifferent().getText(),
+            return replaceEach(heightFormat.getDifferent().getText(),
                     new String[] {"{HEIGHT-MIN}", "{HEIGHT-MAX}"},
                     new String[] {minHeight, maxHeight});
         }
@@ -135,7 +134,7 @@ public class MenuFactory {
 
     private String formatLineWithFortune(String line, int level, DropConfig.FortuneConfig fortune,
             IntRangeFormatConfig amountFormat, String minAmount, String maxAmount) {
-        line = StringUtils.replaceEach(line,
+        line = replaceEach(line,
                 new String[] {String.format("{CHANCE-%d}", level),
                                 String.format("{EXPERIENCE-%d}", level)},
                 new String[] {fortune.chance.getFormattedValue(),
@@ -143,11 +142,11 @@ public class MenuFactory {
 
         String placeholder = String.format("{AMOUNT-%d}", level);
         if (minAmount.equals(maxAmount)) {
-            return StringUtils.replace(line, placeholder,
-                    StringUtils.replace(amountFormat.getFixed().getText(), "{AMOUNT}", minAmount));
+            return replace(line, placeholder,
+                    replace(amountFormat.getFixed().getText(), "{AMOUNT}", minAmount));
         } else {
-            return StringUtils.replace(line, placeholder,
-                    StringUtils.replaceEach(amountFormat.getDifferent().getText(),
+            return replace(line, placeholder,
+                    replaceEach(amountFormat.getDifferent().getText(),
                             new String[] {"{AMOUNT-MIN}", "{AMOUNT-MAX}"},
                             new String[] {minAmount, maxAmount}));
         }
@@ -220,8 +219,7 @@ public class MenuFactory {
             SwitchConfig dropSwitch, SwitchConfig inventorySwitch) {
         String[] replacements =
                 getReplacements(userSetting, menuSlotItemKey, dropSwitch, inventorySwitch);
-        return StringUtils.replaceEach(line, new String[] {"{SWITCH}", "{SWITCH_INVENTORY}"},
-                replacements);
+        return replaceEach(line, new String[] {"{SWITCH}", "{SWITCH_INVENTORY}"}, replacements);
     }
 
     private String[] getReplacements(UserSetting userSetting, String menuSlotItemKey,
@@ -233,5 +231,30 @@ public class MenuFactory {
                 userSetting.hasDropToInventory(menuSlotItemKey) ? inventorySwitch.enabled.getText()
                         : inventorySwitch.disabled.getText();
         return new String[] {dropText, inventoryText};
+    }
+
+    private String replace(String text, String search, String replacement) {
+        if (text == null || search == null || replacement == null) {
+            return text;
+        }
+        return text.replace(search, replacement);
+    }
+
+    private String replaceEach(String text, String[] searchList, String[] replacementList) {
+        if (text == null || searchList == null || replacementList == null) {
+            return text;
+        }
+        if (searchList.length != replacementList.length) {
+            throw new IllegalArgumentException(
+                    "Search and replacement arrays must have the same length");
+        }
+
+        String result = text;
+        for (int i = 0; i < searchList.length; i++) {
+            if (searchList[i] != null && replacementList[i] != null) {
+                result = result.replace(searchList[i], replacementList[i]);
+            }
+        }
+        return result;
     }
 }

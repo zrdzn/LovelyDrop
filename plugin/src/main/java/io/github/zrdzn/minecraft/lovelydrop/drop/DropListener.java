@@ -7,7 +7,6 @@ import io.github.zrdzn.minecraft.lovelydrop.config.DropConfig.FortuneConfig;
 import io.github.zrdzn.minecraft.lovelydrop.message.MessageFacade;
 import io.github.zrdzn.minecraft.lovelydrop.user.UserSetting;
 import io.github.zrdzn.minecraft.lovelydrop.user.UserSettingFacade;
-import io.github.zrdzn.minecraft.spigot.SpigotAdapter;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
@@ -32,15 +31,13 @@ public class DropListener implements Listener {
     private final Logger logger = LoggerFactory.getLogger(DropListener.class);
 
     private final PluginConfig config;
-    private final SpigotAdapter spigotAdapter;
     private final MessageFacade messageFacade;
     private final UserSettingFacade userSettingFacade;
 
-    public DropListener(PluginConfig config, SpigotAdapter spigotAdapter,
-            MessageFacade messageFacade, UserSettingFacade userSettingFacade) {
+    public DropListener(PluginConfig config, MessageFacade messageFacade,
+            UserSettingFacade userSettingFacade) {
         this.config = config;
         this.messageFacade = messageFacade;
-        this.spigotAdapter = spigotAdapter;
         this.userSettingFacade = userSettingFacade;
     }
 
@@ -78,12 +75,11 @@ public class DropListener implements Listener {
             return;
         }
 
-        // Disable drop depending on the server version.
-        this.spigotAdapter.getBlockBreakHelper().disableDrop(event);
+        event.setDropItems(false);
 
         int blockHeight = block.getY();
 
-        int fortuneLevel = pickaxe.getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS);
+        int fortuneLevel = pickaxe.getEnchantmentLevel(Enchantment.FORTUNE);
 
         drops.forEach(keyAndDrop -> {
             DropConfig drop = keyAndDrop.getValue();

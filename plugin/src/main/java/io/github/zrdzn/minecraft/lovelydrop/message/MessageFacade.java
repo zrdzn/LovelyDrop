@@ -1,7 +1,6 @@
 package io.github.zrdzn.minecraft.lovelydrop.message;
 
 import io.github.zrdzn.minecraft.lovelydrop.serdes.ColoredText;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 
@@ -32,7 +31,7 @@ public class MessageFacade {
         }
 
         for (int index = 0; index < length; index += 2) {
-            message = StringUtils.replace(message, placeholders[index], placeholders[index + 1]);
+            message = message.replace(placeholders[index], placeholders[index + 1]);
         }
 
         return message;

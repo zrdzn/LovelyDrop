@@ -1,7 +1,7 @@
 name: LovelyDrop
 version: "${version}"
 main: io.github.zrdzn.minecraft.lovelydrop.LovelyDropPlugin
-api-version: 1.13
+api-version: 1.21
 author: zrdzn
 description: Universal, multi-version drop plugin with a fully customizable GUI
 permissions:

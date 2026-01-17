@@ -1,6 +1,0 @@
-rootProject.name = "LovelyDrop"
-include "plugin"
-include "spigot"
-include "v1_8"
-include "v1_13"
-include "v1_12"
