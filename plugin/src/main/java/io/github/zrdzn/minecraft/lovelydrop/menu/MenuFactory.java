@@ -87,7 +87,7 @@ public class MenuFactory {
         String minimumHeight = String.valueOf(heightRange.getMin());
         String maximumHeight = String.valueOf(heightRange.getMax());
 
-        return itemStack.getItemMeta().getLore().stream().map(line -> {
+        return itemStack.getItemMeta().clone().getLore().stream().map(line -> {
             String formattedHeight = formatHeight(minimumHeight, maximumHeight, heightFormat);
             return replace(line, "{HEIGHT}", formattedHeight);
         }).collect(Collectors.toList());
