@@ -195,7 +195,7 @@ public class MenuFactory {
         } else {
             userSetting.addDisabledDrop(menuSlotItemKey);
         }
-        this.messageFacade.sendMessage(player, this.config.messages.dropSwitched, "{DROP}",
+        this.messageFacade.sendMessageAsync(player, this.config.messages.dropSwitched, "{DROP}",
                 menuSlotItemKey);
     }
 
@@ -203,8 +203,8 @@ public class MenuFactory {
             String menuSlotItemKey) {
         userSetting.setDropToInventory(menuSlotItemKey,
                 !userSetting.hasDropToInventory(menuSlotItemKey));
-        this.messageFacade.sendMessage(player, this.config.messages.dropSwitchedInventory, "{DROP}",
-                menuSlotItemKey);
+        this.messageFacade.sendMessageAsync(player, this.config.messages.dropSwitchedInventory,
+                "{DROP}", menuSlotItemKey);
     }
 
     private List<String> formatLore(List<String> lore, UserSetting userSetting,

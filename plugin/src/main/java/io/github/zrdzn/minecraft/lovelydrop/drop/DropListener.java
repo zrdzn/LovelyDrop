@@ -116,7 +116,7 @@ public class DropListener implements Listener {
 
             String[] placeholders =
                     {"{DROP}", keyAndDrop.getKey(), "{AMOUNT}", String.valueOf(amount)};
-            this.messageFacade.sendMessage(player, this.config.messages.dropSuccessful,
+            this.messageFacade.sendMessageAsync(player, this.config.messages.dropSuccessful,
                     placeholders);
 
             World world = player.getWorld();
