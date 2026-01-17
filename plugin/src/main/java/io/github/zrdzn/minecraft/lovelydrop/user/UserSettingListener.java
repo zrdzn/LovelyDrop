@@ -44,10 +44,10 @@ public class UserSettingListener implements Listener {
         this.scheduler.runTaskAsynchronously(this.plugin, () -> {
             try {
                 // try to find user settings in storage, if found, add to the cache
-                Optional<UserSetting> userSettingMaybe =
+                Optional<UserSetting> userSettingOpt =
                         this.userSettingFacade.findUserSettingByPlayerId(playerId);
-                if (userSettingMaybe.isPresent()) {
-                    UserSetting userSetting = userSettingMaybe.get();
+                if (userSettingOpt.isPresent()) {
+                    UserSetting userSetting = userSettingOpt.get();
                     this.userSettingFacade.addUserSettingToCache(userSetting.getPlayerId(),
                             userSetting.getDisabledDrops(), userSetting.getDropsToInventory());
                     this.logger.info("Drop settings for {} were found and successfully loaded.",
@@ -68,16 +68,16 @@ public class UserSettingListener implements Listener {
     public void onQuit(PlayerQuitEvent event) {
         String name = event.getPlayer().getName();
 
-        Optional<UserSetting> userSettingMaybe = this.userSettingFacade
+        Optional<UserSetting> userSettingOpt = this.userSettingFacade
                 .findUserSettingByPlayerIdFromCache(event.getPlayer().getUniqueId());
-        if (userSettingMaybe.isEmpty()) {
+        if (userSettingOpt.isEmpty()) {
             this.logger.warn(
                     "Drop settings for {} may have been reset due to their absence in the cache.",
                     name);
             return;
         }
 
-        UserSetting userSetting = userSettingMaybe.get();
+        UserSetting userSetting = userSettingOpt.get();
         this.scheduler.runTaskAsynchronously(this.plugin, () -> {
             try {
                 this.userSettingFacade.saveOrUpdateUserSettingToStorage(userSetting.getPlayerId(),

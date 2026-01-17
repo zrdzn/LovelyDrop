@@ -53,15 +53,15 @@ public class DropListener implements Listener {
         Block block = event.getBlock();
 
         // get user settings from the cache
-        Optional<UserSetting> userSettingMaybe =
+        Optional<UserSetting> userSettingOpt =
                 this.userSettingFacade.findUserSettingByPlayerIdFromCache(player.getUniqueId());
-        if (!userSettingMaybe.isPresent()) {
+        if (!userSettingOpt.isPresent()) {
             this.logger.error("User settings not found for {}.", player.getName());
             this.messageFacade.sendMessageAsync(player, this.config.messages.needToJoinAgain);
             return;
         }
 
-        UserSetting userSetting = userSettingMaybe.get();
+        UserSetting userSetting = userSettingOpt.get();
 
         // get all drops from the source
         Set<Entry<String, DropConfig>> drops = this.config.drops.entrySet().stream()
